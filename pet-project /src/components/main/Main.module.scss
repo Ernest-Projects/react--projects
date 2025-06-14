@@ -1,0 +1,35 @@
+
+
+
+@media(max-width:500px) {
+  .MainContainer {
+    width: 70vw;
+    max-width: 55rem;
+  }
+}
+@media(max-width: 700px) and (min-width: 500px) { 
+  .MainContainer {
+    width: 70vw;
+    max-width: 55rem;
+  }
+}
+
+.MainContainer {
+  width: 90vw;
+  height: 75vw;
+  max-height: 30rem;
+  min-width: 30rem;
+  min-height: 35rem;
+  max-width: 60rem;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 1rem;
+  transition: all .3s ease;
+
+  p {
+    padding: 0;
+    margin: 0;
+  }
+}
