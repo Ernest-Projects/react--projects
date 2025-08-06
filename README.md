@@ -1,2 +1,2 @@
 # react--projects
-some simple projects by me
+simple projects/games on React 
