@@ -6,11 +6,15 @@ import type { ConvertorData } from "../../data/types";
 type ConvertorProps = {
   data: ConvertorData;
   isActive: boolean;
+  themeMode: boolean;
 };
 type UnitKey = (keyof ConvertorData["abbreviation"])[];
 
-
-export const Convertor: React.FC<ConvertorProps> = ({ data, isActive }) => {
+export const Convertor: React.FC<ConvertorProps> = ({
+  data,
+  isActive,
+  themeMode,
+}) => {
   // !!
   const abbreviation = data.abbreviation;
   const notate = data.notate;
@@ -35,15 +39,15 @@ export const Convertor: React.FC<ConvertorProps> = ({ data, isActive }) => {
 
   //hook for swapping
   const [isSwapping, setIsSwapping] = useState(false);
-  const [isReloading, setIsReloading] = useState(false)
+  const [isReloading, setIsReloading] = useState(false);
   // function for swaping values places
   const swapValues = () => {
     setIsSwapping((prev) => !prev);
   };
-  
-  useEffect(()=> {
-    swapValues()
-  }, [selectedValueOne, selectedValueTwo])
+
+  useEffect(() => {
+    swapValues();
+  }, [selectedValueOne, selectedValueTwo]);
 
   const convertationFunction = () => {
     // into num
@@ -124,46 +128,83 @@ export const Convertor: React.FC<ConvertorProps> = ({ data, isActive }) => {
 
   return (
     <>
-      <main className={`${styles.window} ${isActive === true ? styles.active : ""}`}>
-        <section className={styles.leftSide}>
+      <main
+        className={`${styles.window} ${
+          isActive === true ? styles.active : ""
+        } ${themeMode == true ? styles.lightWindow : styles.darkWindow}`}
+      >
+        <section className={`${styles.leftSide}`}>
           {renderButtons(
             units,
-             selectedValueOne,
+            selectedValueOne,
             setSelectedValueOne,
             abbreviation,
-            name
+            name,
+            themeMode
           )}
 
           <InputContainer
             inputValue={inputValue}
             setinputValue={setInputValue}
+            themeMode={themeMode}
           />
-          <div className={`${styles.note} ${isActive === true ? styles.activeNote : ""}`}>{noteInput}</div>
+          <div
+            style={{ color: themeMode == true ? "black" : "white" }}
+            className={`${styles.note}  ${
+              isActive === true ? styles.activeNote : ""
+            }`}
+          >
+            {noteInput}
+          </div>
         </section>
-        <section className={`${styles.rightSide} ${isActive === true ? styles.activeSide : ""}`}>
+        <section
+          className={`${styles.rightSide} ${
+            isActive === true ? styles.activeSide : ""
+          }`}
+        >
           {renderButtons(
             units,
-             selectedValueTwo,
+            selectedValueTwo,
             setSelectedValueTwo,
             abbreviation,
-            name
+            name,
+            themeMode
           )}
 
           <div
-            style={{ color: outputValue === "err" ? "red" : "white" }}
+            style={{
+              color:
+                outputValue === "err"
+                  ? "red"
+                  : themeMode === true
+                  ? "black"
+                  : "white",
+            }}
             className={styles.output}
           >
             {outputValue}
           </div>
-          <div className={styles.note}>{noteOutput}</div>
-          <div onClick={() => swapValues()} className={styles.changeButton}>
+          <div
+            style={{ color: themeMode == true ? "black" : "white" }}
+            className={styles.note}
+          >
+            {noteOutput}
+          </div>
+          <div
+            onClick={() => swapValues()}
+            style={{
+              background:
+                themeMode === true ? "rgb(210,210,210)" : "rgb(20,20,20)",
+            }}
+            className={styles.changeButton}
+          >
             <span
               style={{
-                color: "white",
+                color: themeMode === true ? "black" : "white",
                 position: "absolute",
                 cursor: "pointer",
                 placeSelf: "center",
-                transform: "scale(1.6)",
+                transform: "scale(1.3)",
               }}
               className="material-symbols-outlined"
             >
@@ -182,21 +223,22 @@ function renderButtons(
   value: string,
   setValue: React.Dispatch<React.SetStateAction<string>>,
   abbreviation: ConvertorData["abbreviation"],
-  name: ConvertorData["button_name"]
+  name: ConvertorData["button_name"],
+  themeMode: boolean
 ) {
-    const smoothReloading = (unitkey: string) => {
-        setTimeout(()=> {
-        }, 100);
-        setValue(abbreviation[unitkey])
-    }
   return (
     <section className={styles.buttonArea}>
       {units.map((unitkey) => (
-        <button key={unitkey} onClick={() => smoothReloading(unitkey)}>
+        <button key={unitkey} onClick={() => setValue(abbreviation[unitkey])}>
           {name[unitkey]}
         </button>
       ))}
-      <div className={styles.selectedValue}>{value}</div>
+      <div
+        className={styles.selectedValue}
+        style={{ color: themeMode == true ? "black" : "white" }}
+      >
+        {value}
+      </div>
     </section>
   );
 }

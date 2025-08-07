@@ -67,7 +67,7 @@ export const base: BaseData = {
     convertation: {
       one: { two: 0.621, three: 1093.6133 },
       two: { one: 1.609, three: 1760 },
-      three: { one: 0.000914, two: 0.0005 },
+      three: { one: 0.000914, two: 0.000568181818 },
     },
     notate: {
       one_two: "1 kilometer = 0.621 miles",

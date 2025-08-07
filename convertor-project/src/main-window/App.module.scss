@@ -1,6 +1,12 @@
 
-
-
+.background {position: absolute; top:0; left: 0; transition: all .3s ease; width: 100vw; height: 100vh}
+.backgroundLight {
+  background: rgb(240, 240, 240);
+}
+.backgroundDark {
+     background: rgb(35, 35, 35);
+ 
+}
 .container {
   width: 70vw; 
   height: 40vh;
@@ -13,34 +19,52 @@
   
 }
 .author {
-  color: white;
+transition: all .3s ease;
   position: absolute;
   bottom: 0;
   left: 20px;
   font-weight: 700; font-family: "monospace";
   font-size: 2rem;
+} .authorLight { color:black} .authorDark{color:white}
+.author,.headerP, .bavbarButton {
+  transition: all .3s ease;
 }
-
-
+@media (max-height: 600px) {
+  .author {opacity: 0;}
+}
 .headerP, .bavbarButton {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;   
   width: 100%;
   height: 100%;
   font-size: 1rem;
   text-align: center;
   font-family: "monospace";
-  transition: all .3s ease;
-    cursor: pointer;
-    background: rgb(20, 20, 20);
+  cursor: pointer;
   border: none;
-
+  
 }
+.darkNavbarButton, .darkHeaderP {
+  
+  background: rgb(20, 20, 20);
+  color: white;  
+  &:hover {
+    background: rgb(70, 70, 70);
+    box-shadow: 0 0 20px 1px gray;
+
+  } 
+}.lightNavbarButton, .lightHeaderP {
+  background-color: rgb(220, 220, 220);
+  color: black;   
+  &:hover {
+    background: rgb(250, 250, 250);
+    box-shadow: 0 0 20px 1px gray;
+
+  } 
+}
+
 .headerP:hover, .navbarButton:hover {
-    background: rgb(72, 71, 71);
     font-size: 1.1rem;
   border: none;
-    box-shadow: 0 0 20px 1px gray;
 }
