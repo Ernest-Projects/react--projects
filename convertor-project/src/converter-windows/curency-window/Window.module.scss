@@ -1,0 +1,169 @@
+.window {
+    width: 100%;
+    height: 40vh;
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 5%;
+    gap: 10px;
+    user-select: none;
+    min-height: 20rem;
+    min-width: 55rem;
+    cursor: pointer;
+    border: 5px solid rgb(20, 20, 20);
+    border-radius: 2rem;
+    overflow: hidden;
+    transition: all .3s ease;
+    opacity: 0;
+}
+
+.window>*,
+input {
+    font-family: monospace;
+}
+
+.window section {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: rgb(55, 55, 55);
+}
+
+.window button {
+    background: rgb(20, 20, 20);
+    color: white;
+    font-size: 1.1rem;
+}
+
+.inputArea {
+    width: 100%;
+    height: 85%;
+    left: 0px;
+}
+
+.inputArea,
+.output {
+    position: absolute;
+}
+
+.output {
+    top: 120px;
+    margin-left: 30px;
+    width: 100px;
+    height: 100px;
+}
+
+.inputArea input,
+.output {
+    font-size: 2rem;
+    border: none;
+    outline: none;
+    transition: all .3s ease;
+}
+
+.inputArea input {
+    margin: 30px;
+    margin-top: 50px;
+    width: 100%;
+    background: transparent;
+    color: white;
+}
+button:focus {
+    background: rgb(72, 71, 71);
+}
+.activeNote {
+    opacity: 1;
+    bottom: 0;
+}
+.activeSide {
+    background: red;
+}
+
+.window .buttonArea {
+    position: relative;
+    width: 100%;
+    display: flex;
+    box-shadow: 0 5px 10px 1px rgb(79, 79, 79);
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background: rgb(20, 20, 20);
+    height: 4rem;
+
+    button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        width: 100%;
+        height: 100%;
+        transition: all .3s ease;
+        border: none;
+        font-family: monospace;
+        &:hover {
+           background: rgb(72, 71, 71);
+           font-size: 1.1rem;
+           box-shadow: 0 5px 10px 1px rgb(79, 79, 79);
+       
+       }
+    }
+    
+}
+
+.selectedValue {
+    width: 50px;
+    aspect-ratio: 1/1;
+    top: 8rem;
+    font-family: "monospace";
+    font-size: 1.5rem;
+    color: white;
+    display: grid;
+    place-content: center;
+    position: absolute;
+    right: 30px;
+}
+
+section .note {
+    width: fit-content;
+    height: fit-content;
+    bottom: 30px;
+    margin-left: 30px;
+    color: white;
+    font-size: 1.5rem;
+    position: absolute;
+    user-select: none;
+    pointer-events: none;
+}
+
+.rightSide {
+    position: relative;
+}
+
+.rightSide .changeButton {
+
+    border-radius: 10rem;
+    background: rgb(20, 20, 20);
+    width: 70px;
+    aspect-ratio: 1/1;
+    position: absolute;
+    left: 30px;
+    top: 52.5%;
+    cursor: pointer;
+    display: grid;
+    transition: all .3s ease;
+
+    &:hover {
+        background: rgb(72, 71, 71);
+    }
+}
+
+
+.active {
+    opacity: 1;
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    .note {
+        opacity: 1;
+    }
+}

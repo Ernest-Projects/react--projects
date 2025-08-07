@@ -1,0 +1,26 @@
+# Node modules
+node_modules/
+
+# Логи
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Кеш Vite
+.vite/
+
+# Вивід збірки
+dist/
+
+# Файли конфігурацій IDE (якщо є)
+.vscode/
+.idea/
+
+# Файли середовища (env)
+.env
+.env.local
+.env.*.local
+
+# Кеші та тимчасові файли
+*.log
+*.tmp
