@@ -30,7 +30,6 @@ const SecondCard = ({ name,content,componentStyle,index}: ISecondCard) => {
         <>
         <main  className= {`${styles.cardContainer} ${componentStyle ? styles[componentStyle] : ''}`}>
         <header style  ={{zIndex: "1000"}}>{name}</header>
-
             
              <Numeration >{formetterNumber}</Numeration>
             {content}
