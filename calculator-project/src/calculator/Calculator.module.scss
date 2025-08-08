@@ -1,0 +1,30 @@
+.container {
+  width: 30rem;
+  height: 50rem;
+  background: rgb(20,20,20);
+  border-radius: 1rem; 
+  max-height: 50rem;
+  overflow: hidden;
+  position: relative;
+  padding: 2rem;
+  box-sizing: border-box;
+  & * {
+    font-family: monospace;
+  }
+}
+@media (max-width: 1400px) {
+  .author {opacity: 0;}
+}
+
+.author {
+transition: all .2s ease;
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  color: white;
+  font-weight: 700; font-family: "monospace";
+  font-size: 2rem;
+} .trans {
+  
+} 
+.authorLight { color:black} .authorDark{color:white}

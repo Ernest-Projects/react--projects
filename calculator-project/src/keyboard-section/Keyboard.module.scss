@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined');
+
+.keyboard {
+    height: auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 10px;
+    height: fit-content;
+    & button {
+        font-family: monospace;
+        color: white;
+        border-radius: 10rem;
+        font-size: 2.2rem;
+        background: rgb(40, 40, 40);
+        aspect-ratio: 1/1;
+        display: grid;
+        place-content: center;
+        border: none; outline: none;
+        &:hover {
+            outline: none; border: none;
+        }
+        & span {
+            position: absolute;
+            place-self: center;
+            font-size: 3rem;
+            transform: rotateZ(45deg);
+        }
+    }
+    .divide, .multiple,.minus, .plus,.equal {
+        background: orange;
+    }
+    .clear, .plus_minus, .percent {
+        background: rgb(70, 70, 70);
+    }
+    .size {
+
+    }
+    .resizeWindow {
+        position: absolute;
+    }
+}
+
+.id0 {
+    background: black;
+}

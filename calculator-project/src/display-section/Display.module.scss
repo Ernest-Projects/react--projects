@@ -1,0 +1,15 @@
+
+
+
+.display {
+    height: 30%;
+    width: 100%;
+    position: relative;
+    & .output {
+        position: absolute;
+        height: fit-content;
+        font-size: 5rem;
+        bottom: -4rem; right: 0rem;
+        color: white;
+    }
+}
