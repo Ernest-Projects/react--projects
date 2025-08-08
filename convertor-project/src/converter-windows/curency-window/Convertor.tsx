@@ -43,6 +43,7 @@ export const Convertor: React.FC<ConvertorProps> = ({
   // function for swaping values places
   const swapValues = () => {
     setIsSwapping((prev) => !prev);
+    console.log(isSwapping);
   };
 
   useEffect(() => {
