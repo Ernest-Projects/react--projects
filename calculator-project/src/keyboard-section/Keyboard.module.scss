@@ -10,10 +10,9 @@
     height: fit-content;
     & button {
         font-family: monospace;
-        color: white;
         border-radius: 10rem;
         font-size: 2.2rem;
-        background: rgb(40, 40, 40);
+        transition: inherit;
         display: grid;
         place-content: center;
         border: none; outline: none;
@@ -27,23 +26,42 @@
             transform: rotateZ(45deg);
         }
     }
+    .darkButton {
+        background: rgb(40, 40, 40);
+        color: white
+        
+    } .lightButton {
+        background: rgb(200, 200, 200);
+        color: black
+    }
+ 
+    
     .tableButton {
         aspect-ratio: 1.65/1;
     }.mobileButton {
         aspect-ratio: 1/1;
-
+        
+    }
+    .size {
+        background: rgb(255, 118, 118);
     }
     .divide, .multiple,.minus, .plus,.equal {
         background: orange;
     }
-    .clear, .plus_minus, .percent {
-        background: rgb(70, 70, 70);
-    }
-    .size {
-        
-    }
     .resizeWindow {
         position: absolute;
+    }
+}
+.darkKeyboard {
+    .clear, .percent, .plus_minus {
+        
+        background: rgb(170, 170, 170);
+    }
+}
+.lightKeyboard {
+     .clear, .percent, .plus_minus {
+        
+        background: rgb(100, 100, 100);
     }
 
 }

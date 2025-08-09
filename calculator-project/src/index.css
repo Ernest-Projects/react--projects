@@ -2,7 +2,7 @@ body {
   width: 100vw;
   height: 100vh;
   margin: 0;
-  display: flex;background-color: #242424;
+  display: flex;
   justify-content: center;
   overflow: hidden;
   align-items: center;

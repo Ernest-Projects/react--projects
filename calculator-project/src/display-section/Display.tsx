@@ -5,10 +5,11 @@ import { useEffect, useState } from 'react';
 type DisplayProps = {
     pressAllow: boolean;
     pressKey: string;
-    pressId: number
+    pressId: number;
+    mode: boolean
 }
 
-export const Display = ({pressAllow, pressKey, pressId}: DisplayProps) => {
+export const Display = ({pressAllow, pressKey, pressId, mode}: DisplayProps) => {
     const [arrayValues, setArrayValues] = useState("");
     useEffect(()=> {
         if (arrayValues.length < 15) {
@@ -19,7 +20,7 @@ export const Display = ({pressAllow, pressKey, pressId}: DisplayProps) => {
     return (
         <>
         <section className={styles.display}>
-            <p className={styles.output}>{arrayValues}</p>
+            <p className={styles.output} style ={{color: mode == true ? "black" : "white"}}>{arrayValues}</p>
         </section>
         </>)
 }

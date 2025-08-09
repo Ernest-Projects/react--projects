@@ -4,14 +4,14 @@
 .display {
     height: 30%;
     width: 100%;
+    transition: all .3s ease;
     position: relative;
     & .output {
+        transition: inherit;
         position: absolute;
         height: fit-content;
         font-size: 5rem;
         bottom: -4rem; right: 0rem;
-        color: white;
         text-overflow: ellipsis;
-        overflow: hidden;
     }
 }

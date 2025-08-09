@@ -5,10 +5,11 @@ type AuthorClass = {
 }
 type AuthorProps =  {
     authorStyles: AuthorClass;
-    isResized: boolean
+    isResized: boolean;
+    mode: boolean
 }
-export const Author = ({authorStyles, isResized}: AuthorProps) => {
+export const Author = ({authorStyles, isResized, mode}: AuthorProps) => {
     return (<>
-      <p className={`${authorStyles.authorClass } ${isResized == true ? authorStyles.authorTable : authorStyles.authorMobile}`}>Calculator by Ernest</p>
+      <p style = {{color: mode == true ? "black" : "white"}} className={`${authorStyles.authorClass } ${isResized == true ? authorStyles.authorTable : authorStyles.authorMobile}`}>Calculator by Ernest</p>
     </>)
 }
