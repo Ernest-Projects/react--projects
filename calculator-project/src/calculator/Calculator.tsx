@@ -117,7 +117,7 @@ export const Calculator = () => {
         }}
         isResized = {isResized}
         />
-        <DarkLight bodyWidth = {width} mode = {isMode}
+        <DarkLight widthNumber = {850} bodyWidth = {width}  mode = {isMode}
         onSwichTheme={handleSwichMode}
         name = {isMode == false ? "dark" : "light"}/>
         <div style = {{background: isMode == true ? "rgb(250, 250, 250)" : "rgb(35, 35, 35)"}} className={`${styles.background}`}></div>
