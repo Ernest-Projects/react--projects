@@ -13,13 +13,6 @@
     font-family: monospace;
   }
 }
-.keyboard button {
- background: red;
- color: white;
-}
-.display {
-  background: red;
-}
 .tableResize {
   @media (min-width: 880px) {
     width: 50rem;
