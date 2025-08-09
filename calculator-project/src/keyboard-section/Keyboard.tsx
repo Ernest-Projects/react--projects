@@ -1,24 +1,25 @@
 
-import {useState} from 'react'
+import {forwardRef} from 'react'
 import styles from "./Keyboard.module.scss"
-import { KeyData } from "./keyboardData"
 
+type keyboardLayotProps = {
+    abbr: string;
+    output: boolean
+}
 type KeyboardProps = {
     onKeyPress: (value: string, allow: boolean) => void;
+    isResized: boolean;
+    keyboardLayot: Record<string,keyboardLayotProps>;
+    bodyWidth: number;
 }
-export const Keyboard = ({onKeyPress}: KeyboardProps ) => {
-    const keys = Object.entries(KeyData);
-    const [isResized, setIsResized] = useState(false);
-    // const keyFunction = (value: string, sucess: boolean) => {
-    //     onSelectKey(value);
-    //     onAllowed(sucess);
-    // }
+export const Keyboard = forwardRef<HTMLElement, KeyboardProps>(({onKeyPress, isResized, keyboardLayot, bodyWidth  }, ref) => {
+    const keys = Object.entries(keyboardLayot);
+  
     return (<>
-    
-    <section className = {styles.keyboard}>
+    <section ref = {ref} className = {`${styles.keyboard} ${isResized == true && bodyWidth >= 880 ? styles.tableKeyboard : styles.mobileKeyboard}`}>
         {keys.map(([key, value]) => {
-        return <><button key = {key} onClick = {() => onKeyPress(value.abbr, (value.output == true ? true : false))} className={styles[key]}>{value.abbr == "calc" ? (<span className="material-symbols-outlined">pinch_zoom_out</span>) : (value.abbr)}</button></>
+        return <><button key = {key} onClick = {() => onKeyPress(value.abbr, (value.output == true ? true : false))} className={`${styles[key]} ${isResized == true && bodyWidth >= 880 ? styles.tableButton : styles.mobileButton}`}>{value.abbr == "calc" ? (<span className="material-symbols-outlined">pinch_zoom_out</span>) : (value.abbr)}</button></>
 })}
     </section>
     </>)
-}
+})

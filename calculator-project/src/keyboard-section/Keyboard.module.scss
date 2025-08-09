@@ -4,9 +4,9 @@
     height: auto;
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+    transition: all .2s ease;
     gap: 10px;
+    z-index: 10;
     height: fit-content;
     & button {
         font-family: monospace;
@@ -14,7 +14,6 @@
         border-radius: 10rem;
         font-size: 2.2rem;
         background: rgb(40, 40, 40);
-        aspect-ratio: 1/1;
         display: grid;
         place-content: center;
         border: none; outline: none;
@@ -28,6 +27,12 @@
             transform: rotateZ(45deg);
         }
     }
+    .tableButton {
+        aspect-ratio: 1.65/1;
+    }.mobileButton {
+        aspect-ratio: 1/1;
+
+    }
     .divide, .multiple,.minus, .plus,.equal {
         background: orange;
     }
@@ -35,12 +40,21 @@
         background: rgb(70, 70, 70);
     }
     .size {
-
+        
     }
     .resizeWindow {
         position: absolute;
     }
+
 }
+.tableKeyboard {
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+}
+    .mobileKeyboard{ 
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+    }
 
 .id0 {
     background: black;

@@ -11,5 +11,7 @@
         font-size: 5rem;
         bottom: -4rem; right: 0rem;
         color: white;
+        text-overflow: ellipsis;
+        overflow: hidden;
     }
 }

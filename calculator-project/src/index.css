@@ -4,5 +4,6 @@ body {
   margin: 0;
   display: flex;background-color: #242424;
   justify-content: center;
+  overflow: hidden;
   align-items: center;
 }
