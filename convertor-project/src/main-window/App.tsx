@@ -11,6 +11,9 @@ function App() {
   const [selectConverter, setSelectConverter] = useState("weight");
   const [isMode, setIsMode] = useState(false);
 
+  const [width, setWidth] = useState(document.body.offsetWidth);
+
+
   const handleSwich = () => {
     setIsMode((prev) => !prev);
   };
@@ -29,7 +32,14 @@ function App() {
       }
     }
     window.addEventListener("keydown", handleSwichCombination);
-    return () => {window.removeEventListener("keydown", handleSwichCombination)}
+    
+    const handleBodyWidth = () =>  {
+      setWidth(document.body.offsetWidth);
+    }
+    window.addEventListener("resize", handleBodyWidth);
+    return () => {
+      window.removeEventListener("keydown", handleBodyWidth);
+      window.removeEventListener("keydown", handleSwichCombination)}
   }, [])
 
   return (
@@ -57,7 +67,9 @@ function App() {
           );
         })}
       </main>
-      <DarkLight
+      <DarkLight 
+        bodyWidth = {width}
+        widthNumber = {1150}
         mode={isMode}
         onSwichTheme={handleSwich}
         name={isMode == false ? "dark" : "light"}
