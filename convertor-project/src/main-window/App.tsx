@@ -1,9 +1,10 @@
 import Header from "../header/Header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./App.module.scss";
 import Convertor from "../converter-windows/curency-window/Convertor";
 import { base } from "../data/window-data";
-import DarkLight from "../dark-light-theme-swich/DarkLight";
+// dark/light package!
+import { DarkLight } from "project-additions";
 
 function App() {
   // initializing default converter
@@ -18,6 +19,18 @@ function App() {
       setSelectConverter(name);
     }, 100);
   };
+
+// hook for keyboard combination to swiching dark/light theme
+  useEffect(()=> {
+    const handleSwichCombination = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.shiftKey && (event.key == "q" || event.key == "q".toUpperCase())) {
+        setIsMode(prev => !prev)
+        event.preventDefault();
+      }
+    }
+    window.addEventListener("keydown", handleSwichCombination);
+    return () => {window.removeEventListener("keydown", handleSwichCombination)}
+  }, [])
 
   return (
     <>
@@ -46,7 +59,7 @@ function App() {
       </main>
       <DarkLight
         mode={isMode}
-        onSwich={handleSwich}
+        onSwichTheme={handleSwich}
         name={isMode == false ? "dark" : "light"}
       />
       <p
