@@ -9,11 +9,11 @@ export const KeyDataMobile = {
   },
   percent: {
     abbr: "%",
-    output: false,
+    output: true,
   },
   divide: {
     abbr: "/",
-    output: false,
+    output: true,
   },
   id7: {
     abbr: "7",
@@ -28,8 +28,8 @@ export const KeyDataMobile = {
     output: true,
   },
   multiple: {
-    abbr: "x",
-    output: false,
+    abbr: "*",
+    output: true,
   },
   id4: {
     abbr: "4",
@@ -45,7 +45,7 @@ export const KeyDataMobile = {
   },
   minus: {
     abbr: "-",
-    output: false,
+    output: true,
   },
   id1: {
     abbr: "1",
@@ -61,7 +61,7 @@ export const KeyDataMobile = {
   },
   plus: {
     abbr: "+",
-    output: false,
+    output: true,
   },
   size: {
     abbr: "calc",
@@ -101,7 +101,7 @@ export const KeyDataTable = {
   },
   divide: {
     abbr: "/",
-    output: false,
+    output: true,
   },
   id4: {
     abbr: "4",
@@ -120,8 +120,8 @@ export const KeyDataTable = {
     output: false,
   },
   multiple: {
-    abbr: "x",
-    output: false,
+    abbr: "*",
+    output: true,
   },
   id1: {
     abbr: "1",
@@ -137,11 +137,11 @@ export const KeyDataTable = {
   },
   percent: {
     abbr: "%",
-    output: false,
+    output: true,
   },
   minus: {
     abbr: "-",
-    output: false,
+    output: true,
   },
   size: {
     abbr: "calc",
@@ -161,6 +161,6 @@ export const KeyDataTable = {
   },
   plus: {
     abbr: "+",
-    output: false,
+    output: true,
   },
 };

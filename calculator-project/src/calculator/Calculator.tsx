@@ -4,8 +4,10 @@ import { Display } from "../display-section/Display";
 import { Keyboard } from "../keyboard-section/Keyboard";
 import { Author } from "./Author";
 import { KeyDataMobile, KeyDataTable } from "../keyboard-section/keyboardData";
+
 // dark/light package!
 import {DarkLight} from 'project-additions'
+
 export const Calculator = () => {
   const [pressCount, setPressCount] = useState(0);
   const [isResized, setIsResized] = useState(false);
@@ -44,9 +46,12 @@ export const Calculator = () => {
   };
 
   useEffect(() => {
+    let isAnimation = false;
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.ctrlKey && event.key == "r") {
         event.preventDefault();
+        if (isAnimation) return
+        isAnimation =true;
         const keyboardStyles = keyboardRef.current;
         if (!keyboardStyles) return;
         keyboardStyles.style.opacity = "0";
@@ -54,6 +59,7 @@ export const Calculator = () => {
           setIsResized((prev) => !prev);
           setTimeout(() => {
             keyboardStyles.style.opacity = "1";
+            isAnimation = false
           }, 400);
         }, 200);
         console.log(`Combination: ${event.ctrlKey} + ${event.key}`);
@@ -120,6 +126,7 @@ export const Calculator = () => {
         <DarkLight widthNumber = {850} bodyWidth = {width}  mode = {isMode}
         onSwichTheme={handleSwichMode}
         name = {isMode == false ? "dark" : "light"}/>
+        
         <div style = {{background: isMode == true ? "rgb(250, 250, 250)" : "rgb(35, 35, 35)"}} className={`${styles.background}`}></div>
     </>
   );
