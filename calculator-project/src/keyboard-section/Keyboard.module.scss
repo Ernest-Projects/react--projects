@@ -6,6 +6,7 @@
     display: grid;
     transition: all .2s ease;
     gap: 10px;
+    user-select: none;
     z-index: 10;
     height: fit-content;
     & button {
@@ -14,10 +15,12 @@
         font-size: 2.2rem;
         transition: inherit;
         display: grid;
+        transition: all .3s ease;
         place-content: center;
         border: none; outline: none;
         &:hover {
             outline: none; border: none;
+            box-shadow: inset 0 10px 30px 1px gray;
         }
         & span {
             position: absolute;
