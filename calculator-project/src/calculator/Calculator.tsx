@@ -2,11 +2,10 @@ import { useEffect, useState, useRef } from "react";
 import styles from "./Calculator.module.scss";
 import { Display } from "../display-section/Display";
 import { Keyboard } from "../keyboard-section/Keyboard";
-import { Author } from "./Author";
 import { KeyDataMobile, KeyDataTable } from "../keyboard-section/keyboardData";
 
 // dark/light package!
-import {DarkLight} from 'project-additions'
+import {DarkLight, Author} from 'project-additions'
 
 export const Calculator = () => {
   const [pressCount, setPressCount] = useState(0);
@@ -113,9 +112,10 @@ export const Calculator = () => {
           isResized={isResized}
           onKeyPress={handlePressing}
           bodyWidth={width}
+          
         />
       </main>
-      <Author mode = {isMode}
+      <Author nameAuthor="Calculator by Ernest" mode = {isMode}
         authorStyles={{
           authorClass: styles.author,
           authorMobile: styles.authorMobile,
