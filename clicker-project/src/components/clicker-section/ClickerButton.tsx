@@ -11,8 +11,6 @@ export const ClickerButton = ({onCountClicker}: ClickerButtonProps) => {
 
     // for quantity of clicks in navbar
     onCountClicker(num);
-
-
   }
   return (
     <>
