@@ -23,21 +23,6 @@
   height: 45rem;
 
 }
-
-
-.author {
-transition: all .2s ease;
-  position: absolute;
-  bottom: 0;
-  transition: all .3s ease;
-  user-select: none;
-  left: 20px;
-  color: white;
-  font-weight: 700; font-family: "monospace";
-  font-size: 2rem;
-} .authorTable {
-  
-} 
 @media (max-width: 1300px) {
 .authorMobile {opacity: 0;}
 }

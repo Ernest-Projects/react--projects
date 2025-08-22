@@ -115,14 +115,10 @@ export const Calculator = () => {
           
         />
       </main>
-      <Author nameAuthor="Calculator by Ernest" mode = {isMode}
-        authorStyles={{
-          authorClass: styles.author,
-          authorMobile: styles.authorMobile,
-          authorTable: styles.authorTable,
-        }}
-        isResized = {isResized}
-        />
+      {/* <div className= {isResized == true ? styles.authorMobile : styles.authorTable}> */}
+      {/* <Author nameAuthor= "Calculator by Ernest" mode = {isMode}></Author> */}
+
+      {/* </div> */}
         <DarkLight widthNumber = {850} bodyWidth = {width}  mode = {isMode}
         onSwichTheme={handleSwichMode}
         name = {isMode == false ? "dark" : "light"}/>
