@@ -5,18 +5,45 @@ import { MoneyNavbar } from "./clicker-section/MoneyNavbar";
 import { ShopButton } from "./clicker-section/ShopButton";
 import { ShopSection } from "./clicker-section/ShopSection";
 
+import { useLocalStorage } from "./hooks/useLocalStorage";
 import {DarkLight, Author} from 'project-additions'
+import { upgradeDataObject } from "../gameData";
+// import { upgradeDataObject } from "../gameData";
 
+type Upgrader = {
+  [key: string]: number
+}
 
 function Clicker() {
-  const [countClicker, setCountClicker] = useState(0);
-
-  const [isWindowVisible, setIsWindowVisible] = useState(false);
-  const [isMode, setIsMode] = useState(false);
+  const [countClicker, setCountClicker] = useLocalStorage("countClicker", 0);
+  const [isWindowVisible, setIsWindowVisible] = useLocalStorage("isWindowVisible", false);
+  const [isMode, setIsMode] = useLocalStorage("isMode", false);
 
   const [bodyWidth, setBodyWidth] = useState(document.body.offsetWidth);
 
+  const [clickerMoney, setClickerMoney] = useLocalStorage("clickerMoney",0)
 
+  // levels
+  const [upgradeLevels, setUpgradeLevels] =  useState<Upgrader>(() =>{
+  const initial: Upgrader = {}
+  Object.values(upgradeDataObject).forEach(u => {
+    initial[u.name] = 1
+  })
+
+  return initial
+})
+
+
+// price
+  const [upgradePrices, setUpgradePrices] =  useState<Upgrader>(() =>{
+  const initial: Upgrader = {}
+  Object.values(upgradeDataObject).forEach(u => {
+    initial[u.name] = 1
+  })
+
+  return initial
+})
+   
   useEffect(()=> {
       const offsetBodyWidth = () => {
         setBodyWidth(document.body.offsetWidth);
@@ -37,39 +64,37 @@ function Clicker() {
       
   }, [])
 
-  const handleSwichMode = () => {
-    setIsMode(prev => !prev)
-  }
 
   const handleClick = () => {
     setCountClicker((prev) => ++prev);
+    setClickerMoney(prev => prev + 1)
   };
 
   const handleShopVision = () => {
     setIsWindowVisible((prev) => !prev);
   };
 
+
   return (
     <>
       <main
         className={`${styles.container} ${isMode == true ? "bg-[rgb(210,210,210)]" : "bg-[rgb(35,35,35)]"} duration-200 transition relative w-[100vw] h-[100vh] flex align-center content-center`}>
-        <section className={`${styles.ShopSection} ${isWindowVisible == true ? "w-[50%]" : "w-[0%]"} transition-[width] duration-200  h-[100%] border`}>
-          <ShopSection mode = {isMode} isVisible={isWindowVisible}></ShopSection>
+        <section className={`${styles.ShopSection} ${isWindowVisible == true ? "w-[50%]" : "w-[0%]"} transition-[width] duration-200  h-[100%] `}>
+          <ShopSection mode = {isMode} increaseLevels = {upgradeLevels} onIncreaseLevels = {setUpgradeLevels} isVisible={isWindowVisible}></ShopSection>
         </section>
 
-        <section
-        className={`${styles.LogoSection} transition-[width] duration-200 ${isWindowVisible == true ? "w-[50%]" : "w-[100%]"} grid content-center h-[100%] border`}>
+        <section style = {{perspective: "800px"}}
+        className={`${styles.LogoSection} [transform-style:preserve-3d] perspective-500  transition-[width] duration-200 ${isWindowVisible == true ? "w-[50%]" : "w-[100%]"} grid content-center relative h-[100%] `}>
        
-          <MoneyNavbar clickerCount={countClicker}></MoneyNavbar>
+          <MoneyNavbar moneyBalance = {clickerMoney} clickerCount={countClicker}></MoneyNavbar>
           <ClickerButton mode = {isMode} onCountClicker={handleClick}></ClickerButton>
-          <ShopButton onSetVisible={handleShopVision}></ShopButton>
+          <ShopButton mode = {isMode} onSetVisible={handleShopVision}></ShopButton>
         
         </section>
       </main>
 
       {/*connecting packages */}
-      <DarkLight onSwichTheme={handleSwichMode} bodyWidth={bodyWidth} widthNumber = {1000}  mode = {isMode} name = {isMode == true ? 'light' : 'dark'} ></DarkLight>
-    <Author mode = {isMode} nameAuthor="Clicker game by Ernest"></Author>
+      <DarkLight onSwichTheme={()=> setIsMode(prev => !prev)} bodyWidth={bodyWidth} widthNumber = {1000}  mode = {isMode} name = {isMode == true ? 'light' : 'dark'} ></DarkLight>
     </>
   );
 }
