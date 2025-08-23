@@ -5,11 +5,14 @@ type UpgreClickerProps = {
     image: string;
     width: number;
 
+    // for levels
     level: number;
     increaseLevel: () => void;
     
+    // for prices
     price: number;
     increasePrice: () => void;
+    
     money: number
 } 
 

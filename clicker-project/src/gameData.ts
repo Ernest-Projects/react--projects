@@ -11,7 +11,6 @@ export const upgradeDataObject = {
     second:  {
         name: "autoclickerLVL",
         id: 1,
-        // multiplier coefficiet for increase upgrade price
         coefficient: 5,
         image: "../public/autoclicker-icon.png",
         header: "autoclicker",

@@ -4,10 +4,10 @@ import { ClickerButton } from "./clicker-section/ClickerButton";
 import { MoneyNavbar } from "./clicker-section/MoneyNavbar";
 import { ShopButton } from "./clicker-section/ShopButton";
 import { ShopSection } from "./clicker-section/ShopSection";
+import { upgradeDataObject } from "../gameData";
 
 import { useLocalStorage } from "./hooks/useLocalStorage";
 import { DarkLight, Author } from "project-additions";
-import { upgradeDataObject } from "../gameData";
 // import { upgradeDataObject } from "../gameData";
 
 type Upgrader = {
@@ -15,14 +15,18 @@ type Upgrader = {
 };
 
 function Clicker() {
+
+  // useLocalStorage hook!
   const [countClicker, setCountClicker] = useLocalStorage("countClicker", 0);
   const [isWindowVisible, setIsWindowVisible] = useLocalStorage(
     "isWindowVisible",
     false
   );
+
   const [isMode, setIsMode] = useLocalStorage("isMode", false);
   const [bodyWidth, setBodyWidth] = useState(document.body.offsetWidth);
 
+  // a variable that specifies the width at which the store closes
   const clottingWidth = 1280;
 
   const [clickerMoney, setClickerMoney] = useLocalStorage("clickerMoney", 0);
@@ -76,6 +80,7 @@ function Clicker() {
     };
   }, []);
 
+  // increase coef for upgrade price
   useEffect(() => {
     if (profitLevel !== undefined && prevProfitRef.current < profitLevel) {
       setCoefMultiplier((prev) => Number((prev + 0.1).toFixed(1)));
@@ -107,10 +112,15 @@ function Clicker() {
             mode={isMode}
             moneyBalance={clickerMoney}
             bodyWidth={bodyWidth}
+            
+            // for levels
             increaseLevels={upgradeLevels}
             onIncreaseLevels={setUpgradeLevels}
+            
+            // for prices
             upgradePrices={upgradePrices}
             onUpgradePrices={setUpgradePrices}
+
             isVisible={bodyWidth > clottingWidth ? isWindowVisible : false}
           ></ShopSection>
         </section>
