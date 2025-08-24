@@ -1,0 +1,6 @@
+
+
+
+@keyframes rotate-background {
+    100% {transform: rotate(360deg)}
+}.rotateBackground {transform-origin: center; animation: rotate-background 100s linear infinite}
