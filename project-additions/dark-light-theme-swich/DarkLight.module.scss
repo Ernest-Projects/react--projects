@@ -9,6 +9,7 @@ $light-theme-circle: rgb(240, 240, 240);
     height: 3rem;
     user-select: none;
     top: 1rem;
+    z-index: 1;
     right: 1rem;
 
     & *, & {
