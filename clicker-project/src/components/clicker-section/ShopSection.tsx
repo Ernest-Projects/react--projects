@@ -1,23 +1,19 @@
 import { UpgradeClicker } from "../UpgradeClicker";
 import { upgradeDataObject } from "../../gameData";
 
-// type upgradeDataObjectProps = {
-//     name: string;
-//     description: string;
-//     id: number;
-//     header: string
-// }
 
+// types!
 type Upgrader = {
   [key: string]: number;
 };
 
+// more types!
 type ShopSectionProps = {
   isVisible: boolean;
   mode: boolean;
   bodyWidth: number;
   moneyBalance: number;
-
+  decreaseMoney: (key: number) => void
 
   upgradePrices: Upgrader;
   onUpgradePrices: React.Dispatch<React.SetStateAction<Upgrader>>;
@@ -33,6 +29,8 @@ export const ShopSection = ({
   bodyWidth,
   moneyBalance,
   onUpgradePrices, upgradePrices, 
+decreaseMoney
+
 }: ShopSectionProps) => {
   return (
     <>
@@ -68,6 +66,7 @@ export const ShopSection = ({
                     [upgrader.name]: prev[upgrader.name] + 1,
                   }))
                 }
+                decreaseMoney = {(price) => decreaseMoney(price)}
                 key={upgrader.id}
                 name={upgrader.header}
                 description={upgrader.description}
