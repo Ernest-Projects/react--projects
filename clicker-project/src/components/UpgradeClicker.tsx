@@ -25,9 +25,9 @@ export const UpgradeClicker = ({mode,name, description, image, level, increaseLe
         decreaseMoney(price)
     }
     return(<>
-        <section className={`w-full z-[10] relative flex duration-200 h-full ${mode === true ? "bg-[rgb(220,220,220)]" : "bg-[rgb(45,45,45)]"}  hover:scale-[1.05] transition rounded-[1rem]`}>
+        <section className={`w-full z-[10] relative flex duration-200 h-full ${mode === true ? "bg-[rgb(230,230,230)]" : "bg-[rgb(45,45,45)]"}  hover:scale-[1.05] transition rounded-[1rem]`}>
             <div className={`h-[80%] left-[1.5rem] place-self-center  aspect-[1/1] absolute overflow-hidden rounded-[10rem]  `}>
-            <img style = {{objectFit: "cover", }} className={`h-full w-full`} src={image} alt="ой перебач шось пішло мало не так!" />
+            <img style = {{objectFit: "cover", }} className={`${mode === true ? "invert": ""} h-full w-full`} src={image} alt="ой перебач шось пішло мало не так!" />
 
             </div>
             <div className=" absolute gap-[1rem] h-full flex justify-center flex-col left-[10rem] w-[70%]">

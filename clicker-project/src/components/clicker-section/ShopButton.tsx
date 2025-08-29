@@ -23,17 +23,17 @@ export const ShopButton = ({ onSetVisible, mode, width }: ShopButtonProps) => {
   return (
     <>
       <section
-        className={`overflow-hidden absolute z-[10] bottom-20 w-[20rem] h-[5rem] place-self-center`}
+        className={`overflow-hidden absolute z-[10] rounded-[1rem] bottom-20 w-[20rem] h-[5rem] place-self-center`}
       >
         <button
           onClick={() => onSetVisible()}
           className={`${
-            width < 1280 ? "active:bg-red-500" : ""
+            width < 1280 ? "active:bg-red-500 active:rounded-[1rem] overflow-hidden" : ""
           } text-3xl font-mono ${
             mode === true
               ? "bg-[rgb(240,240,240)] hover:shadow-[inset_0_-10px_40px_1px_rgb(180,180,180)] text-black"
               : "bg-[rgb(20,20,20)] hover:shadow-[inset_0_-10px_40px_1px_rgb(50,50,50)] text-white"
-          } duration-100 w-full h-full  active rounded-[1rem] absolute`}
+          } duration-100 w-full h-full  absolute`}
         >
           <span className="font-mono">Open shop 💎</span>
         </button>

@@ -12,7 +12,6 @@ export const ClickerButton = ({ onCountClicker, mode, coefficient, autoclickTimi
     // for quantity of clicks in navbar
     onCountClicker(num);
   };
-  const intervalTime = Math.max(autoclickTiming * 1000, 50);
 
   const [animate, setAnimate] = useState(false);
 
@@ -22,14 +21,14 @@ export const ClickerButton = ({ onCountClicker, mode, coefficient, autoclickTimi
     }, (autoclickTiming * 1000) / 2)
     return () => { clearInterval(intervalAutoclick)
     }
-  },[intervalTime])
+  },[autoclickTiming])
 
   return (
     <>
       <section
         style={{ transformStyle: "preserve-3d" }}
         onClick={() => handleClick(1)}
-        className={`hover:rotate-y-[-20deg] transform-style-preserve-3d w-[20rem] ${
+        className={` transform-style-preserve-3d w-[20rem] ${
           mode == true
             ? "active:shadow-[15px_25px_50px_1px_black] text-white shadow-[20px_30px_70px_1px_black] bg-[rgb(20,20,20)]"
             : "active:shadow-[15px_25px_50px_1px_gray] text-black shadow-[20px_30px_70px_1px_gray] bg-[rgb(185,185,185)]"
@@ -51,7 +50,7 @@ export const ClickerButton = ({ onCountClicker, mode, coefficient, autoclickTimi
             +{Number(coefficient)}$
           </p>
              <p
-            className={`${mode === true ? "text-black" : "text-white"} ${animate == true ? "opacity-0 top-[-10rem]" : "opacity-100"} text-lg place-self-center ease-out z-[-2] left-[-5%] top-[-5rem]  duration-300  absolute z-[-1] `}
+            className={`${mode === true ? "text-black" : "text-white"} ${animate == true ? "opacity-0 top-[-10rem]" : "opacity-100"} text-lg place-self-center pointer-events-none ease-out z-[-2] left-[-5%] top-[-5rem]  duration-300  absolute z-[-1] `}
           >
             +{Number(coefficient)}$
           </p>

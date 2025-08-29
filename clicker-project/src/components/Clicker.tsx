@@ -14,7 +14,6 @@ type Upgrader = {
   [key: string]: number;
 };
 
-
 function Clicker() {
   // useLocalStorage hook!
   const [countClicker, setCountClicker] = useLocalStorage("countClicker", 0);
@@ -22,35 +21,42 @@ function Clicker() {
     "isWindowVisible",
     false
   );
-  
+
   const [isMode, setIsMode] = useLocalStorage("isMode", false);
   // for dynamic backgroud
-  const elements = [];
-  for (let i = 0; i < 600; i++) {
-    elements.push(<div className={`h-fit z-[-1] duration-200 ${isMode == true ? "": "filter invert"} aspect-[1/1] m-0 p-2 w-[4rem] rotate-[-45deg]`} key={i}><img className="z-[-1]" src="../../public/306186.svg" alt="" /></div>);
-  } 
+
   const [bodyWidth, setBodyWidth] = useState(document.body.offsetWidth);
-  
+
   // a variable that specifies the width at which the store closes
   const clottingWidth = 1280;
-  
+
   const [clickerMoney, setClickerMoney] = useLocalStorage("clickerMoney", 0);
-  
+
   // levels
   const [upgradeLevels, setUpgradeLevels] = useState<Upgrader>(() => {
+    const savedLevels = localStorage.getItem("upgradeLevels");
+    if (savedLevels) {
+      return JSON.parse(savedLevels) as Upgrader;
+    }
     const initial: Upgrader = {};
     Object.values(upgradeDataObject).forEach((u) => {
       initial[u.name] = 1;
     });
-    
+
     return initial;
   });
-  
+
   const profitLevel = upgradeLevels["profitableLVL"];
-  const autoclickLevel = upgradeLevels["autoclickerLVL"]
-  
+  const autoclickLevel = upgradeLevels["autoclickerLVL"];
+  const doubleLevel = upgradeLevels["doubleClickLVL"];
+
   // price (what the hell is going on right here)
   const [upgradePrices, setUpgradePrices] = useState<Upgrader>(() => {
+    const savedPrice = localStorage.getItem("upgradePrices");
+    if (savedPrice) {
+      return JSON.parse(savedPrice) as Upgrader;
+    }
+
     const initial: Upgrader = {};
     Object.values(upgradeDataObject).forEach((u) => {
       initial[u.name] = 100;
@@ -58,17 +64,33 @@ function Clicker() {
     return initial;
   });
 
-  // multiplier profit coefficient for third upgrader
-  const [coefMultiplier, setCoefMultiplier] = useState(1);
-  
-  // time for each autoclick (highter level - less time (highter frequency of clicking))
-  const [timeEachClick, setTimeEachClick] = useState(2)
+  // DOUBLE CLICK UPGRADER
+  // the number to be compared to the range of random numbers
+  const [doubleClickChance, setDoubleClickChance] = useLocalStorage(
+    "doubleClickChance",
+    0
+  );
+  const [countdown, setCountdown] = useState(0)
+  const [doubleClickBanner, setDoubleClickBanner] = useState(false);
+  const prevDoubleRef = useRef(doubleClickChance);
 
-  const prevProfitRef = useRef(profitLevel);
+  // uState that generate random namba
+  const [randomNumber, setRandomNumber] = useLocalStorage("randomNumber", 0);
+
+  // AUTOCLICKER UPGRADER
+  // time for each autoclick (highter level - less time (highter frequency of clicking))
+  const [timeEachClick, setTimeEachClick] = useLocalStorage("timeEachClick", 2);
   const prevAutoclickerLevel = useRef(autoclickLevel);
 
+  // PROFIT CLICK UPGRADER
+  // multiplier profit coefficient for third upgrader
+  const [coefMultiplier, setCoefMultiplier] = useLocalStorage(
+    "coefMultiplier",
+    1
+  );
+  const prevProfitRef = useRef(profitLevel);
+ 
   // -----------------------------------------------------------------------------
-
 
   // dynamically getting body width
   useEffect(() => {
@@ -92,8 +114,17 @@ function Clicker() {
       window.removeEventListener("resize", offsetBodyWidth);
     };
   }, []);
-  
-  
+
+  // localStorage for price and levels
+  useEffect(() => {
+    localStorage.setItem("upgradePrices", JSON.stringify(upgradePrices));
+  }, [upgradePrices]);
+
+  useEffect(() => {
+    localStorage.setItem("upgradeLevels", JSON.stringify(upgradeLevels));
+  }, [upgradeLevels]);
+
+  // UPGRADERS
   // increase coef for upgrade price
   // this uEffect for profit click upgrader
   useEffect(() => {
@@ -102,50 +133,128 @@ function Clicker() {
     }
     prevProfitRef.current = profitLevel;
   }, [profitLevel]);
-  
-  // uEffects for autoclicker 
+
+  // uEffects for autoclicker
   useEffect(() => {
-    if (autoclickLevel !== undefined && prevAutoclickerLevel.current < autoclickLevel) {
-      setTimeEachClick((prev) => Number((prev - 0.1).toFixed(1)))
+    if (
+      autoclickLevel !== undefined &&
+      prevAutoclickerLevel.current < autoclickLevel
+    ) {
+      setTimeEachClick((prev) => Number((prev - 0.1).toFixed(1)));
     }
-  },[autoclickLevel])
-  useEffect(()=> {
+  }, [autoclickLevel]);
+
+  useEffect(() => {
     const interval = setInterval(() => {
-      setClickerMoney((prev) => prev + coefMultiplier)
-    }, (timeEachClick * 1000))
-    return () => clearInterval(interval)
-  }, [coefMultiplier])
+      setClickerMoney((prev) => prev + coefMultiplier);
+    }, timeEachClick * 1000);
+    return () => clearInterval(interval);
+  }, [coefMultiplier]);
 
+  //uEffect for first upgrader: double click time
+  useEffect(() => {
+    if (doubleLevel !== undefined && prevDoubleRef.current < doubleLevel) {
+      setDoubleClickChance((prev) => Number(prev + 5));
+      console.log("number that depends on the level: ", doubleClickChance);
+    }
+    prevDoubleRef.current = profitLevel;
+  }, [doubleLevel]);
+  useEffect(() =>{
+    if (randomNumber < doubleClickChance && doubleLevel > 1){ 
+      console.log("truuu");
+      setDoubleClickBanner(true);
+      setCountdown(10)
+    }
 
-  //function for money navbar 
+  }, [randomNumber, doubleClickChance])
+
+  useEffect(() => {
+    if (!doubleClickBanner) return
+    const inter = setInterval(()=> {
+    setCountdown((prev) => {
+      if (prev <= 1) {
+        clearInterval(inter);
+        setDoubleClickBanner(false)
+        return 0
+
+      }
+      return prev - 1;
+    })
+    }, 1000)
+  }, [doubleClickBanner])
+
+  useEffect(() => {
+    if (!doubleClickBanner) return
+
+    const timer = setTimeout(() => {
+     setDoubleClickBanner(false);
+     console.log("fallla")
+     console.log("random namba:", randomNumber)
+   }, 10000);
+    
+      return () => clearTimeout(timer);
+    
+    // console.log(doubleClickChance);
+    // console.log(doubleClickBanner);
+  }, [randomNumber, doubleClickChance]);
+ 
+  // FUNCIONS
+  //function for money navbar
+
   const handleClick = () => {
     setCountClicker((prev) => ++prev);
     setClickerMoney((prev) => Number((prev + coefMultiplier).toFixed(2)));
+    if (!doubleClickBanner) {
+      setRandomNumber(Number(getRandom().toFixed(0)));
+    }
+  };
+
+  // func for random number in double click upgrader genius logic
+  const getRandom = () => {
+    return Math.random() * (1000 - 1) + 1;
   };
 
   // Complete reseting clicker game
   const handleResetClicker = () => {
+    console.log("RESEET GAME! (fuck you)");
     setClickerMoney(0);
+    setUpgradeLevels(() => {
+      const reset: Upgrader = {};
+      Object.values(upgradeDataObject).forEach((u) => {
+        reset[u.name] = 1;
+      });
+      return reset;
+    });
+    setUpgradePrices(() => {
+      const reset: Upgrader = {};
+      Object.values(upgradeDataObject).forEach((u) => {
+        reset[u.name] = 100;
+      });
+      return reset;
+    });
     setCountClicker(0);
     setCoefMultiplier(1);
+    setDoubleClickChance(0);
   };
 
   return (
     <>
-    
-
       <main
         className={`${styles.container} ${
-          isMode == true ? "bg-[rgb(210,210,210)]" : "bg-[rgb(35,35,35)]"
-        } duration-200 transition z-[1] relative w-[100vw] h-[100vh] flex align-center content-center`}
+          isMode == true ? "bg-[#d2d2d2]" : "bg-[rgb(35,35,35)]"
+        } duration-200 transition z-[1]  relative w-[100vw] h-[100vh]  flex align-center content-center`}
       >
-        <div  className={`${styles.rotateBackground} pointer-events-none absolute gap-[5rem] place-self-center duration-2000  grid w-[300%] h-[300%] z-[-1] left-[-100%] top-[-100%]  grid-cols-[repeat(auto-fill,minmax(50px,1fr))] `}>{elements} </div>
+        {/* FUCKING BULLSHIT THIS BACKGROUND!!!*/}
+        {/* <div  className={` origin-top-left absolute place-self-center duration-2000 scale-[2.5]  grid z-[-1] `}>
+          <img  className={`${isMode === false ? "invert" : ""} filter transition duration-200`}  src= "../public/bg-light.png"></img>
+           </div> */}
+
         <section
           className={`${styles.ShopSection} ${
             isWindowVisible == true && bodyWidth > clottingWidth
               ? "w-[50%]"
               : "w-[0%]"
-          } transition-[width] duration-200  h-[100%] `}
+          } transition-[width]  duration-200  h-[100%] `}
         >
           <ShopSection
             mode={isMode}
@@ -164,7 +273,7 @@ function Clicker() {
         </section>
 
         <section
-          style={{ perspective: "800px" }}
+          style={{}}
           className={`${
             styles.LogoSection
           } [transform-style:preserve-3d] perspective-500  transition-[width] duration-200 ${
@@ -173,6 +282,7 @@ function Clicker() {
               : "w-[100%]"
           } grid content-center relative h-[100%] `}
         >
+          <div className={`${doubleClickBanner === true ? "opacity-100": "opacity-0"} absolute border`}> Double click timer: {countdown}</div>
           <MoneyNavbar
             mode={isMode}
             coefficient={coefMultiplier}
@@ -182,7 +292,7 @@ function Clicker() {
           <ClickerButton
             mode={isMode}
             coefficient={coefMultiplier}
-            autoclickTiming = {timeEachClick}
+            autoclickTiming={timeEachClick}
             onCountClicker={handleClick}
           ></ClickerButton>
           <ShopButton
@@ -195,11 +305,19 @@ function Clicker() {
       {/* add reset-button for reset all game*/}
       <div
         onClick={() => handleResetClicker()}
-        className="absolute z-1 group duration-200 active:scale-[.95] left-[1rem] top-[1rem] rounded-[1rem] p-[.8rem] font-mono bg-[rgb(20,20,20)]"
+        className={` ${
+          isWindowVisible === true && bodyWidth > 1280
+            ? "opacity-0 pointer-events-none"
+            : "opacity-100"
+        } absolute z-1 group duration-200 active:scale-[.95] left-[1rem] top-[1rem] rounded-[1rem] p-[.8rem] font-mono bg-[rgb(20,20,20)]`}
       >
         Reset Clicker game
         <div
-          className={`absolute  w-[120vw] group-active:opacity-[1] pointer-events-none opacity-0 z-[-100] duration-100 top-[-5rem] left-[-5rem] h-[120vh] group-active:bg-[rgb(20,20,20)] `}
+          className={`absolute  w-[120vw] group-active:opacity-[1] pointer-events-none opacity-0 z-[-2] duration-50 top-[-5rem] left-[-5rem] h-[120vh] ${
+            isMode == true
+              ? "group-active:bg-[rgb(20,20,20)]"
+              : "group-active:bg-[rgb(210,210,210)]"
+          } `}
         ></div>
       </div>
       {/*connecting package */}
@@ -219,7 +337,6 @@ function Clicker() {
       >
         Clicker game by Ernest
       </div>
-
     </>
   );
 }
