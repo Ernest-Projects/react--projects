@@ -70,7 +70,8 @@ function Clicker() {
     "doubleClickChance",
     0
   );
-  const [countdown, setCountdown] = useState(0)
+  // timer
+  const [countdown, setCountdown] = useState(0);
   const [doubleClickBanner, setDoubleClickBanner] = useState(false);
   const prevDoubleRef = useRef(doubleClickChance);
 
@@ -89,7 +90,7 @@ function Clicker() {
     1
   );
   const prevProfitRef = useRef(profitLevel);
- 
+
   // -----------------------------------------------------------------------------
 
   // dynamically getting body width
@@ -114,6 +115,13 @@ function Clicker() {
       window.removeEventListener("resize", offsetBodyWidth);
     };
   }, []);
+
+
+  useEffect(() => {
+    if (!doubleClickBanner) return
+    setClickerMoney((prev) => prev + (coefMultiplier * 2)) 
+    
+  },[countClicker])
 
   // localStorage for price and levels
   useEffect(() => {
@@ -140,7 +148,7 @@ function Clicker() {
       autoclickLevel !== undefined &&
       prevAutoclickerLevel.current < autoclickLevel
     ) {
-      setTimeEachClick((prev) => Number((prev - 0.1).toFixed(1)));
+      setTimeEachClick((prev) => Number((prev - 0.1).toFixed(2)));
     }
   }, [autoclickLevel]);
 
@@ -154,50 +162,48 @@ function Clicker() {
   //uEffect for first upgrader: double click time
   useEffect(() => {
     if (doubleLevel !== undefined && prevDoubleRef.current < doubleLevel) {
-      setDoubleClickChance((prev) => Number(prev + 5));
+      setDoubleClickChance((prev) => Number(prev + 50));
       console.log("number that depends on the level: ", doubleClickChance);
     }
     prevDoubleRef.current = profitLevel;
   }, [doubleLevel]);
-  useEffect(() =>{
-    if (randomNumber < doubleClickChance && doubleLevel > 1){ 
+  useEffect(() => {
+    if (randomNumber < doubleClickChance && doubleLevel > 1) {
       console.log("truuu");
       setDoubleClickBanner(true);
-      setCountdown(10)
+      setCountdown(10);
     }
-
-  }, [randomNumber, doubleClickChance])
-
-  useEffect(() => {
-    if (!doubleClickBanner) return
-    const inter = setInterval(()=> {
-    setCountdown((prev) => {
-      if (prev <= 1) {
-        clearInterval(inter);
-        setDoubleClickBanner(false)
-        return 0
-
-      }
-      return prev - 1;
-    })
-    }, 1000)
-  }, [doubleClickBanner])
+  }, [randomNumber, doubleClickChance]);
 
   useEffect(() => {
-    if (!doubleClickBanner) return
+    if (!doubleClickBanner) return;
+    const inter = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(inter);
+          setDoubleClickBanner(false);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  }, [doubleClickBanner]);
+
+  useEffect(() => {
+    if (!doubleClickBanner) return;
 
     const timer = setTimeout(() => {
-     setDoubleClickBanner(false);
-     console.log("fallla")
-     console.log("random namba:", randomNumber)
-   }, 10000);
-    
-      return () => clearTimeout(timer);
-    
+      setDoubleClickBanner(false);
+      console.log("fallla");
+      console.log("random namba:", randomNumber);
+    }, 10000);
+
+    return () => clearTimeout(timer);
+
     // console.log(doubleClickChance);
     // console.log(doubleClickBanner);
   }, [randomNumber, doubleClickChance]);
- 
+
   // FUNCIONS
   //function for money navbar
 
@@ -206,6 +212,7 @@ function Clicker() {
     setClickerMoney((prev) => Number((prev + coefMultiplier).toFixed(2)));
     if (!doubleClickBanner) {
       setRandomNumber(Number(getRandom().toFixed(0)));
+      console.log("number: ", randomNumber);
     }
   };
 
@@ -282,17 +289,30 @@ function Clicker() {
               : "w-[100%]"
           } grid content-center relative h-[100%] `}
         >
-          <div className={`${doubleClickBanner === true ? "opacity-100": "opacity-0"} absolute border`}> Double click timer: {countdown}</div>
+          {/* double click timer */} 
+          <div
+            className={`text-orange-500 text-center w-[100%] transition duration-20 animate-bounce  top-[5%] ${
+              doubleClickBanner === true ? "opacity-100" : "opacity-0"
+            } absolute   text-3xl font-mono`}
+          >
+            {" "}
+            Double click timer: {countdown}
+          </div>
+
           <MoneyNavbar
             mode={isMode}
-            coefficient={coefMultiplier}
+            coefficient={
+              doubleClickBanner ? coefMultiplier * 2 : coefMultiplier
+            }
             moneyBalance={clickerMoney}
             clickerCount={countClicker}
+            doubleClickBanner={doubleClickBanner}
           ></MoneyNavbar>
           <ClickerButton
             mode={isMode}
             coefficient={coefMultiplier}
             autoclickTiming={timeEachClick}
+            doubleClickBanner={doubleClickBanner}
             onCountClicker={handleClick}
           ></ClickerButton>
           <ShopButton
