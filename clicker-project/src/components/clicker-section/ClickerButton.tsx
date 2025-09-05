@@ -5,9 +5,10 @@ type ClickerButtonProps = {
   mode: boolean;
   coefficient: number;
    autoclickTiming: number;
+   doubleClickBanner: boolean;
 };
 
-export const ClickerButton = ({ onCountClicker, mode, coefficient, autoclickTiming }: ClickerButtonProps) => {
+export const ClickerButton = ({ onCountClicker, mode, coefficient, autoclickTiming, doubleClickBanner }: ClickerButtonProps) => {
   const handleClick = (num: number) => {
     // for quantity of clicks in navbar
     onCountClicker(num);
@@ -29,9 +30,8 @@ export const ClickerButton = ({ onCountClicker, mode, coefficient, autoclickTimi
         style={{ transformStyle: "preserve-3d" }}
         onClick={() => handleClick(1)}
         className={` transform-style-preserve-3d w-[20rem] ${
-          mode == true
-            ? "active:shadow-[15px_25px_50px_1px_black] text-white shadow-[20px_30px_70px_1px_black] bg-[rgb(20,20,20)]"
-            : "active:shadow-[15px_25px_50px_1px_gray] text-black shadow-[20px_30px_70px_1px_gray] bg-[rgb(185,185,185)]"
+        (mode ? "active:shadow-[15px_25px_50px_1px_black] text-white shadow-[20px_30px_70px_1px_black] bg-[rgb(20,20,20)]"
+            : "active:shadow-[15px_25px_50px_1px_gray] text-black shadow-[20px_30px_70px_1px_gray] bg-[rgb(185,185,185)]")
         } active:animation-ping group z-[10] select-none transition active:duration-[0ms] duration-100 ease-in-out ml-0 active:scale-[.9] place-self-center aspect-[1/1]  grid content-center relative self-center rounded-[10rem]`}
       >
         <button
@@ -39,15 +39,15 @@ export const ClickerButton = ({ onCountClicker, mode, coefficient, autoclickTimi
             mode == true ? "text-white" : "text-black"
           }`}
         >
-          Click!
+          {!doubleClickBanner ? "Click!" : "double!"}
         </button>
         <div
           className={`${styles.clickAnimation} group z-[10]  w-full h-[20rem] grid `}
         >
           <p
-            className={`${mode === true ? "text-black" : "text-white"} place-self-center ease-out text-3xl z-[-2] top-[-5rem] opacity-0 duration-300 delay-20 group-active:opacity-100 absolute z-[-1] `}
+            className={`${ doubleClickBanner ? "text-orange-500" : mode ? "text-black" : "text-white"} place-self-center ease-out text-3xl z-[-2] top-[-5rem] opacity-0 duration-300 delay-20 group-active:opacity-100 absolute z-[-1] `}
           >
-            +{Number(coefficient)}$
+            +{Number(doubleClickBanner ? coefficient * 2: coefficient)}$
           </p>
              <p
             className={`${mode === true ? "text-black" : "text-white"} ${animate == true ? "opacity-0 top-[-10rem]" : "opacity-100"} text-lg place-self-center pointer-events-none ease-out z-[-2] left-[-5%] top-[-5rem]  duration-300  absolute z-[-1] `}
