@@ -5,13 +5,13 @@ type MoneyNavbarProps = {
   moneyBalance: number;
   mode: boolean;
   coefficient: number;
+  doubleClickBanner: boolean;
 };
 
 export const MoneyNavbar = ({
-  
   moneyBalance,
   mode,
-  coefficient,
+  coefficient, doubleClickBanner
 }: MoneyNavbarProps) => {
     const [animate, setAnimate] = useState(false)
 
@@ -29,9 +29,8 @@ export const MoneyNavbar = ({
       >
         <header className={`${animate === true ? "animate-ping" : ""} duration-200 ease-out delay-0 m-[2rem] text-4xl font-mono`}>
           money: {moneyBalance.toFixed(0)}${" "}
-          <span style={{ color: "gray" }}>({coefficient}x)</span>
+          <span className={`duration-10 ${doubleClickBanner === true ? "text-orange-500 animate-ping": "text-gray"}`}>({coefficient}x)</span>
         </header>
-        
         
         {/* not now */}
         {/* <p className="text-3xl font-mono duration-200 text-center">
