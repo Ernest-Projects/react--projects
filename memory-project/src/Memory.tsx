@@ -1,38 +1,86 @@
-import { useAppSelector, useAppDispatch } from "./hooks"
-import { increment } from "./store/store"
-import styles from "./Memory.module.scss"
+import { useAppSelector, useAppDispatch } from "./hooks";
+import styles from "./Memory.module.scss";
 import { Field } from "./components/Field";
+import { SettingWindow } from "./components/SettingsWindow";
+
+//  imported package!
+
+import { DarkLight } from "project-additions";
+import { useEffect, useRef } from "react";
+import { setGameStartState } from "./store/store";
 
 function Memory() {
+  const sleep = (ms: number) => new Promise((res) => setTimeout(res,ms));
+  let elements = [];
+  for (let i = 0; i < 200; i++) {
+    elements.push(
+      <div
+        className={` ${styles.backgroundRotate} transform bg-[radial-gradient(rgb(25,25,25),rgb(65,65,65))] transition duration-200 animate-ping overflow-hidden bg-[rgb(45,45,45)] absolute top-[0] aspect-[1/1] w-[100px] relative flex justify-center `}
+      >
+        {" "}
+        <span className=" rounded-[10rem] absolute place-self-center  aspect-[1/1] w-[1rem] z-[5] bg-[rgb(20,20,20)]"></span>{" "}
+        <p
+          className={`rounded-[10rem] w-full aspect-[1/1] absolute left-[50%] top-[-50%] bg-[rgb(35,35,35)]`}
+        ></p>{" "}
+        <p
+          className={`rounded-[10rem] w-full aspect-[1/1] absolute left-[-50%] top-[50%] bg-[rgb(35,35,35)]`}
+        ></p>{" "}
+        <p
+          className={`rounded-[10rem] w-full aspect-[1/1] absolute left-[-50%] top-[-50%] bg-[rgb(35,35,35)]`}
+        ></p>{" "}
+        <p
+          className={`rounded-[10rem] w-full aspect-[1/1] absolute left-[50%] top-[50%] bg-[rgb(35,35,35)]`}
+        ></p>
+      </div>
+    );
+  }
 
-  const count = useAppSelector((state) => state.counter.value);
+  const isGameState = useAppSelector((state) => state.game.gameStartState);
+  const animate = useAppSelector((state) => state.game.animateActive);
   const dispatch = useAppDispatch();
-  
+
+
+  const gameRef = useRef<HTMLElement>(null);
+
+  useEffect(()=> {
+      const asyncFunction = async () => {
+        const gameStyle = gameRef.current;
+        if (!gameStyle) return
+        await sleep(400);
+       
+      }
+      asyncFunction()
+    },[isGameState])
+
   // background (STUPID)
-  // const elements = []
-  // for (let i = 0; i < 200; i++)  {
-  //   elements.push(<div key = {i} className={`${styles.diamond} aspect-[1/1]  
-  //            relative flex align-center justify-center bg-red-500  w-[3rem] text-center`}> <p className="absolute aspect-[1/1] rounded-[10rem] z-[100] left-[0] bg-white"></p> <p className={`absolute flex justify-center align-center rounded-[10rem] bg-black w-[1rem] place-self-center  z-[100] aspect-[1/1]`}></p></div>)
-  // }
 
   return (
     <>
-    <main className={`w-[100vw] flex  relative gap-[1%] bg-[rgb(35,35,35)] m-0 p-[1%]  h-[100vh]`}>
-      <section className={`relative w-[30%] bg-[rgb(20,20,20)] p-4 rounded-[1rem] border h-[50%]`}>
-        {/* <div className={`border absolute  top-[2rem] w-[20%] place-self-center`}> */}
-          {/* <button onClick = {() => dispatch(increment())}>Click me</button>
-          <p className="text-white">Count: {count}</p> */}
+      <main
+        ref={gameRef}
+        className={` w-[100vw] flex z-[1] justify-center align-center border relative gap-[1%] bg-[rgb(35,35,35)] m-0 p-[1%]  h-[100vh]`}
+      > 
         {/* </div> */}
-      </section>
-      <section className={`w-[70%] h-[90%] relative border `}>
-        <Field></Field>
-      </section>
-      <div className={`text-4xl text-white font-mono font-bold absolute bottom-[1rem] left-[1rem]`}>Memory game by Ernest</div>
-    </main>
-    {/* background (SHIT) */}
-      {/* <div className={`grid grid-cols-20 place-self-center grid-rows-20 gap-[2rem] origin-center scale-[1] aspect-[1/1] justify-center align-center w-[100%] left-[0%] h-fit absolute top-[0%]`}>{elements}</div> */}
+        {isGameState === true ? <button className={`absolute transition duration-200 hover:scale-[1.05] bg-[rgb(20,20,20)] rounded-[.5rem] left-[2rem] font-mono text-white text-2xl top-[2rem] p-4`} onClick= {() => dispatch(setGameStartState())}>Settings</button> : <SettingWindow></SettingWindow>}
+        <section
+          style={{ transform: "translateZ(-5rem)" }}
+          className={`${isGameState === true ? "relative" : "absolute"} perspective-[1500px]  place-self-center right-6  h-[90vh] transition duration-100 `}
+        >
+          <Field></Field>
+        </section>
+        <div
+          className={`text-4xl text-white font-mono font-bold absolute bottom-[1rem] left-[1rem]`}
+        >
+          Memory game by Ernest
+        </div>
+        {/* background (IT'S WORK) */}
+        <div
+          className={`grid absolute  grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-[2rem] z-[-1] grid-rows-[repeat(auto-fill,minmax(100px,1fr))] w-[100vw] top-[0]`}
+        >
+          {elements}
+        </div>
+      </main>
+      {/* <DarkLight></DarkLight> */}
     </>
-  ) 
-}
-
+  )}
 export default Memory
