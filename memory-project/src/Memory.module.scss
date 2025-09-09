@@ -1,0 +1,59 @@
+
+
+@keyframes rotateBackground {
+    0% {
+        transform: rotate(0deg) scale(1.1)
+    }
+    20% {
+        transform: rotate(360deg) scale(1.2)
+    }
+    22% {
+        transform: rotate(360deg) scale(1)
+    }
+    24% {
+        transform: rotate(360deg) scale(1.2)
+    }
+    26% {
+        transform: rotate(360deg) scale(1)
+    }
+    28% {
+        transform: rotate(360deg) scale(1.2)
+    }
+    50% {
+        transform: rotate(360deg) scale(1.2)
+    }
+    52% {
+        transform: rotate(360deg) scale(1)
+    }
+    54% {
+        transform: rotate(360deg) scale(1.2)
+    }
+    56% {
+        transform: rotate(360deg) scale(1)
+    }
+    58% {
+        transform: rotate(360deg) scale(1.2)
+    }
+    80% {
+        transform: rotate(360deg) scale(1)
+    }
+    82% {
+        transform: rotate(360deg) scale(1.2)
+    }
+    84% {
+        transform: rotate(360deg) scale(1)
+    }
+    86% {
+        transform: rotate(360deg) scale(1.2)
+    }
+    88% {
+        transform: rotate(360deg) scale(1)
+    }
+    100% {
+        transform: rotate(360deg) scale(1.2);
+
+    }
+    
+}.backgroundRotate {
+    animation: rotateBackground 20s ease infinite;
+}
