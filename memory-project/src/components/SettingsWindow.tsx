@@ -1,59 +1,84 @@
-import { setAnimateActive, setGameStartState, setQuantityOfCards } from "../store/store";
+import {
+  setAnimateActive,
+  setGameStartState,
+  setQuantityOfCards,
+  setSpeedOfCardAnimation,
+} from "../store/store";
 import { useAppSelector, useAppDispatch } from "../hooks";
 import { useRef } from "react";
 export const SettingWindow = () => {
   // async await
   const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
+  // objects for repeating elemests
+
   const buttonObject = {
-    six: {
-      text: "6",
-    },
-    eight: {
-      text: "8",
-    },
-    twelwe: {
-      text: "12",
-    },
-    eighthteen: {
-      text: "18",
-    },
+    buttons: [
+      { quantity: "6" },
+      { quantity: "8" },
+      { quantity: "12" },
+      { quantity: "18" },
+    ],
   };
-  const quantity = Object.values(buttonObject);
-  const buttons = [];
-  for (let i = 0; i < quantity.length; i++) {
-    buttons.push(
+  const speedChoiceObject = {
+    buttons: [
+      { speed: "1", context: "normal" },
+      { speed: "2", context: "fast" },
+      { speed: "4", context: "lightning-fast" },
+      { speed: "5", context: "insane fast" },
+    ],
+  };
+
+  const speedButtons = speedChoiceObject.buttons;
+  const speed = [];
+  for (let i = 0; i < speedButtons.length; i++) {
+    speed.push(
       <button
-        onClick={() => handleSetQuanitty(Number(quantity[i].text))}
+        onClick={() => handleSpeedOfAnimaion(Number(speedButtons[i].speed))}
         style={{ boxShadow: "inset 0 0 0 2px black, inset 0 0 0 4px white" }}
-        className={`font-mono hover:scale-[1.05] transition duration-200 p-4 w-[25%] text-white `}
+        className={`font-mono hover:scale-[1.05] transition duration-200 p-4 w-[100%] text-white `}
       >
-        {quantity[i].text}
+        {speedButtons[i].context}
+      </button>
+    );
+  }
+  const quantityButtons = buttonObject.buttons;
+  const quantity = [];
+  for (let i = 0; i < quantityButtons.length; i++) {
+    quantity.push(
+      <button
+        onClick={() => handleSetQuanity(Number(quantityButtons[i].quantity))}
+        style={{ boxShadow: "inset 0 0 0 2px black, inset 0 0 0 4px white" }}
+        className={`font-mono hover:scale-[1.05] transition duration-200 p-4 w-[100%] text-white `}
+      >
+        {quantityButtons[i].quantity}
       </button>
     );
   }
 
   const isGameStarted = useAppSelector((state) => state.game.gameStartState);
+  const speedAnimation = useAppSelector(
+    (state) => state.game.speedOfCardAnimation
+  );
   const quantityOfCards = useAppSelector((state) => state.game.quantityOfCards);
-  const animate = useAppSelector((state) => state.game.animateActive);
   const dispatch = useAppDispatch();
 
   const settingsRef = useRef<HTMLElement>(null);
 
-  const handleSetQuanitty = (quantity: number) => {
+  const handleSetQuanity = (quantity: number) => {
     if (quantity === 6) {
       dispatch(setQuantityOfCards(6));
+    } else if (quantity === 8) {
+      dispatch(setQuantityOfCards(8));
+    } else if (quantity === 12) {
+      dispatch(setQuantityOfCards(12));
+    } else {
+      dispatch(setQuantityOfCards(18));
     }
-    else if (quantity === 8) {
-      dispatch(setQuantityOfCards(8))
-    }
-    else if (quantity === 12) {
-      dispatch(setQuantityOfCards(12))
-    }
-    else {
-      dispatch(setQuantityOfCards(18))
-    }
-    console.log(quantityOfCards);
+  };
+
+  const handleSpeedOfAnimaion = (speed: number) => {
+    dispatch(setSpeedOfCardAnimation(speed));
   };
   const handleAnimate = async () => {
     dispatch(setGameStartState());
@@ -79,22 +104,33 @@ export const SettingWindow = () => {
         className={` 
          absolute left-6 w-[35rem] place-self-center  min-w-[25rem] place-self-center  aspect-[1/1] bg-[rgb(25,25,25)] p-2 transition flex flex-col justify-center align-center `}
       >
-        <header className={`fonst-mono text-white text-4xl text-center `}>
+        <header
+          className={`fonst-mono place-self-center absolute top-[2rem] text-white text-4xl text-center `}
+        >
           Cards setttings
         </header>
         <br />
+        <div className="flex flex-row w-[100%]">
         <div
-          className={`relative border w-[100%] gap-[5%] flex align-center justify-center p-4 h-fit font-mono text-2xl text-white`}
+          className={`relative text-purple-400 w-[100%] gap-[5%] flex flex-col align-center justify-center p-4 h-fit font-mono text-md `}
         >
-          {" "}
-          {buttons}
+          {"Quantity of cards:"}
+          {quantity}
+        </div>
+        <div
+          className={`relative text-orange-400 w-[100%] gap-[5%] flex-col flex align-center justify-center p-4 h-fit font-mono text-md `}
+        >
+          {"Speed of card animation:"} 
+          {speed}
+        </div>
+
         </div>
         <button
           onClick={() => handleAnimate()}
           style={{ transform: "rotateZ(0deg)" }}
-          className={`font-mono transition text-white hover:scale-[1.2] w-[50%] bottom-[0] rounded-[.5rem] bg-red-500  p-4 place-self-center justify-center absolute `}
+          className={`font-mono transition  text-white hover:scale-[1.2] w-[50%] bottom-[2rem] rounded-[.5rem] bg-[rgb(15,15,15)]  p-4 place-self-center justify-center absolute `}
         >
-          Start game
+          {"Start game"}
         </button>
       </section>
     </>
