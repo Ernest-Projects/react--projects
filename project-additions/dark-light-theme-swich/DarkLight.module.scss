@@ -58,38 +58,39 @@ $light-theme-circle: rgb(240, 240, 240);
 
 
 
-        .lightClass {
-            left: calc(57%);
-            background: $light-theme-circle;
-            color: black;
-        }
-
-        .darkClass {
-            left: 4%;
-            right: auto;
-            background: $dark-theme-circle;
-            color: white;
-        }
     }
 
-    .lightButton {
-        background: $light-theme-background;
-
-        &::before {
-            color: black;
-        }
+    .lightClass {
+        left: calc(57%);
+        background: $light-theme-circle;
+        color: black;
     }
 
-    .darkButton {
-        background: $dark-theme-background;
-
-        &::before {
-            color: white;
-        }
+    .darkClass {
+        left: 4%;
+        right: auto;
+        background: $dark-theme-circle;
+        color: white;
     }
 
     
+    .lightButton {
+        background: $light-theme-background;
+    
+        &::before {
+            color: black;
+        }
+    }
+    
+    .darkButton {
+        background: $dark-theme-background;
+    
+        &::before {
+            color: white;
+        }
+    }
 }
+
 .rightSide {
     right: 1rem;
 
