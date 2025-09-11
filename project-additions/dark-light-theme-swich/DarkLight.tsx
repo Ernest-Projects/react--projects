@@ -4,12 +4,13 @@ type DarkLightProps = {
   onSwichTheme: () => void;             
   name: string;
   bodyWidth: number;
+  side: boolean;
   widthNumber: number;
 };
-const DarkLight = ({ mode, onSwichTheme, name ,bodyWidth, widthNumber}: DarkLightProps) => {
+const DarkLight = ({ mode, onSwichTheme, name ,bodyWidth, widthNumber, side}: DarkLightProps) => {
   return (
     <>
-      <section style = {{opacity: bodyWidth > widthNumber ? "1" : "0" }} className={`${styles.darkLight}`}>
+      <section style = {{opacity: bodyWidth > widthNumber ? "1" : "0" }} className={`${styles.darkLight} ${side ? styles.rightSide : styles.leftSide}`}>
         <button
           onClick={() => onSwichTheme()}
           className={`${mode == true ? styles.lightButton : styles.darkButton}`}

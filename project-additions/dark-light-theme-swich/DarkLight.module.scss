@@ -10,9 +10,9 @@ $light-theme-circle: rgb(240, 240, 240);
     user-select: none;
     top: 1rem;
     z-index: 1;
-    right: 1rem;
 
-    & *, & {
+    & *,
+    & {
         transition: all .3s ease;
     }
 
@@ -56,7 +56,7 @@ $light-theme-circle: rgb(240, 240, 240);
             transition: inherit;
         }
 
-      
+
 
         .lightClass {
             left: calc(57%);
@@ -87,4 +87,14 @@ $light-theme-circle: rgb(240, 240, 240);
             color: white;
         }
     }
+
+    
+}
+.rightSide {
+    right: 1rem;
+
+}
+
+.leftSide {
+    left: 4rem;
 }
