@@ -80,7 +80,7 @@ function Clicker() {
 
   // AUTOCLICKER UPGRADER
   // time for each autoclick (highter level - less time (highter frequency of clicking))
-  const [timeEachClick, setTimeEachClick] = useLocalStorage("timeEachClick", 2);
+  const [timeEachClick, setTimeEachClick] = useLocalStorage("timeEachClick", 1);
   const prevAutoclickerLevel = useRef(autoclickLevel);
 
   // PROFIT CLICK UPGRADER
@@ -108,7 +108,7 @@ function Clicker() {
         event.preventDefault();
         setIsMode((prev) => !prev);
       }
-    };
+    }; 
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
@@ -344,6 +344,7 @@ function Clicker() {
       <DarkLight
         onSwichTheme={() => setIsMode((prev) => !prev)}
         bodyWidth={bodyWidth}
+        side = {true}
         widthNumber={700}
         mode={isMode}
         name={isMode == true ? "light" : "dark"}
