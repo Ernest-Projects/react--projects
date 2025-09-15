@@ -28,7 +28,7 @@ export const MoneyNavbar = ({
         } absolute top-10 text-center w-fit h-fit place-self-center`}
       >
         <header className={`${animate === true ? "animate-ping" : ""} duration-200 ease-out delay-0 m-[2rem] text-4xl font-mono`}>
-          money: {moneyBalance.toFixed(0)}${" "}
+          money: {moneyBalance}${" "}
           <span className={`duration-10 ${doubleClickBanner === true ? "text-orange-500 animate-ping": "text-gray"}`}>({coefficient}x)</span>
         </header>
         
