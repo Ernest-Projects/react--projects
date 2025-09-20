@@ -4,19 +4,19 @@ import styles from "./App.module.scss";
 import Convertor from "../converter-windows/curency-window/Convertor";
 import { base } from "../data/window-data";
 // dark/light package!
-import { DarkLight } from "project-additions";
+// import { DarkLight } from "project-additions";
 
 function App() {
   // initializing default converter
   const [selectConverter, setSelectConverter] = useState("weight");
   const [isMode, setIsMode] = useState(false);
 
-  const [width, setWidth] = useState(document.body.offsetWidth);
+  // const [width, setWidth] = useState(document.body.offsetWidth);
 
 
-  const handleSwich = () => {
-    setIsMode((prev) => !prev);
-  };
+  // const handleSwich = () => {
+  //   setIsMode((prev) => !prev);
+  // };
   const handleSelect = (name: string) => {
     setTimeout(() => {
       setSelectConverter(name);
@@ -34,7 +34,7 @@ function App() {
     window.addEventListener("keydown", handleSwichCombination);
     
     const handleBodyWidth = () =>  {
-      setWidth(document.body.offsetWidth);
+      // setWidth(document.body.offsetWidth);
     }
     window.addEventListener("resize", handleBodyWidth);
     return () => {
@@ -67,13 +67,13 @@ function App() {
           );
         })}
       </main>
-      <DarkLight 
+      {/* <DarkLight 
         bodyWidth = {width}
         widthNumber = {1150}
         mode={isMode}
         onSwichTheme={handleSwich}
         name={isMode == false ? "dark" : "light"}
-      />
+      /> */}
       <p
         className={`${styles.author} ${
           isMode === true ? styles.authorLight : styles.authorDark
