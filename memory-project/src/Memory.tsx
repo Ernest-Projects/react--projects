@@ -3,9 +3,9 @@ import styles from "./Memory.module.scss";
 import { Field } from "./components/Field";
 import { SettingWindow } from "./components/SettingsWindow";
 
-//  imported package!
+//  imported package! (not for vercel)
+// import { DarkLight } from "project-additions";
 
-import { DarkLight } from "project-additions";
 import { useEffect, useRef } from "react";
 import { setBodyWidth, setGameStartState, setQuantityOfCards, setThemeMode } from "./store/store";
 
@@ -123,13 +123,13 @@ function Memory() {
           {/* change theme of game */}
           <div className={`absolute w-[100vw] ${isMode ? "invert" : ""}`}>
 
-        <DarkLight
+        {/* <DarkLight
           onSwichTheme={() => dispatch(setThemeMode())}
           bodyWidth={bodyWidth}
           widthNumber={900}
           side = {isGameState ? true : false}
           name={isMode == true ? "light" : "dark"}
-        ></DarkLight>
+        ></DarkLight> */}
           </div>
       </main>
       {/* <DarkLight></DarkLight> */}
