@@ -84,7 +84,7 @@ export const Field = () => {
   return (
     <>
       <section ref = {fieldRef} style = {{ backgroundImage: "linear-gradient(to bottom, rgb(25,25,25), rgb(45,45,45))", transformStyle: "preserve-3d", transformOrigin: "50% 0%"}}
-        className={`flex ${isGameEnded ? "[transform:rotateX(35deg)] h-[25rem] opactity-0" : "[transform:rotateX(15deg)]"} perspective-[1500px] gap-[.5rem] min-w-[30rem] transform  border  justify-center  transition duration-100 align-center bg-[rgb(25,25,25)] p-[4rem]  relative  grid w-[100%] h-[100%]`}
+        className={`flex ${isGameEnded ? "[transform:rotateX(35deg)] h-[25rem] opactity-0" : "[transform:rotateX(15deg)]"} perspective-[1000px] gap-[.5rem] min-w-[30rem] transform  border  justify-center  transition duration-100 align-center bg-[rgb(25,25,25)] p-[4rem]  relative  grid w-[100%] h-[100%]`}
       >
         {/* for shadows */}
         {/* <div ref = {shadowFieldRef} className="absolute  gap-[2rem] grid grid-cols-3 place-self-center border grid-rows-2 w-[100%] h-[100%]">
@@ -100,5 +100,3 @@ export const Field = () => {
     </>
   );
 };
-
-// grid-cols-[repeat(auto-fit,minmax(150px,1fr))]

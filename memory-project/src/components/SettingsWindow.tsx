@@ -107,7 +107,7 @@ export const SettingWindow = () => {
             "linear-gradient(to bottom, rgb(20,20,20), rgb(25,25,25)",
         }}
         ref={settingsRef}
-        className={` ${bodyWidth < 1520 ? "" : "left-6"}
+        className={` ${bodyWidth < 1400 ? "" : "left-6"}
          absolute w-[35rem] place-self-center  min-w-[25rem] place-self-center  aspect-[1/1] bg-[rgb(25,25,25)] p-2 transition flex flex-col justify-center align-center `}
       >
         <header

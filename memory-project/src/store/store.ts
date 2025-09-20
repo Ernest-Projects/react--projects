@@ -46,9 +46,9 @@ const generateInitialCards = (quantity: number): CardProps[] => {
   for (let i = 0; i < 14; ) {
     const random = getRandomIndex(1, 21);
     if (
-      !imagesObject.some((item) => item.img === `./public/feel${random}.jpg`)
+      !imagesObject.some((item) => item.img === `${process.env.BASE_URL}feel${random}.jpg`)
     ) {
-      imagesObject.push({ img: `./public/feel${random}.jpg` });
+      imagesObject.push({ img: `${process.env.BASE_URL}feel${random}.jpg` });
       i += 1;
     }
   }

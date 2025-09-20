@@ -107,7 +107,7 @@ function Memory() {
           className={`${
             isGameState === true ? "relative" : "absolute"
           } perspective-[1500px] place-self-center right-6  h-[90vh] transition duration-100 `}
-        > {(bodyWidth < 1520 && !isGameState) ? "" : <Field></Field>}
+        > {(bodyWidth < 1400 && !isGameState) ? "" : <Field></Field>}
         </section>
         <div
           className={`text-4xl text-white font-mono font-bold absolute bottom-[1rem] left-[1rem]`}
