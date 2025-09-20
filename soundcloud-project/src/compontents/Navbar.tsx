@@ -10,7 +10,7 @@ export const Navbar = () => {
     { content: "Try Artist Pro" },
     { content: "For Artists" },
     { content: "Upload" },
-  ];
+  ]
 
   
   const butts = [];

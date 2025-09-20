@@ -263,6 +263,8 @@ function Clicker() {
               : "w-[0%]"
           } transition-[width]  duration-200  h-[100%] `}
         >
+
+           
           <ShopSection
             mode={isMode}
             moneyBalance={clickerMoney}
