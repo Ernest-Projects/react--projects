@@ -46,9 +46,9 @@ const generateInitialCards = (quantity: number): CardProps[] => {
   for (let i = 0; i < 14; ) {
     const random = getRandomIndex(1, 21);
     if (
-      !imagesObject.some((item) => item.img === `https://memory-cards-game-olive.vercel.app/feel${random}.jpg`)
+      !imagesObject.some((item) => item.img === `/feel${random}.jpg`)
     ) {
-      imagesObject.push({ img: `https://memory-cards-game-olive.vercel.app/feel${random}.jpg` });
+      imagesObject.push({ img:`/feel${random}.jpg` });
       i += 1;
     }
   }
