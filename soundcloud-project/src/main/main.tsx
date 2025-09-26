@@ -4,8 +4,8 @@ import './index.css'
 import { Provider } from 'react-redux'
 import App from '../compontents/App.tsx'
 // 
-import {store} from "../redux/storages/NavbarStore.ts"
-import { createBrowserRouter } from 'react-router-dom'
+import {store} from "../redux/storages/store.ts"
+// import { createBrowserRouter } from 'react-router-dom'
 
 // const router = createBrowserRouter([]);
 createRoot(document.getElementById('root')!).render(

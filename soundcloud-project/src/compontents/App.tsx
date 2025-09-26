@@ -21,8 +21,8 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <main
-          className={`w-[70vw] place-self-center relative grid grid-rows grid-cols-1  justify-center align-center  h-fit bg-[rgb(18,18,18)]`}
+        <main 
+          className={`w-[80vw] place-self-center relative grid grid-rows grid-cols-1  justify-center align-center  h-fit bg-[rgb(18,18,18)]`}
         >
           <section
             className={`w-[100%] flex align-center place-self-center relative  h-[2.5rem]`}

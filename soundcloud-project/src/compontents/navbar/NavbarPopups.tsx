@@ -1,5 +1,5 @@
 import type { PopcornIcon } from "lucide-react";
-import { useNavbarAppDispatch, useNavbarAppSelector } from "../../redux/hooks";
+import { useNavbarAppDispatch, useNavbarAppSelector } from "../../redux/hooks/navbarHook";
 import { motion } from "motion/react";
 import React, { forwardRef, useRef } from "react";
 import { UserNotification } from "./UserNotification";
@@ -16,7 +16,7 @@ import { div } from "motion/react-client";
 
 // router
 import { useNavigate } from "react-router-dom";
-import { setAllPopupWindowClose } from "../../redux/storages/NavbarStore";
+import { setAllPopupWindowClose } from "../../redux/storages/navbarSlice";
 
 // type PopupIconsProps = {
 //     type: string;
@@ -66,7 +66,6 @@ export const NotificationPopup = React.forwardRef<HTMLDivElement>(
             <header className="text-xl ">Notifications</header>
             <button className=" text-sm ">Settings</button>
           </div>
-          <UserNotification></UserNotification>
           <UserNotification></UserNotification>
           <UserNotification></UserNotification>
           <UserNotification></UserNotification>

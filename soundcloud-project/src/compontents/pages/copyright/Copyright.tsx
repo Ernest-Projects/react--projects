@@ -3,11 +3,6 @@ import { useEffect, useRef } from "react";
 
 import { motion } from "motion/react";
 import {
-  useNavbarAppDispatch,
-  useNavbarAppSelector,
-} from "../../../redux/hooks";
-import { setAllPopupWindowClose } from "../../../redux/storages/NavbarStore";
-import {
   referenceHeaders, CopyrightNavigationList, secondText, thirdText, CopyrightText
 } from "./copyrightConfig";
 import { div, li, p, ul } from "motion/react-client";

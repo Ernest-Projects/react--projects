@@ -1,5 +1,5 @@
 import { useNavbarAppDispatch } from "../../redux/hooks"
-import { setAllPopupWindowClose } from "../../redux/storages/NavbarStore";
+import { setAllPopupWindowClose } from "../../redux/storages/navbarSlice";
 
 
 export const useNavbarActions = () => {
