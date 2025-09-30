@@ -46,11 +46,11 @@ export const Copyright = () => {
           ))}
         </section>
         <section className="w-[100%] h-fit col-span-2 sticky top-0 px-2">
-          <div className=" bg-[rgb(48,48,48)] px-4 py-1 pb-4 top-0 w-full aspect-[2/1] place-self-center">
+          <div className=" bg-[rgb(48,48,48)] px-4 py-1 pb-4 top-0 w-full h-fit place-self-center">
             <header className={`${refHeaderStyles} text-md`}>
               Report Copyright Infringement
             </header>
-            <p className="text-[12px] my-2 text-[rgb(152,152,152)]">
+            <p className="text-[14px] my-2 text-[rgb(152,152,152)]">
               If you identify content on SoundCloud that you believe infringes
               your copyright, you can let us know using any of the methods
               explained on these pages.
