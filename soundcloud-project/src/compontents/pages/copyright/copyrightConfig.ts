@@ -109,9 +109,9 @@ Does the recording contain any music or excerpts from other copyright works (e.g
 
           </p>
 `;
-const fourthText = `<span class="text-[1.5rem] mt-8 font-bold">Further resources </span> </br> <p class = "pb-4">For information about copyright in your country, try your local copyright office: <span class = "text-blue-400"> http://www.wipo.int/directory/en/urls.jsp </span> </p>
+const fourthText = `<span class="text-[1.5rem] mt-8 font-bold">Further resources </span> </br> <p class = "pb-4">For information about copyright in your country, try your local copyright office: <span> <a href = "http://www.wipo.int/directory/en/urls.jsp" class = "text-blue-400">http://www.wipo.int/directory/en/urls.jsp </a> </span></p>
 
-<p>For information on copyright laws around the world, try the World Intellectual Property Office database: <span class = "text-blue-400">http://www.wipo.int/wipolex/en/</span> </p>`
+<p>For information on copyright laws around the world, try the World Intellectual Property Office database: <span> <a href = "http://www.wipo.int/wipolex/en/" class = "text-blue-400">http://www.wipo.int/wipolex/en/ </a> </span> </p>`
 
 export const CopyrightText = [{text: firstText}, {text: secondText}, {text:thirdText}, {text: fourthText}];
 // export cosnt secondText = 
