@@ -70,12 +70,11 @@ export const Navbar = () => {
     butts.push(
       <>
         <motion.button
-          whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => {
             handleNavbarRouting(buttsNavbar[i].component);
           }}
-          className={` w-min box-border font-bold text-md transition whitespace-nowrap duration-100   h-[100%] text-[rgb(152,152,152)] ${col} hover:text-white text-bold`}
+          className={` w-min box-border font-bold text-sm transition whitespace-nowrap duration-100   h-[100%] text-[rgb(152,152,152)] ${col} hover:text-white text-bold`}
         >
           {buttsNavbar[i].content}{" "}
         </motion.button>
