@@ -30,22 +30,22 @@ export const ProfilePopup = React.forwardRef<HTMLDivElement>((props, ref) => {
   return (
     <>
       <motion.div
+      data-popup ="true" 
         ref={ref}
         initial={{ opacity: 0, y: 0 }}
         animate={{ opacity: 1, y: 10 }}
         className={` top-[100%] py-2 border border-[rgb(50,50,50)] border-[.2px] rounded-[.1rem] bg-[rgb(10,10,10)] font-bold text-md absolute w-[9rem] px-2 left-0  text-black`}
       >
         {profilePopupIcons.map((Icon, index) => (
-          <motion.button
+          <button
             key={index}
-            whileHover={{ color: "rgb(152,152,152)" }}
-            initial={{ color: "white" }}
-            className=" w-full flex py-1 gap-[.5rem] flex-cols relative  text-bold flex-nowrap group hover:text-[rgb(152,152,152)]"
+            
+            className=" w-full text-white flex py-1 gap-[.5rem] flex-cols relative  text-bold flex-nowrap group hover:text-[rgb(152,152,152)]"
           >
             <Icon {...profilePopupProps}></Icon>
             {"  "}
             <p className="text-sm">{profilePopup[index].content}</p>
-          </motion.button>
+          </button>
         ))}{" "}
       </motion.div>
       <></>
@@ -58,6 +58,8 @@ export const NotificationPopup = React.forwardRef<HTMLDivElement>(
     return (
       <>
         <motion.div
+              data-popup ="true" 
+
           initial={{ opacity: 0, y: 0 }}
           animate={{ opacity: 1, y: 10 }}
           className={` top-[100%] h-fit border border-[.2px] border-[rgb(50,50,50)] py-2 rounded-[.1rem] bg-[rgb(10,10,10)] font-bold text-md absolute w-fit px-2   text-white`}
@@ -72,13 +74,11 @@ export const NotificationPopup = React.forwardRef<HTMLDivElement>(
           <UserNotification></UserNotification>
           <UserNotification></UserNotification>
 
-          <motion.button
-            whileHover={{ color: "rgb(152,152,152)" }}
-            initial={{ color: "white" }}
+          <button
             className=" w-fit flex py-1 gap-[.5rem] place-self-center text-sm text-center flex-cols relative  text-bold flex-nowrap group hover:text-[rgb(152,152,152)]"
           >
             View all notifications
-          </motion.button>
+          </button>
         </motion.div>
         <></>
       </>
@@ -90,6 +90,8 @@ export const MessagePopup = React.forwardRef<HTMLDivElement>((props, ref) => {
   return (
     <>
       <motion.div
+            data-popup ="true" 
+
         initial={{ opacity: 0, y: 0 }}
         animate={{ opacity: 1, y: 10 }}
         className={` top-[100%] h-[10rem] border border-[.2px] border-[rgb(50,50,50)] py-2 rounded-[.1rem] bg-[rgb(10,10,10)] font-bold text-md absolute aspect-[2/1] px-2   text-white`}
@@ -103,9 +105,7 @@ export const MessagePopup = React.forwardRef<HTMLDivElement>((props, ref) => {
           </p>
           <motion.button
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            initial={{ color: "white" }}
-            whileHover={{ color: "rgb(152,152,152)" }}
-            className={`text-center  w-full place-self-center text-sm`}
+            className={`text-center hover:text-[rgb(50,50,50)] text-white w-full place-self-center text-sm`}
           >
             View all messages
           </motion.button>
@@ -140,6 +140,8 @@ export const MorePopup = React.forwardRef<HTMLDivElement>((props, ref) => {
   return (
     <>
       <motion.div
+            data-popup ="true" 
+
         initial={{ opacity: 0, y: 0 }}
         animate={{ opacity: 1, y: 10 }}
         className={` top-[100%] w-[10rem] h-fit py-2 rounded-[.1rem] bg-[rgb(10,10,10)] font-bold text-md border-[rgb(50,50,50)] border-[0.2px] absolute aspect-[1/1] px-2  text-white`}

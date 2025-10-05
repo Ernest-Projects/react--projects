@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import '../../main/index.css'
 
 import { motion } from "motion/react";
 import {
@@ -26,19 +27,51 @@ import {
   setTrackCurrentTime,
   setIsTrackOnRepeat,
   setIsTrackEnded,
+  setTrackTime,
 } from "../../redux/storages/playerSlice";
+
+import { CurrentTrack } from "./CurrentTrack";
+import { VolumePopup } from "./PlayerPopups";
 
 export const Player = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const progressbarRef = useRef<HTMLDivElement>(null);
+  const volumeRangeRef = useRef<HTMLInputElement>(null);
 
-  const {isAudioPlaying, trackDuration,trackCurrentTime,isTrackEnded,isTrackOnRepeat} = usePlayerAppSelector((state)=> state.player);
+  const [isHover, setIsHover] = useState(false);
+  const [volume, setVolume] = useState<number>(50);
+  const {
+    isAudioPlaying,
+    trackDuration,
+    trackCurrentTime,
+    isTrackEnded,
+    trackRepeatId,
+    trackTime,
+  } = usePlayerAppSelector((state) => state.player);
   const dispatch = usePlayerAppDispatch();
 
+  const handlePlayTrackAndSetTitle = () => {
+    if (!audioRef.current) return;
+    dispatch(setMusicPlayable());
+    if (!isAudioPlaying) {
+      document.title = audioRef.current.src.slice(28, -4).replaceAll("_", " ");
+      console.log(audioRef.current.src);
+    }
+    else {
+      document.title = "stop"
+    }
+  }
+
   useEffect(() => {
+    if(!audioRef.current) return
+    audioRef.current.volume = volume / 100;
+  }, [volume])
+
+  useEffect(() => {
+
     // track on repeat
     if (progressWidth == 100) {
-      if (!isTrackOnRepeat) {
+      if (trackRepeatId != 3) {
         dispatch(setIsTrackEnded({ ended: true }));
         dispatch(setTrackCurrentTime({ current: 0 }));
         dispatch(setMusicPlayable());
@@ -51,25 +84,26 @@ export const Player = () => {
     }
   }, [trackCurrentTime]);
 
-
   const progressWidth = (trackCurrentTime / trackDuration) * 100;
 
   useEffect(() => {
+    if (!audioRef.current) return;
     if (isAudioPlaying) {
       audioRef.current?.play();
     } else {
       audioRef.current?.pause();
     }
+    // audioRef.current?.volume = volumeRangeRef.current?.value;
   }, [isAudioPlaying]);
 
   return (
     <>
-      <main className="fixed w-[100%] h-[2.5rem] flex flex-col justify-center align-center place-self-center z-[1000] left-0 bottom-0 bg-[rgb(48,48,48)]">
-        <div className="h-full text-white w-[80vw] place-self-center flex  align-center justify-between relative  ">
+      <main className="fixed  w-[100%] z-[1000] h-[2.5rem] flex flex-col justify-center align-center place-self-center z-[1000] left-0 bottom-0 bg-[rgb(48,48,48)]">
+        <div className="h-full text-white  sm:w-[40rem] md:w-[50rem] lg:w-[60rem] place-self-center flex  align-center justify-between relative  ">
           <section className=" gap-[.8rem] border-red-500 relative flex flex-row place-self-center  w-fit ">
             <SkipBack className="place-self-center" />
             <motion.button
-              onClick={() => dispatch(setMusicPlayable())}
+              onClick={() =>  handlePlayTrackAndSetTitle()}
               className="border border-red-500 w-fit h-fit place-self-center"
             >
               {isAudioPlaying && !isTrackEnded ? (
@@ -86,58 +120,105 @@ export const Player = () => {
               <Shuffle size={15} className="place-self-center"></Shuffle>
             </button>
             <button onClick={() => dispatch(setIsTrackOnRepeat())}>
-              {isTrackOnRepeat ? (
-                <Repeat1 size={15} className="place-self-center"></Repeat1>
-              ) : (
+              {trackRepeatId == 1 ? (
                 <Repeat size={15} className="place-self-center"></Repeat>
+              ) : trackRepeatId == 2 ? (
+                <Repeat
+                  size={15}
+                  color="rgb(255,85,0)"
+                  className="place-self-center"
+                ></Repeat>
+              ) : (
+                <Repeat1
+                  size={15}
+                  color="rgb(255,85,0)"
+                  className="place-self-center"
+                ></Repeat1>
               )}
             </button>
           </section>
 
-          <section className="relative place-self-center h-[100%] border-red-500 w-[50%]">
+          <section className="relative place-self-center h-[100%] border-red-500 md:w-[40%] lg:w-[50%]">
             <div
               ref={progressbarRef}
               className=" place-self-center flex gap-[.5rem] justify-center align-center  w-full h-full"
             >
-              <p className=" text-white w-fit text-sm place-self-center">
-                {trackCurrentTime.toFixed(0)}
+              <p className=" text-white w-fit font-bold text-sm place-self-center">
+                {trackCurrentTime == 0 ? "0:00" : trackTime[0]}
               </p>
               <div className="w-full h-[2px] bg-[rgb(130,130,130)] place-self-center">
                 {" "}
-                <div
-                  style={{ width: `${progressWidth}%` }}
+                <motion.div
+                  animate={{ width: `${progressWidth}%` }}
                   className="bg-[rgb(255,85,0)] h-full"
-                ></div>
+                ></motion.div>
               </div>
-              <p className=" text-white w-fit text-sm place-self-center">
-                -3:29
+              <p className=" text-white  w-fit text-sm place-self-center">
+                <span className="font-bold">-{trackTime[1]}</span>
               </p>
-              <Volume1 size={20} className="place-self-center"></Volume1>
+              <div onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)} className=" relative  flex justify-center align-center">
+                <Volume1
+                  size={20}
+                  className="place-self-center cursor-pointer"
+                ></Volume1>
+                {/* Volume popup hover */}
+                <motion.div
+                  initial = {{opacity:0, y:50, pointerEvents: "auto"}}
+                  animate = {isHover ? {opacity: 1, y: -100, pointerEvents: "auto"} : {opacity: 0, y:50, pointerEvents: "none"}}
+                 
+                  className={` w-[3rem] h-[10rem] rounded-[.3rem] border border-[rgb(70,70,70)] absolute  place-self-center flex justify-center align-center absolute  bg-[rgb(18,18,18)]  h-[5rem] text-white`}
+                >
+                    <input
+                     
+  onPointerDown={(e) => e.stopPropagation()}
+                      ref={volumeRangeRef}
+                      type="range"
+                      min={0} 
+                      max={100}
+                      value={volume}
+                      name="volume"
+                      id="volume"
+                      onChange={(e)=> { e.stopPropagation(); setVolume(Number(e.target.value))}}
+                      className=" active:outline-none range-custom  hover:border-none active:border-none h-[4px] bg-[rgb(70,70,70)]  [transform:rotate(-90deg)] [transform-origin:center] w-[8rem] place-self-center"
+                      step={1}
+                    />
+                    <div className="[transform:rotate(45deg)] rounded-br-sm border-b border-[rgb(70,70,70)] border-r   z-[-100] [transform-origin:center] bg-[rgb(18,18,18)] aspect-[1/1] w-[35%] absolute bottom-[-.52rem]"></div>
+                </motion.div>
+              </div>
               <audio
-                onTimeUpdate={(e) =>
+                onTimeUpdate={(e) => {
                   dispatch(
                     setTrackCurrentTime({
                       current: e.currentTarget.currentTime,
                     })
-                  )
-                }
-                onLoadedMetadata={(e) =>
+                  );
+                  dispatch(setTrackTime());
+                }}
+                onLoadedMetadata={(e) => {
                   dispatch(
                     setTrackDuration({ duration: e.currentTarget.duration })
-                  )
-                }
+                  );
+                }}
                 ref={audioRef}
                 id="myAudio"
-                src="../../music/test.mp3"
+                src="../../music/with_you.mp3"
               ></audio>
             </div>
           </section>
 
-          <div className=" h-full border-red-500 w-[15%] border"></div>
-          <section className=" gap-[.8rem] border-red-500 relative flex place-self-center align-center justify-center w-fit ">
-            <Heart size={15} className="place-self-center" />
-            <UserPlus size={15} className="place-self-center" />
-            <ListVideo size={15} className="place-self-center" />
+          <div className=" h-full  w-[12.5%] ">
+            <CurrentTrack></CurrentTrack>
+          </div>
+          <section className=" gap-[1.5rem] border-red-500 relative flex place-self-center align-center justify-center w-fit ">
+            <button>
+              <Heart size={15} className="place-self-center" />
+            </button>
+            <button>
+              <UserPlus size={15} className="place-self-center" />
+            </button>
+            <button>
+              <ListVideo size={15} className="place-self-center" />
+            </button>
           </section>
         </div>
       </main>

@@ -38,10 +38,10 @@ export const homeStore = createSlice({
       action: PayloadAction<{ id: string; value: number; direction: string }>
     ) => {
       const { id, value, direction } = action.payload;
-      if (direction == "right" && state.sliders[id] <= value * 4) {
+      if (direction == "right") {
         state.sliders[id] += value;
       }
-      if (direction == "left" && state.sliders[id] >= 0) {
+      if (direction == "left") {
         state.sliders[id] -= value;
       }
     }

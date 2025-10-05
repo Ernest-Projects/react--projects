@@ -5,11 +5,11 @@ import { Mail, Bell, Ellipsis, ChevronDown, Search, Hand } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 // import hook
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 // react Motion library animations import
 import { motion } from "motion/react";
-import { nav, span, input } from "motion/react-client";
+// import {  } from "motion/react-client";
 // import { AnimatePresence } from 'motion/react';
 // import { div } from 'motion/react-client';
 
@@ -17,14 +17,14 @@ import { nav, span, input } from "motion/react-client";
 import { useNavbarAppDispatch, useNavbarAppSelector } from "../../redux/hooks/navbarHook";
 import {
   setAllPopupWindowClose,
-  setIsInputOnFocus,
+  
   setOpenPopupWindow,
 } from "../../redux/storages/navbarSlice";
 import {
   ProfilePopup,
-  MessagePopup,
-  NotificationPopup,
-  MorePopup,
+  // MessagePopup,
+  // NotificationPopup,
+  // MorePopup,
 } from "./NavbarPopups";
 
 // import objects for navbar
@@ -45,9 +45,10 @@ export const Navbar = () => {
   // rgb(152,152,152)
 
   const popupStates = useNavbarAppSelector((state) => state.navbar.popupStates);
-  const inputOnFocus = useNavbarAppSelector((state) => state.navbar.isInputOnFocus);
   const dispatch = useNavbarAppDispatch();
   const navigate = useNavigate();
+
+  const [isInputOnFocus, setIsInputOnFocus] = useState<boolean>(false);
   
   const routeNavbarMap = new Map();
   for (let i = 0; i < buttsNavbar.length; i++) {
@@ -58,9 +59,16 @@ export const Navbar = () => {
     if (path) {
       navigate(path);
     }
-
     dispatch(setAllPopupWindowClose());
   };
+  const test = (a:number, b:number) => {
+    return a +  b;
+
+  }
+
+  const result = test(2,45);
+
+  result;
   let col = "";
   const butts = [];
   for (let i = 0; i < 6; i++) {
@@ -74,32 +82,28 @@ export const Navbar = () => {
           onClick={() => {
             handleNavbarRouting(buttsNavbar[i].component);
           }}
-          className={` w-min box-border font-bold text-sm transition whitespace-nowrap duration-100   h-[100%] text-[rgb(152,152,152)] ${col} hover:text-white text-bold`}
+          className={` w-min box-border font-bold lg:text-sm md:text-[.8rem] transition whitespace-nowrap duration-100   h-[100%] text-[rgb(152,152,152)] ${col} hover:text-white text-bold`}
         >
           {buttsNavbar[i].content}{" "}
-        </motion.button>
+        </motion.button> 
       </>
     );
     col = "";
   }
-  // for router
-  // const navigate = useNavigate();
 
   const popupRef = useRef<HTMLDivElement>(null);
-  // useEffect(() => {
-  //   const handleClosePopups = (event: MouseEvent) => {
-  //     if (
-  //       popupRef.current &&
-  //       !popupRef.current.contains(event.target as Node)
-  //     ) {
-  //       dispatch(setAllPopupWindowClose());
-  //       console.log(popupRef.current, event.target);
-  //     }
-  //   };
-  //   document.addEventListener("mousedown", handleClosePopups);
+  useEffect(() => {
+    const handleClosePopups = (event: MouseEvent) => {
+        const target = event.target as HTMLElement;
+        const clickedInsidePopup = target.closest('[data-popup="true"]');
+        if (!clickedInsidePopup) {
+          dispatch(setAllPopupWindowClose());
+        }
+    };
+    document.addEventListener("mousedown", handleClosePopups);
 
-  //   return () => document.removeEventListener("mousedown", handleClosePopups);
-  // }, [dispatch]);
+    return () => document.removeEventListener("mousedown", handleClosePopups);
+  }, [dispatch]);
 
   const left = butts.slice(0, butts.length / 2);
   const right = butts.slice(butts.length / 2);
@@ -108,7 +112,7 @@ export const Navbar = () => {
     <>
       <main
         style={{ justifyContent: "space-evenly" }}
-        className={`w-[80vw] select-none fixed h-[3rem] bg-[rgb(18,18,18)] z-[1000] place-self-center gap-[1rem]  align-center flex justify-center flex-rows  top-[0%] `}
+        className={` select-none sm:w-[40rem] md:w-[50rem] lg:w-[60rem] fixed h-[2.5rem] bg-[rgb(18,18,18)] z-[1000] place-self-center gap-[1rem]  align-center flex justify-center flex-rows  top-[0%] `}
       > 
         <button
           onClick={() => handleNavbarRouting(buttsNavbar[0].component)}
@@ -131,10 +135,10 @@ export const Navbar = () => {
  bg-[rgb(48,48,48)] place-self-center   box-border relative  duration-200 transition-[shadow] rounded-[.2rem] outline-none text-white hover:outline-none"
         >
           <motion.input
-            onFocus={() => dispatch(setIsInputOnFocus({ focused: true }))}
-            onBlur={() => dispatch(setIsInputOnFocus({ focused: false }))}
+            onFocus={() => setIsInputOnFocus(true)}
+            onBlur={() => setIsInputOnFocus(false)}
             animate={{
-              boxShadow: inputOnFocus
+              boxShadow: isInputOnFocus
                 ? "0px 0px 0px .5px rgb(152,152,152)"
                 : "0px 0px 0px 0px rgb(152,152,152)",
             }}
@@ -144,7 +148,7 @@ export const Navbar = () => {
             className={`w-[100%] h-[100%] p-[1rem] rounded-[.2rem] focus:border-none hover:outline-none focus:outline-none active:outline-none`}
           />
           <button className={` absolute place-self-center right-[1rem]`}>
-            <Search strokeWidth={1.2} className={`text-[rgb(152,152,152)]`} />
+            <Search strokeWidth={1.5} size = {20} className={`text-[rgb(152,152,152)]`} />
           </button>
         </section>
         <section className=" h-full w-fit relative flex gap-[1rem] flex-cols">
@@ -166,7 +170,8 @@ export const Navbar = () => {
             />
           </p>
           <ChevronDown
-            strokeWidth={1.2}
+            strokeWidth={1.5}
+
             className={`${
               popupStates[3].isOpened ? "text-white" : "text-[rgb(152,152,152)]"
             } border-none place-self-center`}
@@ -185,8 +190,8 @@ export const Navbar = () => {
               <button
                 onClick={() => dispatch(setOpenPopupWindow({ id: index }))}
               >
-                <item.icon
-                  strokeWidth={1}
+                <item.icon size = {20}
+                  strokeWidth={1.5}
                   className="text-[rgb(152,152,152)] hover:text-white"
                 ></item.icon>
               </button>

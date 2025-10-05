@@ -26,10 +26,10 @@ export const Home = () => {
       <motion.main
         initial={{ opacity: 0, y: 0 }}
         animate={{ opacity: 1, y: 10 }}
-        className="relative pt-2 z-[100] w-[100%]  h-[100vh] grid grid-rows-1 grid-cols-9"
+        className="relative pt-2 z-[100] w-[100%]  h-[100vh] grid grid-rows-1 md:grid-cols-10 lg:grid-cols-9"
       >
         
-        <section className=" w-[100%] h-[200vh]  relative col-span-6 flex flex-col pt-4 pr-8">
+        <section className=" w-[100%] h-[200vh]  relative col-span-6 flex flex-col pt-4 pr-4">
          {SlidersContent.map((item, index) => (
            <div key = {index}>
               <header className='text-white text-2xl font-bold'>{item.title}</header>
@@ -38,7 +38,7 @@ export const Home = () => {
          ))}
         </section>
 
-        <section className="h-fit w-[100%] sticky bottom-0 pl-2 py-2 relative col-span-3">
+        <section className="h-fit w-[100%] sticky bottom-0 pl-2 py-2 relative lg:col-span-3 md:col-span-4">
          <ArtistTools></ArtistTools>
         </section>
       </motion.main>

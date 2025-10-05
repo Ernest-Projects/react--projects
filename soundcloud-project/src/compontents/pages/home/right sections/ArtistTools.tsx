@@ -15,7 +15,7 @@ export const ArtistTools = () => {
     <>
       <motion.section
         transition={{ duration: 0.1 }}
-        className="h-fit w-[100%]  relative "
+        className="h-fit w-[100%]   relative "
       >
         <div className="w-[100%] h-fit relative flex flex-cols justify-between pb-6 ">
           <header className="font-bold text-sm text-white">ARTIST TOOLS</header>
@@ -48,7 +48,7 @@ export const ArtistTools = () => {
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.1 }}
                   key={index}
-                  className="border grid p-2 grid-rows-2 group overflow-hidden relative grid-cols-1 align-center justify-center border-[rgb(70,70,70)] w-[100%] h-full rounded-[.5rem] "
+                  className="border grid p-2 min-w-[3rem] grid-rows-2 group overflow-hidden relative grid-cols-1 align-center justify-center border-[rgb(70,70,70)] h-full rounded-[.5rem] "
                 >
                   <div className="w-[50%] aspect-[1/1]  place-self-center  h-fit">
                     <img
@@ -75,12 +75,12 @@ export const ArtistTools = () => {
               )
             )}
         </motion.div>
-        <div className=" w-full flex flex-cols align-center  bg-[rgb(50,44,91)] rounded-[.3rem] my-[1rem] h-[3rem]">
+        <div className=" w-full flex flex-cols align-center  bg-[rgb(50,44,91)] rounded-[.3rem] my-[1rem] h-fit ">
           <Sparkles
             size={50}
             className="text-[rgb(111,94,230)]  place-self-center px-4"
           />
-          <p className="text-white text-[.8rem] place-self-center">
+          <p className="text-white text-[.8rem]  place-self-center">
             Unlock Artist tools from UAH 69.99/month.
           </p>
         </div>

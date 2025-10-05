@@ -3,7 +3,6 @@ import { GlobalButton } from "../glo/GlobalButton"
 import {User} from 'lucide-react'
 export const UserNotification = () => {
     return (<>
-    
     <section className=" relative w-[22rem] h-[4rem] place-self-center p-2 gap-[.2rem] flex  justify-between flex-cols ">
         <div className="rounded-[10rem] relative h-[100%]  aspect-[1/1] overflow-[hidden] overflow-hidden">
         <img  style = {{objectFit:"fill"}} className="w-[100%] rounded-[10rem] h-[100%]" src="../../../../public/notificationIcon.png" alt="" />
