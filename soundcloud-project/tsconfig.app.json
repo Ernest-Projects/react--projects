@@ -21,7 +21,19 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    // alias
+     "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src"],
+      "@global/*": ["./src/compontents/global/*"],
+      "@pages/*": ["src/compontents/pages/*"],
+      "@navbar/*": ["./src/compontents/navbar/*"],
+      "@library-sections/*": ["./src/compontents/pages/library/components/library-sections/*"],
+    }
+
+
   },
   "include": ["src"]
 }

@@ -14,6 +14,7 @@ import {
   Heart,
   ListVideo,
   DotSquare,
+  icons,
 } from "lucide-react";
 import { Volume1, Volume2, VolumeX } from "lucide-react";
 
@@ -39,7 +40,7 @@ export const Player = () => {
   const volumeRangeRef = useRef<HTMLInputElement>(null);
 
   const [isHover, setIsHover] = useState(false);
-  const [volume, setVolume] = useState<number>(50);
+  const [volume, setVolume] = useState({vol: 50, icons: [{icon: Volume2}, {icon: Volume1}, {icon: VolumeX}]});
   const {
     isAudioPlaying,
     trackDuration,
@@ -61,10 +62,9 @@ export const Player = () => {
       document.title = "stop"
     }
   }
-
   useEffect(() => {
     if(!audioRef.current) return
-    audioRef.current.volume = volume / 100;
+    audioRef.current.volume = volume.vol / 100;
   }, [volume])
 
   useEffect(() => {
@@ -99,7 +99,7 @@ export const Player = () => {
   return (
     <>
       <main className="fixed  w-[100%] z-[1000] h-[2.5rem] flex flex-col justify-center align-center place-self-center z-[1000] left-0 bottom-0 bg-[rgb(48,48,48)]">
-        <div className="h-full text-white  sm:w-[40rem] md:w-[50rem] lg:w-[60rem] place-self-center flex  align-center justify-between relative  ">
+        <div className="h-full text-white  sm:w-[40rem] md:w-[50rem] lg:w-[70rem] place-self-center flex  align-center justify-between relative  ">
           <section className=" gap-[.8rem] border-red-500 relative flex flex-row place-self-center  w-fit ">
             <SkipBack className="place-self-center" />
             <motion.button
@@ -157,10 +157,14 @@ export const Player = () => {
                 <span className="font-bold">-{trackTime[1]}</span>
               </p>
               <div onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)} className=" relative  flex justify-center align-center">
-                <Volume1
+                {(() =>{
+                  const Icon = volume.icons[volume.vol == 0 ? 2 : volume.vol >= 60 ? 0: 1].icon;
+                  return <Icon
                   size={20}
                   className="place-self-center cursor-pointer"
-                ></Volume1>
+                  ></Icon>
+                })()}
+                
                 {/* Volume popup hover */}
                 <motion.div
                   initial = {{opacity:0, y:50, pointerEvents: "auto"}}
@@ -169,16 +173,15 @@ export const Player = () => {
                   className={` w-[3rem] h-[10rem] rounded-[.3rem] border border-[rgb(70,70,70)] absolute  place-self-center flex justify-center align-center absolute  bg-[rgb(18,18,18)]  h-[5rem] text-white`}
                 >
                     <input
-                     
   onPointerDown={(e) => e.stopPropagation()}
                       ref={volumeRangeRef}
                       type="range"
                       min={0} 
                       max={100}
-                      value={volume}
+                      value={volume.vol}
                       name="volume"
                       id="volume"
-                      onChange={(e)=> { e.stopPropagation(); setVolume(Number(e.target.value))}}
+                      onChange={(e)=> { e.stopPropagation(); setVolume((prev) => ({...prev, vol:Number(e.target.value)}))}}
                       className=" active:outline-none range-custom  hover:border-none active:border-none h-[4px] bg-[rgb(70,70,70)]  [transform:rotate(-90deg)] [transform-origin:center] w-[8rem] place-self-center"
                       step={1}
                     />

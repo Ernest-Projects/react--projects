@@ -10,17 +10,12 @@ type SliderProps = {
 };
 type ToolsProps = {
   isToolsOpened: boolean;
-  sliders: SliderProps;
+  // sliders: SliderProps;
 };
 
 const initialState = {
   isToolsOpened: false,
-  sliders: {
-    first: 0,
-    second: 0,
-    third: 0,
-    fourth: 0,
-  },
+
 } as ToolsProps;
 
 export const homeStore = createSlice({
@@ -33,22 +28,11 @@ export const homeStore = createSlice({
     },
 
     // for sliders
-    setMoveSlider: (
-      state,
-      action: PayloadAction<{ id: string; value: number; direction: string }>
-    ) => {
-      const { id, value, direction } = action.payload;
-      if (direction == "right") {
-        state.sliders[id] += value;
-      }
-      if (direction == "left") {
-        state.sliders[id] -= value;
-      }
-    }
+  
   },
 });
 
-export const { setIsToolsOpened, setMoveSlider } = homeStore.actions;
+export const { setIsToolsOpened } = homeStore.actions;
 export const store = configureStore({
   reducer: { home_page: homeStore.reducer },
 });

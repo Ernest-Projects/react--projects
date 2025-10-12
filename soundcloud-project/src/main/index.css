@@ -1,7 +1,15 @@
+@font-face {
+  font-family: 'Interstate';
+  src: url('../../public/fonts/interstate-webfont/interstate-black-comp-58b641cc0aca1.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
 @import "tailwindcss";
 
 body {
   background: rgb(18, 18, 18);
+  font-family: 'Interstate', sans-serif;
 }
 input[type="range"] {
   -webkit-appearance: none;

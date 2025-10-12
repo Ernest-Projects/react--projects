@@ -49,26 +49,21 @@ export const Navbar = () => {
   const navigate = useNavigate();
 
   const [isInputOnFocus, setIsInputOnFocus] = useState<boolean>(false);
-  
+  const [isButtonActive, setIsButtonActive] = useState(Array.from({length: 6}, (_,i) => ({isActive: false})));
   const routeNavbarMap = new Map();
   for (let i = 0; i < buttsNavbar.length; i++) {
     routeNavbarMap.set(buttsNavbar[i].component, buttsNavbar[i].path);
   }
-  const handleNavbarRouting = (content: React.ComponentType) => {
+  const handleNavbarRouting = (content: React.ComponentType, id: number) => {
+    setIsButtonActive((prev) => prev.map((_,index) => ({isActive:index == id})));
     const path = routeNavbarMap.get(content);
     if (path) {
       navigate(path);
     }
+        // setTimeout(() => window.location.reload(), 0);
     dispatch(setAllPopupWindowClose());
   };
-  const test = (a:number, b:number) => {
-    return a +  b;
 
-  }
-
-  const result = test(2,45);
-
-  result;
   let col = "";
   const butts = [];
   for (let i = 0; i < 6; i++) {
@@ -80,9 +75,9 @@ export const Navbar = () => {
         <motion.button
           whileTap={{ scale: 0.98 }}
           onClick={() => {
-            handleNavbarRouting(buttsNavbar[i].component);
+            handleNavbarRouting(buttsNavbar[i].component, i);
           }}
-          className={` w-min box-border font-bold lg:text-sm md:text-[.8rem] transition whitespace-nowrap duration-100   h-[100%] text-[rgb(152,152,152)] ${col} hover:text-white text-bold`}
+          className={` w-min border-b-[2px] ${isButtonActive[i].isActive ? "text-white border-b-white"  : "text-[rgb(152,152,152)] border-b-[rgb(18,18,18)]" }  box-border font-bold lg:text-sm md:text-[.8rem] transition whitespace-nowrap duration-100 h-[100%] text-[rgb(152,152,152)] ${col} hover:text-white text-bold`}
         >
           {buttsNavbar[i].content}{" "}
         </motion.button> 
@@ -112,10 +107,10 @@ export const Navbar = () => {
     <>
       <main
         style={{ justifyContent: "space-evenly" }}
-        className={` select-none sm:w-[40rem] md:w-[50rem] lg:w-[60rem] fixed h-[2.5rem] bg-[rgb(18,18,18)] z-[1000] place-self-center gap-[1rem]  align-center flex justify-center flex-rows  top-[0%] `}
+        className={` select-none sm:w-[40rem] md:w-[55rem] lg:w-[70rem] fixed h-[2.5rem] bg-[rgb(18,18,18)] z-[1000] place-self-center gap-[1rem]  align-center flex justify-center flex-rows  top-[0%] `}
       > 
         <button
-          onClick={() => handleNavbarRouting(buttsNavbar[0].component)}
+          onClick={() => handleNavbarRouting(buttsNavbar[0].component, 0)}
           className={`invert  place-self-center flex justify-center align-center`}
         >
           <img

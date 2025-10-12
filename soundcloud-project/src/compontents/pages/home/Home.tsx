@@ -11,10 +11,13 @@ import {
 
 import { ArtistTools } from "./right sections/ArtistTools";
 import { setIsToolsOpened } from "../../../redux/storages/homeSlice";
-import { Slider } from "./left sections/Slider";
+import { Slider } from "../../global/Slider";
 import { SlidersContent } from "./homeConfig";
 
 export const Home = () => {
+
+      const LikedCardsObject = Array.from({length: 15}, (_, i) =>({image: `https://picsum.photos/300/200?random=${i}`, type: "track", title: {header: `Track name ${i}`, subtitle:`track author ${i}`}})) 
+ 
   // const  = us
   const toolsOpened = useHomeAppSelector(
     (state) => state.home_page.isToolsOpened
@@ -33,7 +36,7 @@ export const Home = () => {
          {SlidersContent.map((item, index) => (
            <div key = {index}>
               <header className='text-white text-2xl font-bold'>{item.title}</header>
-          <Slider id = {item.sliderId}></Slider>
+          <Slider content = {LikedCardsObject}></Slider>
           </div>
          ))}
         </section>

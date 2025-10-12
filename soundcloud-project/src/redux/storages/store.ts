@@ -4,12 +4,21 @@ import {configureStore} from "@reduxjs/toolkit";
 import { navbarReducer } from "./navbarSlice";
 import { homeReducer } from "./homeSlice";
 import { playerReducer } from "./playerSlice";
+import { libraryReducer } from "./librarySlice";
 
 export const store =  configureStore({
     reducer: {
+        // static
         navbar: navbarReducer,
+        player: playerReducer,
+
+        // ------
+        
+        // pages
         home_page: homeReducer,
-        player: playerReducer 
+        library_page: libraryReducer,
+        // ------
+
     },
 });
 

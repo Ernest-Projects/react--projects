@@ -5,7 +5,7 @@ import { MorePopup, NotificationPopup, MessagePopup
 //  navbar buttons for main pages 
  import { Home } from "../pages/home/Home";
  import {Feed} from "../pages/feed/Feed";
- import { Library } from "../pages/library/Library";
+ import { Library } from "../pages/library/main/Library";
  import { TryArtist } from "../pages/tryArtist/TryArtist";
  import { ForArtists } from "../pages/forArtists/ForArtists";
  import { Upload } from "../pages/upload/Upload";
@@ -13,9 +13,9 @@ import { MorePopup, NotificationPopup, MessagePopup
 // import * from "../pages/";
 
 export const buttsNavbar = [
-  { content: "Home", component: Home, path: "/home" },
+  { content: "Home", component: Home, path: "/discover" },
   { content: "Feed", component: Feed, path: "/feed" },
-  { content: "Library", component: Library, path: "/library" },
+  { content: "Library", component: Library, path: "/you/*" },
   { content: "Try Artist Pro", component: TryArtist,path: "/try" },
   { content: "For Artists", component:ForArtists, path: "/artist" },
   { content: "Upload", component: Upload, path: "/upload" },

@@ -1,5 +1,5 @@
 
-import { GlobalButton } from "../glo/GlobalButton"
+import { GlobalButton } from "../global/GlobalButton"
 import {User} from 'lucide-react'
 export const UserNotification = () => {
     return (<>
