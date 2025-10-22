@@ -12,6 +12,20 @@ export interface PlayerState {
   trackRepeatId: 0 | 1 | 2 | 3 | 4;
   volumeOfTrack: number;
   trackTime: Record<string, string>;
+  currentTrack: TrackProps;
+}
+
+export interface TrackProps {
+  id: number;
+  audio: string;
+  image: string;
+  title: {
+    name: string;
+    subtitle: string;
+  };
+  liked: boolean;
+    setted: boolean,
+    playable: boolean
 }
 
 const initialState = {
@@ -25,6 +39,15 @@ const initialState = {
     trackTimeForward: "",
     trackTimeBack: "",
   },
+  currentTrack: {
+    id: 1,
+    audio: "with_you.mp3",
+    image: "artworks-nmLsxmyqXpaxaVqz-l0rGKQ-t1080x1080.jpeg",
+    title: { name: "with you", subtitle: "DJ anemia, crier, sixnite" },
+    liked: true,
+    setted: true,
+    playable: true
+  },
 } as PlayerState;
 
 export const playerStore = createSlice({
@@ -32,8 +55,13 @@ export const playerStore = createSlice({
   initialState,
   // for popup windows
   reducers: {
-    setMusicPlayable: (state) => {
-      state.isAudioPlaying = !state.isAudioPlaying;
+    setMusicPlayable: (state, action: PayloadAction<{playable?: boolean}>) => {
+      if (typeof action.payload?.playable == "boolean") {
+         state.isAudioPlaying = action.payload.playable;
+      }
+      else {
+        state.isAudioPlaying =!state.isAudioPlaying;
+      }
     },
     setTrackDuration: (state, action: PayloadAction<{ duration: number }>) => {
       state.trackDuration = action.payload.duration;
@@ -76,7 +104,6 @@ export const playerStore = createSlice({
       let allMinutes = Math.floor(timeTrackBack / 60);
       let allSeconds = Math.floor(timeTrackBack % 60);
 
-
       let allSecStr = allSeconds < 10 ? `0${allSeconds}` : `${allSeconds}`;
       state.trackTime[1] = `${allMinutes}:${allSecStr}`;
 
@@ -84,6 +111,10 @@ export const playerStore = createSlice({
         state.trackTime[0] = "0:00";
         state.trackTime[1] = `${allMinutes}:${allSecStr}`;
       }
+    },
+
+    setPlayerData: (state, action: PayloadAction<{ data: TrackProps }>) => {
+      state.currentTrack = action.payload.data;
     },
   },
 });
@@ -94,6 +125,7 @@ export const {
   setIsTrackEnded,
   setIsTrackOnRepeat,
   setTrackTime,
+  setPlayerData,
 } = playerStore.actions;
 export const store = configureStore({
   reducer: { player: playerStore.reducer },

@@ -49,10 +49,11 @@ export const libraryStore = createSlice({
         setAddTrackInHistory: (state,action:PayloadAction<{image: string, title:{header: string, subtitle: string }, type:string}>) => {
             state.historyOfTracks.push({image: action.payload.image, title:  action.payload.title, type: action.payload.type});
         }
+
     }
 });
 
-export const {setSelectButton} = libraryStore.actions;
+export const {setSelectButton,setAddTrackInHistory} = libraryStore.actions;
 export const store = configureStore({reducer: {library_page: libraryStore.reducer}});
 export const libraryReducer = homeStore.reducer;
 

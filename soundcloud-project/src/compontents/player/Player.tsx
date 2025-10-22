@@ -42,6 +42,7 @@ export const Player = () => {
   const [isHover, setIsHover] = useState(false);
   const [volume, setVolume] = useState({vol: 50, icons: [{icon: Volume2}, {icon: Volume1}, {icon: VolumeX}]});
   const {
+    currentTrack,
     isAudioPlaying,
     trackDuration,
     trackCurrentTime,
@@ -53,7 +54,7 @@ export const Player = () => {
 
   const handlePlayTrackAndSetTitle = () => {
     if (!audioRef.current) return;
-    dispatch(setMusicPlayable());
+    dispatch(setMusicPlayable({playable:true }));
     if (!isAudioPlaying) {
       document.title = audioRef.current.src.slice(28, -4).replaceAll("_", " ");
       console.log(audioRef.current.src);
@@ -74,7 +75,7 @@ export const Player = () => {
       if (trackRepeatId != 3) {
         dispatch(setIsTrackEnded({ ended: true }));
         dispatch(setTrackCurrentTime({ current: 0 }));
-        dispatch(setMusicPlayable());
+        dispatch(setMusicPlayable({playable:false}));
       } else {
         dispatch(setIsTrackEnded({ ended: false }));
         audioRef.current?.play();
@@ -98,7 +99,7 @@ export const Player = () => {
 
   return (
     <>
-      <main className="fixed  w-[100%] z-[1000] h-[2.5rem] flex flex-col justify-center align-center place-self-center z-[1000] left-0 bottom-0 bg-[rgb(48,48,48)]">
+      <main className="fixed  w-[100%] z-[1000] h-[2.25rem] flex flex-col justify-center align-center place-self-center z-[1000] left-0 bottom-0 bg-[rgb(48,48,48)]">
         <div className="h-full text-white  sm:w-[40rem] md:w-[50rem] lg:w-[70rem] place-self-center flex  align-center justify-between relative  ">
           <section className=" gap-[.8rem] border-red-500 relative flex flex-row place-self-center  w-fit ">
             <SkipBack className="place-self-center" />
@@ -138,12 +139,12 @@ export const Player = () => {
             </button>
           </section>
 
-          <section className="relative place-self-center h-[100%] border-red-500 md:w-[40%] lg:w-[50%]">
+          <section className="relative place-self-center h-[100%] border-red-500 md:w-[40%] lg:w-[55%]">
             <div
               ref={progressbarRef}
               className=" place-self-center flex gap-[.5rem] justify-center align-center  w-full h-full"
             >
-              <p className=" text-white w-fit font-bold text-sm place-self-center">
+              <p className=" text-white w-fit font-bold text-[12px] place-self-center">
                 {trackCurrentTime == 0 ? "0:00" : trackTime[0]}
               </p>
               <div className="w-full h-[2px] bg-[rgb(130,130,130)] place-self-center">
@@ -153,7 +154,7 @@ export const Player = () => {
                   className="bg-[rgb(255,85,0)] h-full"
                 ></motion.div>
               </div>
-              <p className=" text-white  w-fit text-sm place-self-center">
+              <p className=" text-white  w-fit text-[12px] place-self-center">
                 <span className="font-bold">-{trackTime[1]}</span>
               </p>
               <div onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)} className=" relative  flex justify-center align-center">
@@ -204,7 +205,7 @@ export const Player = () => {
                 }}
                 ref={audioRef}
                 id="myAudio"
-                src="../../music/with_you.mp3"
+                src={`../../music/${currentTrack.audio}`}
               ></audio>
             </div>
           </section>

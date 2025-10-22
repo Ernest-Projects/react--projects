@@ -6,11 +6,11 @@ export const UndergroundResources = () => {
         "Cookie Policy", "Cookie Manager","Imprint", "Artist Resources","Newsroom", "Charts", "Transparency Reports"];
   return (
     <>
-      <main className=" text-[14px] flex flex-col gap-[1rem] text-gray-500 py-[4rem] pb-[6.5rem]">
+      <main className=" text-[14px] flex flex-col gap-[1rem] text-gray-500 py-[3rem] pb-[6.5rem]">
         <div className="w-fit flex flex-wrap">
 
         {data.map((item, index) => (
-          <span>
+          <span className="font-bold">
             <a className="text-[rgb(152,152,152)] hover:text-[rgb(48,48,48)]">{item}</a>
             <span className="font-bold mx-[.3rem]">{index == data.length - 1 ? "" : "·"}</span>
            </span>

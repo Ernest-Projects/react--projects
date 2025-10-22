@@ -25,14 +25,12 @@ import { OverviewPage } from "../components/library-pages";
 export const Library = () => {
 
     // const LikedCardsObject = Array.from({length: 10}, (_, i) =>({image: `https://picsum.photos/300/200?random=${i}`, type: "track", title: {header: `Track name ${i}`, subtitle:`track author ${i}`}})) 
-
    
 return (<> 
  
 <AnimatePresence>
 <motion.main initial = {{opacity: 0, y: 0}} animate = {{opacity:1, y: 10}} className="flex flex-col h-fit  gap-[3rem]"> 
-
-
+ 
     <ButtonsTitle></ButtonsTitle>
      <Routes>
     <Route index  element = {<OverviewPage/>}></Route>
@@ -48,3 +46,4 @@ return (<>
     </AnimatePresence> 
 </>);
 };
+
