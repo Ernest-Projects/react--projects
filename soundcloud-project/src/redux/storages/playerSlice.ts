@@ -4,6 +4,8 @@ import {
   type PayloadAction,
 } from "@reduxjs/toolkit";
 
+import type{ Track} from 'src/types/Track'
+
 export interface PlayerState {
   isAudioPlaying: boolean;
   trackDuration: number;
@@ -12,21 +14,9 @@ export interface PlayerState {
   trackRepeatId: 0 | 1 | 2 | 3 | 4;
   volumeOfTrack: number;
   trackTime: Record<string, string>;
-  currentTrack: TrackProps;
+  currentTrack: Track;
 }
 
-export interface TrackProps {
-  id: number;
-  audio: string;
-  image: string;
-  title: {
-    name: string;
-    subtitle: string;
-  };
-  liked: boolean;
-    setted: boolean,
-    playable: boolean
-}
 
 const initialState = {
   isAudioPlaying: false,
@@ -40,13 +30,16 @@ const initialState = {
     trackTimeBack: "",
   },
   currentTrack: {
-    id: 1,
-    audio: "with_you.mp3",
-    image: "artworks-nmLsxmyqXpaxaVqz-l0rGKQ-t1080x1080.jpeg",
-    title: { name: "with you", subtitle: "DJ anemia, crier, sixnite" },
-    liked: true,
-    setted: true,
-    playable: true
+     id: 3,
+      audio: "Get_Away_w_CNQR.mp3",
+      image: "artworks-cKp9DnXYoVNyB8Ya-5Gb30w-t500x500.jpeg",
+      title: {
+        name: "Get Away (w/ CNQR+)",
+        subtitle: "Hugeloud"
+      },
+      liked: true,
+      setted: true,
+      playable: false
   },
 } as PlayerState;
 
@@ -73,11 +66,9 @@ export const playerStore = createSlice({
       action: PayloadAction<{ current: number }>
     ) => {
       state.trackCurrentTime = action.payload.current;
-      console.log("current:", state.trackCurrentTime);
     },
     setIsTrackEnded: (state, action: PayloadAction<{ ended: boolean }>) => {
       state.isTrackEnded = action.payload.ended;
-      console.log("track ended: ", state.isTrackEnded);
     },
     setIsTrackOnRepeat: (state) => {
       state.trackRepeatId += 1;
@@ -102,7 +93,7 @@ export const playerStore = createSlice({
       // back
       let timeTrackBack = state.trackDuration - state.trackCurrentTime;
       let allMinutes = Math.floor(timeTrackBack / 60);
-      let allSeconds = Math.floor(timeTrackBack % 60);
+      let allSeconds = Math.floor(timeTrackBack % 60); 
 
       let allSecStr = allSeconds < 10 ? `0${allSeconds}` : `${allSeconds}`;
       state.trackTime[1] = `${allMinutes}:${allSecStr}`;
@@ -113,10 +104,36 @@ export const playerStore = createSlice({
       }
     },
 
-    setPlayerData: (state, action: PayloadAction<{ data: TrackProps }>) => {
+    setPlayerData: (state, action: PayloadAction<{ data: Track }>) => {
       state.currentTrack = action.payload.data;
+      console.log("when clicked on the title: ", state.currentTrack)
+      console.log("setted is (in currentTrack):", state.currentTrack.setted)
+      console.log("playable is (in currentTrack):", state.currentTrack.playable)
+
     },
-  },
+
+    // встановити трек: встановити setted = true (встановлений в player), встановити played = true (трек грає)
+    setCurrentTrackPlayablePayload: (state, action: PayloadAction<{trackId: number}>) => {
+      // state.currentTrack.forEach(element => {element.
+
+      // });
+      if (state.currentTrack.id == action.payload.trackId) {
+        state.currentTrack.playable = true;
+        console.log("State `playable` for track ", action.payload.trackId, ": ", state.currentTrack.playable)
+      }
+      
+      // state.headerButtons.forEach((item) => item.isSelected = item.id === action.payload.id);
+    },
+  
+   setCurrentTrackSettedPayload: (state, action: PayloadAction<{trackId: number}>) => {
+      // state.currentTrack.forEach(element => {element.
+  if (state.currentTrack.id == action.payload.trackId) {
+        state.currentTrack.setted = true;
+      }
+      // });
+      // state.headerButtons.forEach((item) => item.isSelected = item.id === action.payload.id);
+    }
+  }
 });
 export const {
   setMusicPlayable,
@@ -125,7 +142,9 @@ export const {
   setIsTrackEnded,
   setIsTrackOnRepeat,
   setTrackTime,
+  setCurrentTrackSettedPayload,
   setPlayerData,
+  setCurrentTrackPlayablePayload
 } = playerStore.actions;
 export const store = configureStore({
   reducer: { player: playerStore.reducer },

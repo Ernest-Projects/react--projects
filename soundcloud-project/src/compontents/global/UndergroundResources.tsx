@@ -10,7 +10,7 @@ export const UndergroundResources = () => {
         <div className="w-fit flex flex-wrap">
 
         {data.map((item, index) => (
-          <span className="font-bold">
+          <span key = {index} className="font-bold">
             <a className="text-[rgb(152,152,152)] hover:text-[rgb(48,48,48)]">{item}</a>
             <span className="font-bold mx-[.3rem]">{index == data.length - 1 ? "" : "·"}</span>
            </span>

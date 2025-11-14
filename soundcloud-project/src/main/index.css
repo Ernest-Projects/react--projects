@@ -15,18 +15,38 @@ input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
 }
-input[type="range"]:hover {
-}
+input[name="progressbar"]:hover::-webkit-slider-thumb{
+  /* box-shadow: inset 0 0 0 1px  red; */
+  opacity: 0;
 
-input[type="range"]::-webkit-slider-thumb {
+}
+/* pimpochka for volume   */
+input[name="volume"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
+  opacity: 1;
   width: 16px; /* Thumb width */
   height: 16px; /* Thumb height */
   background: black; /* Thumb color */
   cursor: pointer;
   border-radius: 10rem;
   box-shadow: inset 0 0 0 1px  white;
+}
+
+/* pimpochka fro */
+input[name="progressbar"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  opacity: 0;
+  z-index: 10000;
+  width: 10px; 
+  height: 10px; 
+  background: black; 
+  cursor: pointer;
+  border-radius: 10rem;
+  box-shadow:
+  inset 0 0 0 10px transparent 
+  inset 0 0 0 1.5px  rgb(255,85,0);
 }
 /* input[type="range"]::-webkit-slider-runnable-track { */
   /* height: 6px; */

@@ -13,7 +13,7 @@ type ButtsProps = {
     id: number,
     isSelected: boolean
 }
-type TrackProps = {
+type TrackTitleProps = {
     type: string
     image: string,
     title: {
@@ -22,9 +22,22 @@ type TrackProps = {
     }
 }
 
+interface TrackProps  {
+ id: number,
+  audio: string,
+    image: string,
+    title: {
+        name: string,
+        subtitle: string
+    },
+    liked: boolean,
+    setted: boolean,
+    playable:boolean
+}
+
 interface LibraryProps  {
     headerButtons: ButtsProps[],
-    historyOfTracks: TrackProps[],
+    historyOfTracks: TrackTitleProps[],
     likedTracks: TrackProps[]
 
 }
@@ -46,9 +59,16 @@ export const libraryStore = createSlice({
             }
         },
         // add track in history
-        setAddTrackInHistory: (state,action:PayloadAction<{image: string, title:{header: string, subtitle: string }, type:string}>) => {
-            state.historyOfTracks.push({image: action.payload.image, title:  action.payload.title, type: action.payload.type});
-        }
+        setAddTrackInHistory: (state,action:PayloadAction<{trackData: any}>) => {
+        },
+
+
+        // setAllLikedTracks: (state, action:PayloadAction<{likedTracksFromDb: TrackProps[]}>) => {
+            // state.likedTracks = action.payload.likedTracksFromDb; 
+            // state.likedTracks = state.likedTracks.map((item, index) => item)
+
+        // }/
+
 
     }
 });

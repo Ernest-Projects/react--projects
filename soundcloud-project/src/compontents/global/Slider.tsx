@@ -5,6 +5,19 @@ import { motion} from "motion/react"
 import { TrackTitle } from "./TrackTitle";
 // import {  } from "motion/react-client";
 
+interface TrackProps  {
+ id: number,
+  audio: string,
+    image: string,
+    title: {
+        name: string,
+        subtitle: string
+    }
+    liked: boolean,
+    setted: boolean,
+    playable:boolean
+}
+
 type CardTitlesProps = {
   image: string,
   type: string,
@@ -14,7 +27,7 @@ type CardTitlesProps = {
   }
 }
 type SliderProps = {
-  content: CardTitlesProps[]
+  content: TrackProps[]
 }
 
 export const Slider = ({content}: SliderProps) => { 

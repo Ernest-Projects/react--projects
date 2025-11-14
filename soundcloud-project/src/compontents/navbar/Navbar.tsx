@@ -44,6 +44,10 @@ export const Navbar = () => {
   // hover popup buttons color
   // rgb(152,152,152)
 
+  // original Soundcloud color
+  //rgb(255,85,0)
+
+
   const popupStates = useNavbarAppSelector((state) => state.navbar.popupStates);
   const dispatch = useNavbarAppDispatch();
   const navigate = useNavigate();
