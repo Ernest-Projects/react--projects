@@ -11,33 +11,15 @@ import { Eye, EyeOff } from "lucide-react";
 import { isPrimaryPointer, motion } from "motion/react";
 import { input } from "motion/react-client";
 
-import type { UserDataProps } from "../../types/withTypes";
+import type { UserDataProps, UserRegistrationProps, AuthorizationProps, UserLoginProps } from "../../types/withTypes";
 
-interface AuthorizationProps {
-  userLogged: boolean;
-  loggedOrRegistered: boolean;
-  
-  onLoggedOrRegistered: () => void;
-  
-  handleSendUserData: (data: UserDataProps) => void;
-} 
-type UserRegistrationProps = {
-  user_name: string;
-  user_email: string;
-  user_password: string;
-  confirm_user_password: string;
-};
 
-type UserLoginProps = {
-  user_name: string;
-  user_password: string;
-};
 
 export const Authorization = ({
   loggedOrRegistered,
   onLoggedOrRegistered,
 
-  handleSendUserData,
+  handleSendUserData,  
 }: AuthorizationProps) => {
   // const [userName, setUserName] = useState<string>("");
   const [userDataRegistration, setUserDataRegistration] =
@@ -190,7 +172,7 @@ export const Authorization = ({
 
   return (
     <>
-      <motion.div className="border-red-500 px-[2rem] w-full h-full bg-red rounded-[1rem]">
+      <motion.div style = {{boxShadow: "inset 0px 20px 100px 1px rgb(20,20,20)"}} className="bg-[rgb(20,20,20)] overflow-hidden text-white font-mono px-[2rem] w-full h-full bg-red rounded-[1rem]">
         <header className="text-2xl pl-0 p-[1rem] font-bold">
           {" "}
           {loggedOrRegistered ? "Hello there, mate!" : "Are you new here?"}{" "}
@@ -201,7 +183,7 @@ export const Authorization = ({
             <form action="" className="">
               <header className="font-bold">Username: </header>
               <input
-                className="border border-[rgba(15,18,51,1)]  p-[.2rem] px-[1rem]  focus:outline-none w-full rounded-[.25rem] border-[2px]"
+                className="border border-[rgba(120,120,120,1)]  p-[.2rem] px-[1rem]  focus:outline-none w-full rounded-[.25rem] border-[2px]"
                 type="text"
                 value={userDataRegistration.user_name}
                 placeholder="Enter user name"
@@ -211,7 +193,7 @@ export const Authorization = ({
             <form action="">
               <header className="font-bold">Email: </header>
               <input
-                className="border border-[rgba(15,18,51,1)]  p-[.2rem] px-[1rem]  focus:outline-none w-full rounded-[.25rem] border-[2px]"
+                className="border border-[rgba(120,120,120,1)]  p-[.2rem] px-[1rem]  focus:outline-none w-full rounded-[.25rem] border-[2px]"
                 type="text"
                 value={userDataRegistration.user_email}
                 placeholder="Enter user email"
@@ -223,7 +205,7 @@ export const Authorization = ({
             <form action="" className="relative">
               <header className="font-bold">Password: </header>
               <input
-                className="border border-[rgba(15,18,51,1)] focus:outline-none w-full p-[.2rem] px-[1rem] rounded-[.25rem] border-[2px]"
+                className="border border-[rgba(120,120,120,1)] focus:outline-none w-full p-[.2rem] px-[1rem] rounded-[.25rem] border-[2px]"
                 type="password"
                 ref={inputPasswordRef}
                 value={userDataRegistration.user_password}
@@ -249,7 +231,7 @@ export const Authorization = ({
             <form action="">
               <header className="font-bold">Confirm password: </header>
               <input
-                className="border border-[rgba(15,18,51,1)]  p-[.2rem] px-[1rem]  focus:outline-none w-full rounded-[.25rem] border-[2px]"
+                className="border border-[rgba(120,120,120,1)]  p-[.2rem] px-[1rem]  focus:outline-none w-full rounded-[.25rem] border-[2px]"
                 type="password"
                 maxLength={25}
                 value={userDataRegistration.confirm_user_password}
@@ -269,7 +251,7 @@ export const Authorization = ({
             <form action="" className="">
               <header className="font-bold">Username: </header>
               <input
-                className="border border-[rgba(15,18,51,1)]  p-[.5rem] px-[1rem]  focus:outline-none w-full rounded-[.25rem] border-[2px]"
+                className="border border-[rgba(120,120,120,1)]  p-[.5rem] px-[1rem]  focus:outline-none w-full rounded-[.25rem] border-[2px]"
                 type="text"
                 value={userDataLogin.user_name}
                 placeholder="Enter user name"
@@ -280,7 +262,7 @@ export const Authorization = ({
             <form action="" className="relative">
               <header className="font-bold">Password: </header>
               <input
-                className="border border-[rgba(15,18,51,1)]  p-[.5rem] px-[1rem]  focus:outline-none w-full rounded-[.25rem] border-[2px]"
+                className="border border-[rgba(120,120,120,1)]  p-[.5rem] px-[1rem]  focus:outline-none w-full rounded-[.25rem] border-[2px]"
                 type="password"
                 ref={inputPasswordRef}
                 value={userDataLogin.user_password}
@@ -309,12 +291,13 @@ export const Authorization = ({
           animate={{ height: loggedOrRegistered ? "fit-content" : "full" }}
           className={`w-full gap-[1rem] flex flex-col my-[2rem]`}
         >
-          <button
-            className="bg-[rgba(15,18,51,1)] rounded-[.5rem] text-white font-bold py-[1rem]"
+          <motion.button initial = {{color: "white",scale: 1, background:"rgb(100,100,100)"}} whileHover={{ scale:1.1, color: "black", background: "rgb(210,210,210)"}} whileTap={{scale:1.1, }}
+            className="active:bg-[rgb(210,210,210)] bg-[rgb(150,150,150)]  rounded-[.5rem] text-white font-bold py-[1rem]"
             onClick={() => handleSubmitUser()}
+            
           >
             {loggedOrRegistered ? "Login" : "Register"}
-          </button>
+          </motion.button>
           <button onClick={() => onLoggedOrRegistered()}>
             {" "}
             {loggedOrRegistered

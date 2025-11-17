@@ -5,7 +5,5 @@ import Clicker from '../components/Clicker'
 
 console.log("Clicker component is loaded");
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
     <Clicker />
-  </StrictMode>
 )

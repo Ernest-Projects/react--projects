@@ -1,4 +1,4 @@
-// object typization for database
+// object typing for database
 export type UserDataProps = {
     type: string,
     data: Record<string, unknown>

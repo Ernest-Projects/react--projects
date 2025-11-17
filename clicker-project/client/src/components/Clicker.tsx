@@ -7,9 +7,16 @@ import { ShopSection } from "./clicker-section/ShopSection";
 import { upgradeDataObject } from "../gameData";
 
 import { useLocalStorage } from "./hooks/useLocalStorage";
-import { DarkLight } from "project-additions";
-import { Authentication } from "./user-authentication/Authentication";
+// import { DarkLight } from "project-additions";
+import { Authorization } from "./user-authentication/Authorization";
 // import { upgradeDataObject } from "../gameData";
+
+import {motion} from "motion/react"
+import { UserWindow } from "./clicker-section/UserWindow";
+
+import type { UserDataProps } from "../types/withTypes";
+import { DotSquare } from "lucide-react";
+
 
 type Upgrader = {
   [key: string]: number;
@@ -20,16 +27,24 @@ function Clicker() {
   // logic for registarion
   const [isUserLogged, setIsUserLogged ] = useState(false);
 
-  const [loggedOrRegistered, setLoggedOrRegistered]= useState(false)
+  const [userData, setUserData] = useState<UserDataProps>();
 
+  const [loggedOrRegistered, setLoggedOrRegistered]= useState(true)
 
-  const onUserLogged = () => {
-    setIsUserLogged(prev => !prev)
+  const handleGetUserData = (data: UserDataProps) => {
+    console.log("data: ", data)
+    setUserData(data)
+  
+    setIsUserLogged(true)
+    console.log("User logged: ", isUserLogged)
   }
 
   const onLoggedOrRegistered = () => {
     setLoggedOrRegistered(prev =>  !prev)
-    console.log("Loged (true), registered (false): ", loggedOrRegistered)
+  }
+  const handleSetLogout = () => {
+    console.log("Clicked!")
+    setIsUserLogged(false) 
   }
 
 
@@ -136,7 +151,7 @@ function Clicker() {
 
 
   useEffect(() => {
-    if (!doubleClickBanner) return
+    if (!doubleClickBanner && isUserLogged == false) return
     setClickerMoney((prev) => prev + (coefMultiplier * 2)) 
     
   },[countClicker])
@@ -164,7 +179,7 @@ function Clicker() {
   useEffect(() => {
     if (
       autoclickLevel !== undefined &&
-      prevAutoclickerLevel.current < autoclickLevel
+      prevAutoclickerLevel.current < autoclickLevel && isUserLogged == true
     ) {
       setTimeEachClick((prev) => Number((prev - 0.1).toFixed(2)));
     }
@@ -177,6 +192,7 @@ function Clicker() {
 // --------------------------------------------
 
   useEffect(() => {
+    if (!isUserLogged) return
     const interval = setInterval(() => {
       setClickerMoney((prev) => prev + coefMultiplier);
     },1000);
@@ -285,17 +301,18 @@ function Clicker() {
   
   return (
     <>
+       {/* FUCKING BULLSHIT THIS BACKGROUND!!!*/}
+        {/* <motion.div animate = {{rotate: 360}} transition={{duration: 100, ease:"linear", repeat: Infinity}} className={`  absolute place-self-center duration-2000 scale-[2.5]  grid z-[-1] `}>
+          <img  className={`${isMode === false ? "invert" : ""} filter transition duration-200`}  src= "../public/bg-light.png"></img>
+           </motion.div> */}
     {isUserLogged == true ? 
           <div> 
       <main 
-        className={`${styles.container} ${
-          isMode == true ? "bg-[#d2d2d2]" : "bg-[rgb(35,35,35)]"
-        } duration-200 transition z-[1]  relative w-[100vw] h-[100vh]  flex align-center content-center`}
-      >
+        className={`${styles.container} 
+        } duration-200 transition z-[1] ${isMode ? "bg-[rgb(36,36,36)] text-white": "bg-[rgb(210,210,210)] text-black"}  relative w-[100vw] h-[100vh]  flex align-center content-center`}
+      > 
         {/* FUCKING BULLSHIT THIS BACKGROUND!!!*/}
-        {/* <div  className={` origin-top-left absolute place-self-center duration-2000 scale-[2.5]  grid z-[-1] `}>
-          <img  className={`${isMode === false ? "invert" : ""} filter transition duration-200`}  src= "../public/bg-light.png"></img>
-           </div> */}
+      
 
         <section
           className={`${styles.ShopSection} ${
@@ -383,32 +400,34 @@ function Clicker() {
         ></div>
       </div>
       {/*connecting package */}
-      <DarkLight
+      {/* <DarkLight
         onSwichTheme={() => setIsMode((prev) => !prev)}
         bodyWidth={bodyWidth}
         side = {true}
         widthNumber={700}
         // mode={isMode}
         name={isMode == true ? "light" : "dark"}
-      ></DarkLight>
+      ></DarkLight> */}
+
 
       {/* third project 'by Ernest' */}
       <div
-        className={`bottom-[1rem] absolute font-mono left-[3rem] font-bold text-[2.3rem] ${
+        className={`bottom-[1rem] absolute font-mono left-[3rem] font-bold text-[2rem]  ${
           isMode === true ? "text-black" : "text-white"
         }`}
       >
         Clicker game by Ernest
       </div> 
 
-
+      <UserWindow onSetLogout = {handleSetLogout} user = {userData} ></UserWindow>
 
       </div>
 
  :
-      <section className="border-red-500 place-self-center bg-white rounded-[1rem] text-black w-[25rem] h-[30rem]">
-        <Authentication loggedOrRegistered = {loggedOrRegistered} onLoggedOrRegistered={onLoggedOrRegistered} userLogged = {isUserLogged} onUserLogged = {onUserLogged}></Authentication>
-         </section> }
+      <motion.section  initial={{scale: 1 }}
+        animate={{scale: loggedOrRegistered ? 1.2 : 1 }} className="border-red-500 place-self-center bg-white rounded-[1rem] text-black w-[25rem] h-[30rem]">
+        <Authorization loggedOrRegistered = {loggedOrRegistered} onLoggedOrRegistered={onLoggedOrRegistered} userLogged = {isUserLogged} handleSendUserData = {handleGetUserData}></Authorization>
+         </motion.section> }
     </>
   );
 } 

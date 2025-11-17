@@ -22,7 +22,7 @@ export const upgradeDataObject = {
         coefficient: 3,
         image: "../public/profitable-icon.png",
         header: "profit click",
-        description: "Increases profit from each click. <br> Each level adds +0.1 to earnings."
+        description: "Increases profit from each click. <br> Each level adds X2 to earnings."
     },
     //  fourth: {
     //     id: 2,
