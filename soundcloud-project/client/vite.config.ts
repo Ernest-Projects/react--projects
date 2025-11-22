@@ -1,0 +1,21 @@
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
+import tailwindcss from '@tailwindcss/vite';
+
+import path from "path"
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+      "@library-sections": path.resolve(__dirname, "./src/compontents/pages/library/components/library-sections/"),
+      "@global": path.resolve(__dirname, "./src/components/global"),
+      "@redux-storage": path.resolve(__dirname, "./src/redux/storages"),
+      "@redux-hook": path.resolve(__dirname, "./src/redux/hooks")
+
+
+    }
+  }
+})

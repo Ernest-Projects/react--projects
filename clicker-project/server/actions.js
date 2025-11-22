@@ -8,6 +8,9 @@ user_email VARCHAR(50) NOT NULL,
 user_password VARCHAR(30) NOT NULL,
 confirm_user_password VARCHAR(30) NOT NULL);`
 
+
+export const ADD_NEW_COLUMN_IN_TABLE = `ALTER TABLE tracks ADD COLUMN name INTEGER DEFAULT 0;`
+
 // is_user_active BOOLEAN DEFAULT TRUE);
 // user_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 // email VARCHAR(100) UNIQUE NOT NULL,

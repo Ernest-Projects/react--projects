@@ -194,7 +194,7 @@ export const Authorization = ({
               <header className="font-bold">Email: </header>
               <input
                 className="border border-[rgba(120,120,120,1)]  p-[.2rem] px-[1rem]  focus:outline-none w-full rounded-[.25rem] border-[2px]"
-                type="text"
+                type="email"
                 value={userDataRegistration.user_email}
                 placeholder="Enter user email"
                 onChange={(e) =>
