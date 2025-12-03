@@ -1,5 +1,6 @@
 // import { Radical } from "lucide-react";
 
+
 // dinamically change the title of app
 import { TitleChange } from "./titleChange";
 // fixed components
@@ -17,9 +18,15 @@ import { buttsNavbar } from "./navbar/navbar-config/navbarConfings";
 import styles from "./SoundCloud.module.scss";
 import { ScrollToTop } from "./global/ScrollToTop";
 import { SignOut } from "./pages/popups/morePopup-pages/SingOut";
-import { AuthorizationWindow } from "../services/authorization/AuthorizationWindow";
+import { Registration } from "../services/authorization/Registration";
+import { setIsUserLogged } from "@redux-storage/authSlice";
+import { useAuthAppSelector } from "@redux-hook/authHook";
 
 function SoundCloud() {
+
+  // user logged/logout boolean value 
+  const isUserLogged = useAuthAppSelector(state => state.authorization.isUserLogged);
+
   // document.addEventListener("visibilitychange", () => {
   //   document.title = "Track";
   // });
@@ -38,7 +45,7 @@ function SoundCloud() {
         {/* scroll to top after virtual reloading the pages */} 
         <ScrollToTop></ScrollToTop>
         <TitleChange></TitleChange>
-        <main
+        <main style = {{overflow: isUserLogged ? "hidden": "visible"}}
           className={` sm:w-[40rem] md:w-[55rem] lg:w-[70rem]  place-self-center relative grid grid-rows grid-cols-1  justify-center align-center  h-fit bg-[rgb(18,18,18)]`}
         >
           <section
@@ -65,7 +72,7 @@ function SoundCloud() {
           </Routes>
 
             {/* Window for authorization */}
-            <AuthorizationWindow/>
+            <Registration/>
           
           <Player></Player>
         </main>

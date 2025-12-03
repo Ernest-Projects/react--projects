@@ -35,21 +35,25 @@ export const DROP_TABLE = `DROP TABLE logged_users;`
 
 export const DELETE_ROW = "DELETE FROM logged_users WHERE user_id = " +  "$1" +  " RETURNING *;"
 
+//  insert new row after log in
 export const INSERT_USERS_ROW = `
       INSERT INTO users (user_name, user_email, user_password, user_avatar, user_country)
-      VALUES ('Ernest_admin', 'ernest@', '1234', NULL, 'Ukraine')
+      VALUES ('ernest_test', $1, $2, NULL, 'Ukraine')
       RETURNING *`;  
 
+  
 export const INSERT_TRACKS_ROW = `
       INSERT INTO tracks (track_owner_id, audio_url, image_url, title_name, title_subtitle)
       VALUES (1, 'shedontluvyou.mp3', 'artworks-vuCkwwjyIzFwyqca-Y1AvQg-t500x500.jpg', 'shedontluvyou', 'jdmfessh')
       RETURNING *`; 
 
 export const SELECT_BY_ID = `SELECT * FROM logged_users WHERE user_id = $1;`
-export const SELECT_ALL = `SELECT * FROM logged_users;`
+export const SELECT_ALL = `SELECT * FROM users;`
 
 export const SELECT_BY_NAME_AND_PASSWORD = `SELECT * FROM logged_users WHERE user_name = $1 AND user_password = $2;`
+export  const SELECT_BY_EMAIL_AND_PASSWORD = `SELECT * FROM users WHERE user_email = $1 AND user_password = $2;`
 export const SELECT_BY_NAME = `SELECT * FROM logged_users WHERE user_name = $1;`
  
 export const UPDATE_BY_ID = `UPDATE logged_users SET user_password = $1 WHERE user_id = $2 RETURNING *;`
+
 

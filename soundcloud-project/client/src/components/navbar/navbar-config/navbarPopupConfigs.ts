@@ -23,7 +23,7 @@ export const profilePopupIcons = [
 const PopupButtonStyles =
   "text-white cursor-[pointer] border-none  place-self-center";
 export const profilePopupProps = {
-  strokeWindth: 1.5,
+  strokeWidth: 1.5,
   className: PopupButtonStyles,
   size: 15,
 };

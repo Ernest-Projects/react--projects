@@ -3,7 +3,7 @@ import { useGlobalAppSelector } from "../../../../redux/hooks/globalHook";
 
 import { useNavigate } from "react-router-dom";
 import { buttsNavbar } from "../../navbar-config/navbarConfings";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {motion} from "motion/react"
 import { setActiveButton } from "../../../../redux/storages/navbarSlice";
@@ -14,6 +14,8 @@ import { useAuthAppDispatch, useAuthAppSelector } from "../../../../redux/hooks/
 
 export const LeftNavbarButtons = () => {
 
+
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
 
   const isUserlogged = useAuthAppSelector(state => state.authorization.isUserLogged);
 
@@ -60,6 +62,19 @@ export const LeftNavbarButtons = () => {
     );
   }
 
+  useEffect(() =>{
+
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth)
+    }
+
+    window.addEventListener("resize",handleResize);
+
+    return () => (
+      window.removeEventListener("resize", handleResize)
+    )
+  }, [window])
+
   return <>
  <button
           onClick={() => handleClick(buttsNavbar[0].component, 0)}
@@ -70,10 +85,8 @@ export const LeftNavbarButtons = () => {
             className={`w-[3rem] min-w-[3rem] place-self-center aspect-[1/1]`}
             alt=""
           />
-          {!isUserlogged  ?
+          {(!isUserlogged &&  windowWidth > 1024) &&
         <header className="font-bold  tracking-wider flex align-center justify-center text-[1.1rem] text-center place-self-center">SOUNDCLOUD</header>
-         : 
-         ""
          }
         </button>
 

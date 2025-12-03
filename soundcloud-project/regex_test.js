@@ -5,6 +5,7 @@
 const e1 = "ernest5621@gmail.com";
 const e2 = "ernest5621gmail.com";
 const e3 = "gmail@o.com";
+const e4 = "ernest5621@gm0ail.com";
 
 
 const test =  "abcd"
@@ -21,3 +22,4 @@ const exp = /[A-Za-z0-9._-]+@(?!-)[A-Za-z0-9]+\.[a-zA-Z]{2,}$/i;
 console.log(exp.test(e1))
 console.log(exp.test(e2))
 console.log(exp.test(e3))
+console.log(exp.test(e4))

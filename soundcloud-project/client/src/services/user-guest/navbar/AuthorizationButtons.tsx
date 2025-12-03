@@ -6,8 +6,6 @@ import { useAuthAppDispatch } from "@redux-hook/authHook";
 import {setIsUserLoggedValue } from "@redux-storage/authSlice";
 import {setCloseAllPopups} from "@redux-storage/navbarSlice";
 
-// router
-import { useNavigate } from "react-router-dom";
 
 import { useNavbarAppDispatch } from "@redux-hook/navbarHook";
 import { setAuthorizationWindowId, setIsAuthorizationWindowOpened } from "@redux-storage/authSlice"
@@ -16,18 +14,20 @@ export const AuthorizationButtons = () => {
     const authDispatch = useAuthAppDispatch();
         const navbarDispatch = useNavbarAppDispatch();
 
-    const navigate = useNavigate();
 
     const handleSingIn = () => {
-        console.log("here")
+        console.log("here");
 
         // set user logged, but its for test only for now
         // authDispatch(setIsUserLoggedValue({logged: true}));
      
         // set open login window
-        authDispatch(setIsAuthorizationWindowOpened({opened: true}))
+        authDispatch(setIsAuthorizationWindowOpened({opened: true}));
         
-        navbarDispatch(setCloseAllPopups())
+        navbarDispatch(setCloseAllPopups());
+
+        // disable scrollbar
+        document.documentElement.style.overflow = "hidden";
         
     }
     return <>

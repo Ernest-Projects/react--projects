@@ -1,48 +1,46 @@
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronDown, Sparkles, Sparkle } from "lucide-react";
-import {
-  useHomeAppDispatch,
-  useHomeAppSelector,
-} from "../../../../redux/hooks/homeHook";
 import { ArtistToolsButtons } from "../homeConfig";
-import { setIsToolsOpened } from "../../../../redux/storages/homeSlice";
+
+import {useState} from "react";
+import { div } from "motion/react-client";
+
 export const ArtistTools = () => {
-  const toolsOpened = useHomeAppSelector(
-    (state) => state.home_page.isToolsOpened
-  );
-  const dispatch = useHomeAppDispatch();
+
+
+  const [isToolsOpened, setIsToolsOpened] = useState<boolean>(false)
+  
   return (
     <>
       <motion.section
         transition={{ duration: 0.1 }}
         className="h-fit w-[100%]   relative "
       >
-        <div className="w-[100%] h-fit relative flex flex-cols justify-between pb-6 ">
+        <button  onClick={() => setIsToolsOpened(prev => !prev)} className="w-[100%] h-fit relative flex flex-cols justify-between pb-6 ">
           <header className="font-bold text-sm text-white">ARTIST TOOLS</header>
           <motion.div
             className="flex justify-center"
-            animate={{ rotate: toolsOpened ? 180 : 0 }}
+            animate={{ rotate: isToolsOpened ? 180 : 0 }}
           >
-            <button className="hover:pointer border-none  place-self-center">
+            <button className="hover:pointer border-none w-[75%] place-self-end">
               <ChevronDown
                 className="hover:pointer place-self-center text-white"
-                onClick={() => dispatch(setIsToolsOpened())}
               />
             </button>
           </motion.div>
-          <p className="w-[100%] h-[.2px] bottom-[1.5rem] absolute bg-[rgb(70,70,70)]"></p>
-        </div>
+          <p className="w-[100%] h-[.2px] bottom-[1.5rem] pointer-events-none absolute bg-[rgb(70,70,70)]"></p>
+        </button>
         <motion.div
           style={{ gridTemplateRows: "auto auto" }}
           animate={{
-            height: toolsOpened ? "auto" : "fit-content",
-            rowGap: toolsOpened ? "1rem" : "0rem",
+            height: isToolsOpened ? "auto" : "fit-content",
+            rowGap: isToolsOpened ? "1rem" : "0rem",
           }}
           className={`w-[100%] h-fit  grid gap-x-[.6rem] grid-y-[1rem] grid-cols-4 relative`}
         >
-            {ArtistToolsButtons.slice(0, toolsOpened ? 8 : 4).map(
+            {ArtistToolsButtons.slice(0, isToolsOpened ? 8 : 4).map(
               (item, index) => (
-                <motion.button
+                                <motion.div
                   animate={{ opacity: 1, scale: 1 }}
                   initial={{ opacity: 0, scale: 0.9 }}
                   exit={{ opacity: 0, scale: 0.9 }}
@@ -71,7 +69,7 @@ export const ArtistTools = () => {
                     size={45}
                     className={` ${index == 7 || index == 6 ? "text-[rgb(186,158,94)]" : "text-[rgb(117,100,245)]"} absolute top-[-10px] right-[-10px]  place-self-center px-4`}
                   />
-                </motion.button>
+                </motion.div>
               )
             )}
         </motion.div>

@@ -13,13 +13,14 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.9.0",
     "@tailwindcss/vite": "^4.1.13",
+    "axios": "^1.13.2",
     "express": "^5.1.0",
     "json-server": "^1.0.0-beta.3",
     "lucide-react": "^0.544.0",
     "motion": "^12.23.18",
     "nodemon": "^3.1.11",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.9.5",
     "redux-thunk": "^3.1.0"
@@ -27,8 +28,8 @@
   "devDependencies": {
     "@eslint/js": "^9.35.0",
     "@types/node": "^24.7.2",
-    "@types/react": "^19.1.13",
-    "@types/react-dom": "^19.1.9",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react-swc": "^4.0.1",
     "embedded": "^1.1.0",
     "eslint": "^9.35.0",

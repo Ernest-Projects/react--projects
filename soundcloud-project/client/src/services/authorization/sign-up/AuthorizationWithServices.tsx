@@ -1,6 +1,9 @@
+import { useAuthAppSelector } from "@redux-hook/authHook"
+
+
 
 export const AuthorizationWithServices = () => {
-
+  const authorizationWindowId = useAuthAppSelector(state => state.authorization.authorizationWindowId);
     
     return <>
      {/* authorization service buttons */}
@@ -31,5 +34,9 @@ export const AuthorizationWithServices = () => {
       </button>
 
        </section>
+
+          <header className="text-white pb-[1rem] w-full p-0 m-0 leading-[.5rem]">
+            Or with email
+          </header>
     </>
 }

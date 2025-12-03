@@ -3,13 +3,20 @@ import express from "express"
 import cors from "cors"
 
 import {pool} from "./database.js";
-import { CREATE_DATABASE, CREATE_USERS_TABLE,CREATE_TRACKS_TABLE, INSERT_TRACKS_ROW } from "./actions.js";
+import { CREATE_DATABASE, CREATE_USERS_TABLE,CREATE_TRACKS_TABLE, SELECT_ALL, INSERT_TRACKS_ROW } from "./actions.js";
+import userRoutes from "./routes/userRoutes.js"
 
 const app = express();
 
 app.use(cors())
 app.use(express.json());
 
+
+app.use("/api/users", userRoutes)
+
+
+
+  app.listen(3000, () => console.log("Server on localhost: " + 3000))
 
 
 // creating database 
@@ -31,6 +38,8 @@ const initializeTable = async() =>{
          console.error(err)
     }
 }
+
+
 
 // initializeTable().then(res => {
 //     console.log("Table tracks with foreign key initialized !")

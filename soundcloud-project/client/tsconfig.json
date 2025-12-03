@@ -1,5 +1,19 @@
 {
-  "files": [],
+ 
+  "compilerOptions": {
+    "jsx": "react-jsx", // or "react", "preserve", etc. depending on your needs
+        "lib": ["DOM", "ESNext"],          // обов’язково "DOM"
+            "moduleResolution": "node",
+                "esModuleInterop": true,
+                 "allowJs": true,
+    "skipLibCheck": true,
+        "types": ["react", "react-dom"] // ось тут TS знайде JSX
+
+
+
+
+  },
+    "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }

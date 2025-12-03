@@ -93,8 +93,8 @@ export const Navbar = () => {
         {/* left side of buttons in navbar */}
         <LeftNavbarButtons/>
         <section
-          className={`h-[80%] w-[30rem] ${!isUserLogged ? "max-w-[23rem]" : ""}
- bg-[rgb(48,48,48)] place-self-center   box-border relative  duration-200 transition-[shadow] rounded-[.2rem] outline-none text-white hover:outline-none`}
+          className={`h-[80%] w-[100%] ${!isUserLogged ? "max-w-[23rem]" : ""}
+ bg-[rgb(48,48,48)] place-self-center   box-border relative  duration-200 min-w-[20rem] transition-[shadow] rounded-[.2rem] outline-none text-white hover:outline-none`}
         >
 
 

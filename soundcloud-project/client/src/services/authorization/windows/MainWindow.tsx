@@ -2,12 +2,12 @@ import {motion }from "motion/react";
 import {AuthorizationWithServices} from "../sign-up/AuthorizationWithServices";
 import { SignInComponent } from "../sign-in/SignInComponent";
 
-type MainWindowProps = {
-    close: boolean
-}
+// type MainWindowProps = {
+//     close: boolean
+// }
 
 
-export const MainWindow = ({close}: MainWindowProps) => {
+export const MainWindow = () => {
     return <>
     
         {/* header, subtitle and service buttons */}

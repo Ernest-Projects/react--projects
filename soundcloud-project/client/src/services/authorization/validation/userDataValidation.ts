@@ -8,7 +8,7 @@ export const isUserEmailValid = (email: string) => {
 // checking the password
 export const isUserPasswordValid = (password: string) => {
   // regex (i know how its work)
-  return /^(?=.*[A-Za-z0-9])[A-Za-z0-9-_!@#$%^&*()+].{8,}$/.test(password);
+  return /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[A-Za-z0-9-_!@#$%^&*()+].{8,}$/.test(password);
 };
 
 

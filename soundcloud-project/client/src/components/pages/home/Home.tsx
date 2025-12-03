@@ -49,8 +49,8 @@ export const Home = () => {
 
         <section className="h-fit w-[100%] sticky bottom-0 pl-2 py-2 relative lg:col-span-3 md:col-span-4">
 
-          {isUserLogged ?
-          <ArtistTools/> : ""
+          {isUserLogged &&
+          <ArtistTools/>
         }
          <UndergroundResources/>
         </section>

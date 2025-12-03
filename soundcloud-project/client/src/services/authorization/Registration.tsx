@@ -15,7 +15,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { createPortal } from "react-dom";
 import {
   setAuthorizationWindowId,
-  setIsAuthorizationWindowOpened,
+  setIsAuthorizationWindowOpened, setClearAuthorizationData
 } from "@redux-storage/authSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -23,11 +23,12 @@ import { useEffect, useState } from "react";
 import { SignInComponent } from "./sign-in/SignInComponent";
 import { AuthorizationWithServices } from "./sign-up/AuthorizationWithServices";
 import { MainWindow } from "./windows/MainWindow";
-import { EmailWindow } from "./windows/EmailWindow";
+import { LogInWindows } from "./windows/LogInWindows";
 import { span } from "motion/react-client";
 import type { exit } from "process";
+import { SignInWithGoogleWindow } from "./sign-up/SignInWithGoogleWindow";
 
-export const AuthorizationWindow = () => {
+export const Registration = () => {
   const [closeAuthorizationWindow, setCloseAuthorizationWindow] =
     useState<boolean>(true);
 
@@ -35,7 +36,8 @@ export const AuthorizationWindow = () => {
     new Promise((resolve) => setTimeout(resolve, ms));
 
   const dispatch = useAuthAppDispatch();
-  const navigate = useNavigate();
+
+  const userDataFromGoogle = useAuthAppSelector(state => state.authorization.userGoogleData);
 
   const authorizationWindowId = useAuthAppSelector(
     (state) => state.authorization.authorizationWindowId
@@ -45,11 +47,11 @@ export const AuthorizationWindow = () => {
   );
 
   const handleCloseAuthorizationWindow = async () => {
-    dispatch(setIsAuthorizationWindowOpened({ opened: false }));
+    dispatch(setClearAuthorizationData());
+    document.documentElement.style.overflow = "visible";
   };
 
  
-
   // facebook button bg
   // rgba(0, 59, 179, 1)
 
@@ -80,22 +82,31 @@ export const AuthorizationWindow = () => {
       <motion.section
       initial = {{ opacity: 0, y: -100}} animate = {{opacity: 1, y: 0}} exit={{opacity: 0  , y:  -100}}
         style={{transform: "translateX(0%) translateY(0%)", transformOrigin:"top"}}
-        className={`rounded-[.2rem] border w-[28rem] place-self-center absolute h-fit p-[1.5rem] bg-[rgb(18,18,18)]`}
+        className={`rounded-[.2rem] border w-[28rem] place-self-center gap-[1rem] absolute h-fit p-[1.5rem] bg-[rgb(18,18,18)]`}
       >
-        <AnimatePresence mode="wait">
+
         {authorizationWindowId == 1 ? (
+          
           <motion.div key = "main" initial={{y:-40,  opacity: 0}} animate = {{y: 0, opacity:1}} exit={{y:40, opacity:0}}>
-            <MainWindow close={closeAuthorizationWindow} />
+            <MainWindow />
           </motion.div>
+
         ) : (
-           <motion.div key = "email" initial={{y:-40,  opacity: 0}} animate = {{y: 0, opacity:1}} exit={{y:40, opacity:0}}>
-          <EmailWindow />
+          
+          <motion.div key = "email" initial={{y:-40,  opacity: 0}} animate = {{y: 0, opacity:1}} exit={{y:40, opacity:0}}>
+          <LogInWindows/>
           </motion.div>
+
         )}
-      </AnimatePresence>
+        {/* window after choosing google account */}
+        {
+          true &&
+          <SignInWithGoogleWindow/>
+        }
+
+      
       </motion.section> 
       )}
-
         </AnimatePresence>
 
 
@@ -125,7 +136,7 @@ export const AuthorizationWindow = () => {
       style={{ transform: "translate(50%, -50%)" }}
       className="rounded-[.2rem] border w-[28rem] place-self-center absolute h-fit p-[1.5rem] bg-[rgb(18,18,18)]"
     >
-      <EmailWindow />
+      <<LogInWindow></LogInWindow> />
     </motion.section>
   )}
 </AnimatePresence> */}
