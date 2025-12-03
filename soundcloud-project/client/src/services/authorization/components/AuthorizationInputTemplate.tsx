@@ -6,6 +6,7 @@ import { Eye, EyeOff } from "lucide-react";
 import type { JSX } from "react/jsx-dev-runtime";
 
 import {motion } from "motion/react";
+import type { isTypedArray } from "util/types";
 
 interface AuthorizationInputTemplateProps<T extends Record<string, number | string>> {
   placeholder: string;
@@ -13,11 +14,12 @@ interface AuthorizationInputTemplateProps<T extends Record<string, number | stri
 
   // like "setUserDisplayName"
   sliceReducer: PayloadActionCreator<T>;
+
   // like "displayName" key in payload object 
   sliceKey: keyof T;
   
   // 
-  sliceState: string;
+  sliceState: string | number;
   inputAttrs?: React.InputHTMLAttributes<HTMLInputElement>;
 
   // onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -50,7 +52,8 @@ export const AuthorizationInputTemplate = forwardRef(
           <motion.p initial = {{y:0}} animate = {{y: isInputNotEmpty ? -10 : 0}} className="text-[rgba(152,152,152,1)] absolute pointer-events-none w-full h-fit left-[1rem] place-self-center">
           {placeholder}
           </motion.p>
-        <input
+      <form autoComplete="on">
+        <input autoComplete= {isTypePassword ? "new-passoword" : "on"}
         // all atributes for input tag (<HTMLInputElement> type)
           {...inputAttrs}
           ref={ref}
@@ -65,6 +68,7 @@ export const AuthorizationInputTemplate = forwardRef(
           type={isTypePassword ? (isPasswordVisible ? "text" : "password") : "text"}
           className={`text-white h-[2.5rem] w-full transition duration-200 place-self-center ${isInputNotEmpty && "translate-y-[8px]"} translate-y-[0] focus:outline-none active:outline-none `}
         />
+      </form>
        
  {isTypePassword && (
           <button

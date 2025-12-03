@@ -12,10 +12,11 @@ import { useAuthAppDispatch, useAuthAppSelector } from "@redux-hook/authHook";
 
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { AuthorizationButtons } from "src/services/user-guest/navbar/AuthorizationButtons";
+import { AuthorizationButtons } from "src/services/user-guest-components/navbar/AuthorizationButtons";
 import { PasswordWindow } from "./PasswordWindow";
 import { EmailWindow } from "./EmailWindow";
 import axios from "axios";
+import { SignInWithGoogleWindow } from "../sign-up/SignInWithGoogleWindow";
 
 export const SignInComponent = () => {
   const navigate = useNavigate();
@@ -66,7 +67,7 @@ export const SignInComponent = () => {
     dispatch(setIsUserLoggedValue({ logged: true }));
     dispatch(setClearAuthorizationData());
 
-    alert("legged")
+    alert("legged");
 
     navigate("/discover");
     return;
@@ -74,33 +75,34 @@ export const SignInComponent = () => {
 
   // request to the server
   const handleAddUserInDatabase = async () => {
-        try {
-        const responce = await fetch("http://localhost:3000/api/users/add", {
-          method: "POST",
-          headers: { "Content-Type": "Application/json" },
-          body: JSON.stringify({data: {user_email: userEmail, user_password: userPassword}}),
-        });
+    try {
+      const responce = await fetch("http://localhost:3000/api/users/add", {
+        method: "POST",
+        headers: { "Content-Type": "Application/json" },
+        body: JSON.stringify({
+          data: { user_email: userEmail, user_password: userPassword },
+        }),
+      });
 
-        //  if responce cant be reached
-        if (!responce.ok) {
-          console.error("Responce error:", responce.status);
-        }
-
-        const result = await responce.json();
-        console.log("Server responce: ", result);
-
-        //  success? Add data in uState
-        if (result.success) {
-          console.log("data successfully added in database!");
-        } else {
-          // if success is false (user already exsists)
-          alert("User already exsists with this name! Please choose another");
-        }
-        return;
-      
-      } catch (err) {
-        console.error(err);
+      //  if responce cant be reached
+      if (!responce.ok) {
+        console.error("Responce error:", responce.status);
       }
+
+      const result = await responce.json();
+      console.log("Server responce: ", result);
+
+      //  success? Add data in uState
+      if (result.success) {
+        console.log("data successfully added in database!");
+      } else {
+        // if success is false (user already exsists)
+        alert("User already exsists with this name! Please choose another");
+      }
+      return;
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   // 'continue' button when clicked
@@ -110,23 +112,21 @@ export const SignInComponent = () => {
       await handleAddUserInDatabase();
       handleLoginUser();
 
-      console.log("email: ", userEmail)
-      console.log("Password: ", userPassword)
+      console.log("email: ", userEmail);
+      console.log("Password: ", userPassword);
     }
-    
+
     if (!userPassword.length || !userEmail.length) {
       setIsInputNotEmpty(false);
     }
-    
+
     if (userEmail.length) {
       dispatch(setAuthorizationWindowId({ windowId: 3 }));
     }
-    
+
     // if (authorizationWindowId == 4) {
     // }
-
   };
-
 
   // move to next window when input clicked
   const handleContinueWithInput = () => {
@@ -152,24 +152,35 @@ export const SignInComponent = () => {
           className=" flex flex-col gap-[1rem] align-center text-[.7rem] overflow-hidden w-full h-fit "
         >
           <AnimatePresence mode="sync">
-            {authorizationWindowId == 3 ? (
+            {authorizationWindowId == 2 || authorizationWindowId == 1 ? (
               <motion.div
                 key="email"
                 initial={{ y: -40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 40, opacity: 0 }}
               >
-                <PasswordWindow handleLoginUser={handleLoginUser} />
+                <EmailWindow />
               </motion.div>
-            ) : (
+            ) : authorizationWindowId == 3 ? (
               <motion.div
                 key="password"
                 initial={{ y: -40, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
+                animate={{ y: 0, opacity: 1 }} 
                 exit={{ y: 40, opacity: 0 }}
               >
-                <EmailWindow />
-              </motion.div>
+                <PasswordWindow handleLoginUser={handleLoginUser} />
+              </motion.div> 
+            ) : (
+              authorizationWindowId == 4 && (
+                <motion.div
+                  key="first-entry-data"
+                  initial={{ y: -40, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: 40, opacity: 0 }}
+                >
+                  <SignInWithGoogleWindow />
+                </motion.div>
+              )
             )}
           </AnimatePresence>
         </div>

@@ -1,10 +1,23 @@
 import { useAuthAppSelector } from "@redux-hook/authHook"
+import { GoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
+import {useState, useEffect} from "react";
 
 
-
+import {jwtDecode} from "jwt-decode";
+ 
 export const AuthorizationWithServices = () => {
-  const authorizationWindowId = useAuthAppSelector(state => state.authorization.authorizationWindowId);
+
+//  const authorizationWindowId = useAuthAppSelector(state => state.authorization.authorizationWindowId);
+
+
+    // custom handler for google authorization
+      const handleGoogleLogin = useGoogleLogin({
+        onSuccess: (responce) => console.log("responce: ", responce),
+       onError: () =>  console.log("Load failed")},);
+
     
+
     return <>
      {/* authorization service buttons */}
 
@@ -15,7 +28,6 @@ export const AuthorizationWithServices = () => {
             </a>   and acknowledge our <a className="text-blue-400" href="">Privacy Policy</a>.
         </p>  
      
-
        <section className="flex pb-[2rem] text-sm flex-col h-fit text-black gap-y-[1rem]">
 
        <button className="w-full font-medium rounded-[.2rem]  flex flex-row justify-center gap-[.5rem] h-fit text-white py-[.7rem]  bg-[rgba(0,59,179,1)]" > 
@@ -23,8 +35,9 @@ export const AuthorizationWithServices = () => {
       Continue with Facebook
        </button>
 
-       <button className="w-full font-medium rounded-[.2rem] flex flex-row justify-center gap-[.5rem] h-fit text-white py-[.7rem]  bg-[rgba(48,48,48,1)]" > 
+       <button onClick = {() => handleGoogleLogin()} className="cursor-pointer w-full font-medium  relative rounded-[.2rem] flex flex-row justify-center gap-[.5rem] h-fit text-white py-[.7rem]  bg-[rgba(48,48,48,1)]" > 
         <div className="h-[1rem] place-self-center  aspect-[1/1]"><img className="w-[1rem] h-[1rem] " style = {{objectFit: "fill"}} src="public/icons/authorization-icons/Google__G__logo.svg.webp" alt="" /></div>
+        
       Continue with Google
       </button>
 

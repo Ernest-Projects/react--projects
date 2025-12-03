@@ -7,7 +7,6 @@ const userRoutes = express.Router()
 
 userRoutes.post("/add", addUser)
 userRoutes.get("/watch", getAllUsers)
-
 userRoutes.post("/check", checkLoggenedUser)
 
 

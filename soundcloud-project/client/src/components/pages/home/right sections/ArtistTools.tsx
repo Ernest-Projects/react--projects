@@ -22,11 +22,11 @@ export const ArtistTools = () => {
             className="flex justify-center"
             animate={{ rotate: isToolsOpened ? 180 : 0 }}
           >
-            <button className="hover:pointer border-none w-[75%] place-self-end">
+            <div className="hover:pointer border-none w-[75%] place-self-end">
               <ChevronDown
                 className="hover:pointer place-self-center text-white"
               />
-            </button>
+            </div>
           </motion.div>
           <p className="w-[100%] h-[.2px] bottom-[1.5rem] pointer-events-none absolute bg-[rgb(70,70,70)]"></p>
         </button>

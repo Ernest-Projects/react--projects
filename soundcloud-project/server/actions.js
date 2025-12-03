@@ -38,7 +38,7 @@ export const DELETE_ROW = "DELETE FROM logged_users WHERE user_id = " +  "$1" + 
 //  insert new row after log in
 export const INSERT_USERS_ROW = `
       INSERT INTO users (user_name, user_email, user_password, user_avatar, user_country)
-      VALUES ('ernest_test', $1, $2, NULL, 'Ukraine')
+      VALUES ('ernest_test2', $1, $2, NULL, 'Ukraine')
       RETURNING *`;  
 
   

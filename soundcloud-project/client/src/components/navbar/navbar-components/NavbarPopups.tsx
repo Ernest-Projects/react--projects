@@ -6,7 +6,7 @@ import { useAuthAppDispatch, useAuthAppSelector } from "../../../redux/hooks/aut
 import { setIsUserLoggedValue } from "../../../redux/storages/authSlice";
 
 import { motion } from "motion/react";
-import React, { forwardRef, useRef } from "react";
+import { forwardRef, useRef } from "react";
 import { UserNotification } from "./UserNotification";
 import {
   profilePopupIcons,

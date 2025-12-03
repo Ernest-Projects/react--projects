@@ -46,7 +46,6 @@ export const Home = () => {
           <button onClick={()=> dispatch(setIsUserLogged())} className="text-4xl text-black bg-white rounded-[.5rem]">Log out</button>
         </section>
 
-
         <section className="h-fit w-[100%] sticky bottom-0 pl-2 py-2 relative lg:col-span-3 md:col-span-4">
 
           {isUserLogged &&

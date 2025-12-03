@@ -21,19 +21,19 @@ export const EmailWindow = () => {
   );
   const dispatch = useAuthAppDispatch();
 
-  const [notEmptyInput, setNotEmptyInput] = useState<boolean>(true);
+  const [isNotEmptyInput, setIsNotEmptyInput] = useState<boolean>(true);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key == "Enter") {
       e.preventDefault();
-      if (notEmptyInput) {
+      if (isNotEmptyInput) {
         dispatch(setAuthorizationWindowId({ windowId: 3 }));
       }
     }
   };
 
   useEffect(() => {
-    setNotEmptyInput(userEmail.length !== 0);
+    setIsNotEmptyInput(userEmail.length !== 0);
   }, [userEmail]);
 
   return (

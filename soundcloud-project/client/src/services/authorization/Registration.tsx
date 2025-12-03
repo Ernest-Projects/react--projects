@@ -25,8 +25,9 @@ import { AuthorizationWithServices } from "./sign-up/AuthorizationWithServices";
 import { MainWindow } from "./windows/MainWindow";
 import { LogInWindows } from "./windows/LogInWindows";
 import { span } from "motion/react-client";
-import type { exit } from "process";
 import { SignInWithGoogleWindow } from "./sign-up/SignInWithGoogleWindow";
+
+import { GoogleLogin } from "@react-oauth/google";
 
 export const Registration = () => {
   const [closeAuthorizationWindow, setCloseAuthorizationWindow] =
@@ -91,24 +92,22 @@ export const Registration = () => {
             <MainWindow />
           </motion.div>
 
-        ) : (
+        ) : ([2,3].includes(authorizationWindowId)) ? (
           
-          <motion.div key = "email" initial={{y:-40,  opacity: 0}} animate = {{y: 0, opacity:1}} exit={{y:40, opacity:0}}>
+          <motion.div key = "email/password" initial={{y:-40,  opacity: 0}} animate = {{y: 0, opacity:1}} exit={{y:40, opacity:0}}>
           <LogInWindows/>
           </motion.div>
 
-        )}
-        {/* window after choosing google account */}
-        {
-          true &&
-          <SignInWithGoogleWindow/>
-        }
+        ) : authorizationWindowId == 4 && (
+          
+            <SignInWithGoogleWindow/>
+        ) 
+      }
+        
 
-      
       </motion.section> 
       )}
         </AnimatePresence>
-
 
 {/* 
 
@@ -153,8 +152,6 @@ export const Registration = () => {
           <X />
         </span>
       </button>
-
-
 
     </motion.main>,
     document.body

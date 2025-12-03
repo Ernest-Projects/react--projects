@@ -13,7 +13,9 @@ export default defineConfig({
       "@library-sections": path.resolve(__dirname, "./src/compontents/pages/library/components/library-sections/"),
       "@global": path.resolve(__dirname, "./src/components/global"),
       "@redux-storage": path.resolve(__dirname, "./src/redux/storages"),
-      "@redux-hook": path.resolve(__dirname, "./src/redux/hooks")
+      "@redux-hook": path.resolve(__dirname, "./src/redux/hooks"),
+      "react": path.resolve('./node_modules/react'),
+      "react-dom": path.resolve('./node_modules/react-dom'),
 
 
     }

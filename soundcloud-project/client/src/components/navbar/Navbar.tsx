@@ -31,10 +31,10 @@ import {
 import { buttsNavbar, navbarIconProps, navbarIcons } from "./navbar-config/navbarConfings";
 import { useGlobalAppSelector } from "../../redux/hooks/globalHook";
 import { NavbarInput } from "./navbar-components/NavbarInput";
-import { LogoutInput } from "../../services/user-guest/LogoutInput";
+import { LogoutInput } from "../../services/user-guest-components/LogoutInput";
 import { LeftNavbarButtons } from "./navbar-components/navbar-buttons/LeftNavbarButtons";
 import { RightNavbarButtons } from "./navbar-components/navbar-buttons/RightNavbarButtons";
-import { AuthorizationButtons } from "../../services/user-guest/navbar/AuthorizationButtons";
+import { AuthorizationButtons } from "../../services/user-guest-components/navbar/AuthorizationButtons";
 import { NavbarProfileIcon } from "./navbar-components/navbar-icons/NavbarProfileIcon";
 import { NavbarElipsisIcon } from "./navbar-components/navbar-icons/NavbarElipsisIcon";
 import { NavbarIcons } from "./navbar-components/navbar-icons/NavbarIcons";
