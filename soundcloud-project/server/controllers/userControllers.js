@@ -1,7 +1,6 @@
 import { pool } from "../database.js";
 import {
-  SELECT_BY_EMAIL_AND_PASSWORD,
-  INSERT_USERS_ROW,
+  SELECT_BY_EMAIL,
   SELECT_ALL,
 } from "../actions.js";
 
@@ -27,7 +26,7 @@ const verifyExsistedUser = async (name, password) => {
   try {
     const params = [name, password];
 
-    const exists = await pool.query(SELECT_BY_EMAIL_AND_PASSWORD, params);
+    const exists = await pool.query(SELECT_BY_EMAIL, [name]);
 
     if (exists.rows.length) {
       return exists.rows[0];
@@ -38,26 +37,35 @@ const verifyExsistedUser = async (name, password) => {
   }
 };
 
+
+
 export const addUser = async (req, res) => {
   console.log("AddUser called");
 
+  
   const { data } = req.body;
-  const { user_email, user_password } = data;
+  const { user_email, user_password, user_displayName, user_age, user_gender } = data;
+  console.log("body: ", req.body)
+  
+  
+    // codding the password
+    const hashedPassword = await bycript.hash(data.user_password, 10);
 
   try {
     // ultimate verify, that user already exsist or not
     if (await verifyExsistedUser(user_email, user_password)) {
-      res.send({ success: false });
+      res.send({ success: false, message: "user exist" });
       return;
     }
 
-    const newRow = await pool.query(INSERT_USERS_ROW, [user_email, user_password]);
+    const newRow = await pool.query(INSERT_USERS_ROW, [user_email, hashedPassword]);
     console.log("User successfully added in database: ", newRow.rows[0]);
 
-    res.send({ success: true });
+    res.status(200).send({ success: true });
     // const result = pool.query("")
   } catch (err) {
-    console.error(err);
+    res.status(500).send({success: false, message: "error"})
+    console.error("MAYBE HERE IS ERROR?? :", err);
   }
 };
 
@@ -65,6 +73,7 @@ export const checkLoggenedUser = async (req, res) => {
   try {
     const { type, data } = req.body;
     const { user_name, user_password } = data;
+    console.log("BODY:", req.body);
 
     const row = await verifyExsistedUser(type, user_name, user_password);
 

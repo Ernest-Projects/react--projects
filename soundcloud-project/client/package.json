@@ -11,9 +11,11 @@
     "server": "json-server --watch db.json --port 5001"
   },
   "dependencies": {
+    "@react-oauth/google": "^0.12.2",
     "@reduxjs/toolkit": "^2.9.0",
     "@tailwindcss/vite": "^4.1.13",
     "axios": "^1.13.2",
+    "cors": "^2.8.5",
     "express": "^5.1.0",
     "json-server": "^1.0.0-beta.3",
     "jsonwebtoken": "^9.0.2",
@@ -21,6 +23,7 @@
     "lucide-react": "^0.544.0",
     "motion": "^12.23.18",
     "nodemon": "^3.1.11",
+    "oathjs": "^0.1.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-redux": "^9.2.0",

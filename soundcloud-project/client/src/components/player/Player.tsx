@@ -48,7 +48,7 @@ import {
   useGlobalAppDispatch,
   useGlobalAppSelector,
 } from "../../redux/hooks/globalHook";
-import { handleSetTracksToDefault } from "../../database-controllers/resetAllTracks";
+// import { handleSetTracksToDefault } from "../../database-controllers/resetAllTracks";
 
 export const Player = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -110,7 +110,7 @@ export const Player = () => {
 
     console.log("Track playable is: ", currentTrack.playable);
 
-    await handleSetTracksToDefault();
+    // await handleSetTracksToDefault();
     await handleStateForPlayerTrack(currentTrack);
 
 

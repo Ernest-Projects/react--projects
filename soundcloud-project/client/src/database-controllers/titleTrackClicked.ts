@@ -1,5 +1,5 @@
 
-import type { Track } from "../types/Track";
+import type { Track } from "../app-types/Track";
 
 export const handleSetSettedClickedTrack = async (trackData: Track) => {
   // reset all tracks to default

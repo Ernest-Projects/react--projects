@@ -3,8 +3,8 @@ import { ArrowLeft, ArrowRight,  } from "lucide-react";
 
 import { motion} from "motion/react"
 import { TrackTitle } from "./TrackTitle";
-import type { TrackProps } from "src/types/Track";
-import type { TrackTitleProps } from "src/types/TrackTitle";
+import type { TrackProps } from "src/app-types/Track";
+import type { TrackTitleProps } from "src/app-types/TrackTitle";
 
 // import {  } from "motion/react-client";
 

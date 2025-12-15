@@ -1,6 +1,6 @@
 
 
-import type { Track } from "../types/Track";
+import type { Track } from "../app-types/Track";
 
 
 export const handleStateForPlayerTrack = async (trackData: Track) => {

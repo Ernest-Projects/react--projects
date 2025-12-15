@@ -2,12 +2,12 @@
  
   "compilerOptions": {
     "jsx": "react-jsx", // or "react", "preserve", etc. depending on your needs
-        "lib": ["DOM", "ESNext"],          // обов’язково "DOM"
+        "lib": ["DOM", "ESNext"],         
             "moduleResolution": "node",
                 "esModuleInterop": true,
                  "allowJs": true,
     "skipLibCheck": true,
-        "types": ["react", "react-dom"] // ось тут TS знайде JSX
+        "types": ["react", "react-dom"] 
 
 
 

@@ -13,8 +13,8 @@ import { create } from "motion/react-m";
 import { homeStore } from "./homeSlice";
 import { title } from "motion/react-client";
 
-import type {TrackProps} from '../../types/Track'
-import type {TrackTitleProps} from '../../types/TrackTitle'
+import type {TrackProps} from '../../app-types/Track'
+import type {TrackTitleProps} from '../../app-types/TrackTitle'
 
 
 

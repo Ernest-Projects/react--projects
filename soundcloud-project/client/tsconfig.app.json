@@ -34,6 +34,7 @@
       "@redux-storage/*": ["src/redux/storages/*"],
             "@redux-hook/*": ["src/redux/hooks/*"],
 
+      "@app-types/*":["src/app-types/*"],
 
     }
 

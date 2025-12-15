@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-// redux aliase
+// redux alias
 import {
   setAuthorizationWindowId,
   setUserEmail,
@@ -11,30 +11,35 @@ import { useEffect, useState } from "react";
 
 import { useAuthAppDispatch, useAuthAppSelector } from "@redux-hook/authHook";
 
+import type {  AuthFieldType } from "../../../app-types/errorTypes";
+
 type EmailWindowProps = {
-  emptyInput: boolean;
+  handleSetGlobalNotEmptyInputs: (value: boolean) => void;
+  inputError: string | null;
+  handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>, type: AuthFieldType) => void;
 };
 
-export const EmailWindow = () => {
+export const EmailWindow = ({handleSetGlobalNotEmptyInputs, handleKeyDown, inputError}: EmailWindowProps) => {
   const userEmail = useAuthAppSelector(
-    (state) => state.authorization.userEmail
+    (state) => state.authorization.userInputData.userEmail
   );
   const dispatch = useAuthAppDispatch();
 
   const [isNotEmptyInput, setIsNotEmptyInput] = useState<boolean>(true);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key == "Enter") {
-      e.preventDefault();
-      if (isNotEmptyInput) {
-        dispatch(setAuthorizationWindowId({ windowId: 3 }));
-      }
-    }
-  };
+
+
+  // --------------------------------------------------
+
+  // TEST
 
   useEffect(() => {
+    console.log("Email type:", typeof userEmail);
     setIsNotEmptyInput(userEmail.length !== 0);
+    handleSetGlobalNotEmptyInputs(userEmail.length !== 0);
   }, [userEmail]);
+
+  // --------------------------------------------------
 
   return (
     <>
@@ -62,19 +67,29 @@ export const EmailWindow = () => {
     </div> */}
 
       {/* this is universal input for all auth fields  */}
-      <AuthorizationInputTemplate
+      <AuthorizationInputTemplate<{ userEmail: string }>
         placeholder="Your email address or profile URL"
 
         isTypePassword={false}
 
         sliceReducer={setUserEmail}
-        sliceKey="email"
+        sliceKey="userEmail"
         sliceState={userEmail}
 
         onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
-          handleKeyDown(e)
+          handleKeyDown(e, "userEmail")
         }
+        inputError = {inputError}
       ></AuthorizationInputTemplate>
+
+
+       { inputError !== null && inputError.length && (
+      
+      <section className="text-red-500 mt-[.2rem] text-[.8rem] h-fit w-full">
+        <p>{inputError}</p>
+      </section>)
+      
+      }
     </>
   );
 };

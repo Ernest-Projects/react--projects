@@ -46,17 +46,18 @@ export const LeftNavbarButtons = () => {
   }
 
   const butts = [];
-  for (let i = 0; i < 3; i++) {
+  for (let index = 0; index < 3; index++) {
     butts.push(
       <>
         <motion.button
           whileTap={{ scale: 0.98 }}
           onClick={() => {
-            handleClick(buttsNavbar[i].component, i)
+            handleClick(buttsNavbar[index].component, index)
           }}
-          className={` w-min border-b-[2px] ${buttonActiveId == i ? "text-white border-b-white"  : "text-[rgb(152,152,152)] border-b-[rgb(18,18,18)]" }  box-border font-semibold lg:text-sm md:text-[.8rem] transition whitespace-nowrap duration-100 h-[100%] text-[rgb(152,152,152)]  hover:text-white text-bold`}
+          key={index}
+          className={` w-min border-b-[2px] ${buttonActiveId == index ? "text-white border-b-white"  : "text-[rgb(152,152,152)] border-b-[rgb(18,18,18)]" }  box-border font-semibold lg:text-sm md:text-[.8rem] transition whitespace-nowrap duration-100 h-[100%] text-[rgb(152,152,152)]  hover:text-white text-bold`}
         >
-          {buttsNavbar[i].content}{" "}
+          {buttsNavbar[index].content}{" "}
         </motion.button> 
       </>
     );

@@ -1,4 +1,6 @@
-import { useAuthAppSelector } from "@redux-hook/authHook"
+import { useAuthAppDispatch, useAuthAppSelector } from "@redux-hook/authHook"
+import { setProvider, setUserGoogleData } from "@redux-storage/authSlice";
+
 import { GoogleLogin } from "@react-oauth/google";
 import { useGoogleLogin } from "@react-oauth/google";
 import {useState, useEffect} from "react";
@@ -9,12 +11,19 @@ import {jwtDecode} from "jwt-decode";
 export const AuthorizationWithServices = () => {
 
 //  const authorizationWindowId = useAuthAppSelector(state => state.authorization.authorizationWindowId);
-
+  const dispatch = useAuthAppDispatch();
 
     // custom handler for google authorization
-      const handleGoogleLogin = useGoogleLogin({
-        onSuccess: (responce) => console.log("responce: ", responce),
+      const handleGoogleLogin = () => { 
+        
+        // set provider to google
+        dispatch(setProvider({type: "google"}));
+
+        useGoogleLogin({
+        onSuccess: (responce) => dispatch(setUserGoogleData({data: jwtDecode(responce.access_token)})),
        onError: () =>  console.log("Load failed")},);
+      
+      }
 
     
 

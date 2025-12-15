@@ -4,19 +4,45 @@ import {
   setAuthorizationWindowId,
   setUserEmail,
   setUserPassword,
+  setValidationErrors,
+  setIsUserLogged,
+  setProvider,
   setIsUserLoggedValue,
-  setClearAuthorizationData,
 } from "@redux-storage/authSlice";
 
 import { useAuthAppDispatch, useAuthAppSelector } from "@redux-hook/authHook";
 
 import { useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ProviderProps } from "react";
 import { AuthorizationButtons } from "src/services/user-guest-components/navbar/AuthorizationButtons";
 import { PasswordWindow } from "./PasswordWindow";
 import { EmailWindow } from "./EmailWindow";
 import axios from "axios";
-import { SignInWithGoogleWindow } from "../sign-up/SignInWithGoogleWindow";
+import { ProfileDetailsWindow } from "../sign-up/ProfileDetailsWindow";
+import type { Provider } from "../../../app-types/loginTypes";
+import { handleAddUserInDatabase } from "../fetching/addToDatabase";
+
+
+
+// -----------------------------------------------
+// VALIDATION IMPORTS
+
+import type { AuthFieldType, ValidationErrorsProps } from "../../../app-types/errorTypes";
+import {
+  invalidErrorExists,
+  validateUserLocalLogin,
+} from "../validation/validateUserLocalLogin";
+
+import { handleFieldValidationAfterKeyDown } from "../validation/input_enter_key/handleFieldValidationAfterKeyDown";
+
+
+interface InputErrorsProps {
+  invalidEmail: string;
+  invalidPassword: string;
+  // invalidDisplayName: string,
+  invalidAge: string;
+  // invalidGender: string
+}
 
 export const SignInComponent = () => {
   const navigate = useNavigate();
@@ -25,6 +51,15 @@ export const SignInComponent = () => {
 
   const authorizationWindowId = useAuthAppSelector(
     (state) => state.authorization.authorizationWindowId
+  );
+
+  // google data
+  const userGoogleData = useAuthAppSelector(
+    (state) => state.authorization.userGoogleData
+  );
+
+  const validationErrors = useAuthAppSelector(
+    (state) => state.authorization.validationErrors
   );
 
   // useEffect(() => {
@@ -49,106 +84,233 @@ export const SignInComponent = () => {
   // /    onEnterClicked();
   // }, [])
 
+  // --------------------------------------------------------
+  // ALL INPUT FIELDS
   const userEmail = useAuthAppSelector(
-    (state) => state.authorization.userEmail
+    (state) => state.authorization.userInputData.userEmail
   );
 
   const userPassword = useAuthAppSelector(
-    (state) => state.authorization.userPassword
+    (state) => state.authorization.userInputData.userPassword
   );
+
+  const userDisplayName = useAuthAppSelector(
+    (state) => state.authorization.userInputData.userDisplayName
+  );
+
+  const userAge = useAuthAppSelector(
+    (state) => state.authorization.userInputData.userAge
+  );
+
+  const userGender = useAuthAppSelector(
+    (state) => state.authorization.userInputData.userGender
+  );
+
+  const userInputData = useAuthAppSelector(
+    (state) => state.authorization.userInputData
+  );
+
+  const dispatch = useAuthAppDispatch();
+  // --------------------------------------------------------
 
   const sleep = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
 
-  const dispatch = useAuthAppDispatch();
-
   // if user in password window (windowId = 3), then set isUserLogged = true and close auth window
   const handleLoginUser = () => {
-    dispatch(setIsUserLoggedValue({ logged: true }));
-    dispatch(setClearAuthorizationData());
+    dispatch(setIsUserLogged());
 
-    alert("legged");
+    // alert("legged");
 
     navigate("/discover");
     return;
   };
 
-  // request to the server
-  const handleAddUserInDatabase = async () => {
-    try {
-      const responce = await fetch("http://localhost:3000/api/users/add", {
-        method: "POST",
-        headers: { "Content-Type": "Application/json" },
-        body: JSON.stringify({
-          data: { user_email: userEmail, user_password: userPassword },
-        }),
-      });
+  // -----------------------------------------------------------------------------
 
-      //  if responce cant be reached
-      if (!responce.ok) {
-        console.error("Responce error:", responce.status);
+  // success await continue after fetching google data
+  useEffect(() => {
+    const handleSetData = async () => {
+      if (userGoogleData) {
+        // last window
+        await sleep(1000);
+
+        dispatch(setAuthorizationWindowId({ windowId: 4 }));
+        alert("google data: " + userGoogleData);
+
+        Object.values(userGoogleData).map((_) => console.log(_ + "\n"));
       }
+    };
 
-      const result = await responce.json();
-      console.log("Server responce: ", result);
+    handleSetData();
+  }, [userGoogleData]);
 
-      //  success? Add data in uState
-      if (result.success) {
-        console.log("data successfully added in database!");
-      } else {
-        // if success is false (user already exsists)
-        alert("User already exsists with this name! Please choose another");
-      }
-      return;
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  // -----------------------------------------------------------------------------
 
-  // 'continue' button when clicked
+  // set input errors
+
+  // validate all inputs
+  const validateAllInputFields = () => {};
+  // -----------------------------------------------------------------------------
+
+  // test 'continue button '
+
   const handleEntryUser = async () => {
     await sleep(500);
-    if (authorizationWindowId == 3) {
-      await handleAddUserInDatabase();
-      handleLoginUser();
 
-      console.log("email: ", userEmail);
-      console.log("Password: ", userPassword);
-    }
+    // errors
+    let errors: ValidationErrorsProps = {
+      userEmail: null,
+      userPassword: null,
+      userDisplayName: null,
+      userAge: null,
+    };
 
-    if (!userPassword.length || !userEmail.length) {
-      setIsInputNotEmpty(false);
-    }
-
-    if (userEmail.length) {
-      dispatch(setAuthorizationWindowId({ windowId: 3 }));
-    }
-
-    // if (authorizationWindowId == 4) {
+    // IF ERRORS EXISTS, THAN BLOCK CONTINUING AUTHORIZATION
+    // if (!invalidErrorExists(validationErrors)) {
+    //   dispatch(setAuthorizationWindowId({ windowId: authorizationWindowId + 1 }));
     // }
+
+    if (authorizationWindowId == 1) {
+      // set provider right here, only one time
+      errors = validateUserLocalLogin({ userEmail });
+      dispatch(setValidationErrors(errors));
+
+      if (errors.userEmail !== null) {
+        return;
+      } else {
+        dispatch(
+          setAuthorizationWindowId({ windowId: authorizationWindowId + 2 })
+        );
+      }
+    }
+    // email and password window
+    if (authorizationWindowId == 2) {
+      console.log("User");
+      dispatch(setProvider({ type: "local" }));
+
+      errors = validateUserLocalLogin({ userEmail });
+      dispatch(setValidationErrors(errors));
+      // alert("errors: " + errors);
+
+      if (errors.userEmail !== null) {
+        return;
+      } else {
+        dispatch(
+          setAuthorizationWindowId({ windowId: authorizationWindowId + 1 })
+        );
+      }
+    }
+
+    // email and password window
+    if (authorizationWindowId == 3) {
+      console.log("Password");
+
+      errors = validateUserLocalLogin({ userPassword });
+      dispatch(setValidationErrors(errors));
+
+      if (errors.userPassword !== null) {
+        return;
+      } else {
+        dispatch(
+          setAuthorizationWindowId({ windowId: authorizationWindowId + 1 })
+        );
+      }
+    }
+
+    // invalidEmail: "Enter a valid email address!", invalidPassword: "This password is incorrect!",invalidAge: "Sorry, but you don't meet SoundCloud's minimum age requirements"
+    if (authorizationWindowId == 4) {
+      // if all necessary fields valid
+      // if (isUserInputDataValid()) {
+
+      errors = validateUserLocalLogin({ userDisplayName, userAge });
+      dispatch(setValidationErrors(errors));
+
+      if (errors.userDisplayName !== null || errors.userAge !== null) {
+        return;
+      } else {
+        // GET ANSWER FROM SERVER
+        const result = await handleAddUserInDatabase(userInputData);
+
+        // IF SUCCESS
+        if (result.ok) {
+         
+          // SET LOGGED
+          // CLOSE AUTHORIZATION WINDOW
+          dispatch(setIsUserLogged());
+
+          return;
+        }
+
+        if (result.reason == "USER_EXISTS") {
+          errors.userDisplayName = "User already exists! Change email address!";
+          dispatch(setValidationErrors(errors));
+        }
+      }
+
+      // set user logged
+      // dispatch(setIsUserLogged());
+
+      // add user in database
+      // handleAddUserInDatabase();
+    }
+    // set errors
+
+    return;
   };
 
-  // move to next window when input clicked
-  const handleContinueWithInput = () => {
-    if (authorizationWindowId == 1) {
-      dispatch(setAuthorizationWindowId({ windowId: 2 }));
+  const getValueByField = (field: AuthFieldType) => {
+  switch (field) {
+    case "userEmail":
+      return userEmail;
+    case "userPassword":
+      return userPassword;
+    case "userDisplayName":
+      return userDisplayName;
+    case "userAge":
+      return userAge ?? 0;
     }
+  };
+
+
+  // move to next window when input clicked
+  const handleContinueWithInput = (e: React.KeyboardEvent<HTMLInputElement>, type: AuthFieldType) => {
+    // alert("handleContinueWithInput!");
+   if (type == "userAge") return; 
+    handleFieldValidationAfterKeyDown(e, type, authorizationWindowId, getValueByField(type),  dispatch);
   };
 
   // set semitransparent and disabled 'continue' button, when input empty
-  useEffect(() => {
-    if (authorizationWindowId == 2 || authorizationWindowId == 1) {
-      setIsInputNotEmpty(userEmail.length ? true : false);
-    } else if (authorizationWindowId == 3) {
-      setIsInputNotEmpty(userPassword.length ? true : false);
-    }
-  }, [userPassword, userEmail, authorizationWindowId]);
+  // useEffect(() => {
+  //   if (authorizationWindowId == 2 || authorizationWindowId == 1) {
+  //     setIsInputNotEmpty(userEmail.length ? true : false);
+  //   } else if (authorizationWindowId == 3) {
+  //     setIsInputNotEmpty(userPassword.length ? true : false);
+  //   }
+  //   else {
+  //     setIsInputNotEmpty(userPassword.length ? true : false);
+  //   }
+
+  // }, [userPassword, userEmail, userAge, userDisplayName, userGender]);
+
+
+  // SET PROVIDER TO LOCAL
+  // ------------------------------------------
+  // TEST
+
+  // useEffect(() => {
+  //   // for provider
+  //   if (userEmail.length) {
+  //     dispatch(setProvider({ type: "local" }));
+  //   }
+  // }, [userEmail]);
+
+  // ------------------------------------------
 
   return (
     <>
       <section className="gap-y-[1rem]  flex  h-fit w-full text-sm flex-col">
         <div
-          onClick={handleContinueWithInput}
           className=" flex flex-col gap-[1rem] align-center text-[.7rem] overflow-hidden w-full h-fit "
         >
           <AnimatePresence mode="sync">
@@ -159,26 +321,44 @@ export const SignInComponent = () => {
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 40, opacity: 0 }}
               >
-                <EmailWindow />
+                <EmailWindow
+                  handleSetGlobalNotEmptyInputs={(value) =>
+                    setIsInputNotEmpty(value)
+                  }
+                  handleKeyDown ={handleContinueWithInput}
+                  inputError={validationErrors.userEmail}
+                />
               </motion.div>
             ) : authorizationWindowId == 3 ? (
               <motion.div
                 key="password"
                 initial={{ y: -40, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }} 
+                animate={{ y: 0, opacity: 1 }}
                 exit={{ y: 40, opacity: 0 }}
               >
-                <PasswordWindow handleLoginUser={handleLoginUser} />
-              </motion.div> 
+                <PasswordWindow
+                  handleSetGlobalNotEmptyInputs={(value) =>
+                    setIsInputNotEmpty(value)
+                  }
+                  // validation function from validation/input_enter_key
+                  handleKeyDown={handleContinueWithInput}
+                  inputError={validationErrors.userPassword}
+                />
+              </motion.div>
             ) : (
               authorizationWindowId == 4 && (
                 <motion.div
-                  key="first-entry-data"
+                  key="name-age-gender"
                   initial={{ y: -40, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: 40, opacity: 0 }}
                 >
-                  <SignInWithGoogleWindow />
+                  <ProfileDetailsWindow
+                    handleSetGlobalNotEmptyInputs={(value) =>
+                      setIsInputNotEmpty(value)
+                    }
+                    inputError={{userDisplayName: validationErrors.userDisplayName, userAge: validationErrors.userAge}}
+                  />
                 </motion.div>
               )
             )}
@@ -188,7 +368,7 @@ export const SignInComponent = () => {
         <button
           onClick={handleEntryUser}
           disabled={!isInputNotEmpty}
-          className={`w-full font-medium rounded-[.2rem]  flex flex-row justify-center gap-[.5rem] h-fit text-black py-[.5rem] ${
+          className={`w-full font-medium rounded-[.2rem]  flex flex-row justify-center gap-[.5rem] h-fit text-black py-[.8rem] ${
             isInputNotEmpty ? "opacity-[1]" : " opacity-[.6]"
           }  bg-white`}
         >

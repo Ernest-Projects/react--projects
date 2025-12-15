@@ -4,7 +4,7 @@ import {
   type PayloadAction,
 } from "@reduxjs/toolkit";
 
-import type{ TrackProps} from 'src/types/Track'
+import type{ TrackProps} from 'src/app-types/Track'
 
 export interface PlayerState {
   isAudioPlaying: boolean;

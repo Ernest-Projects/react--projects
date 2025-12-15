@@ -12,6 +12,14 @@ dist
 dist-ssr
 *.local
 react--projects/node_modules
+react--projects/server/node_modules
+react--projects/client/node_modules
+ 
+
+
+# Google Oauth secret
+soundcloud-project/client/secret.txt
+
 
 # Editor directories and files
 .vscode/*

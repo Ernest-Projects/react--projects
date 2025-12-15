@@ -23,11 +23,14 @@ export const AuthorizationButtons = () => {
      
         // set open login window
         authDispatch(setIsAuthorizationWindowOpened({opened: true}));
-        
+        // close popups
         navbarDispatch(setCloseAllPopups());
 
         // disable scrollbar
         document.documentElement.style.overflow = "hidden";
+
+
+    
         
     }
     return <>

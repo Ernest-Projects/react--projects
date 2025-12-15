@@ -17,21 +17,21 @@ import {
 } from "../../redux/storages/playerSlice";
 import { PlayerButton } from "../player/PlayerButton";
 
-import type { TrackProps } from "src/types/Track";
+import type { TrackProps } from "src/app-types/Track";
 import {
   useGlobalAppDispatch,
   useGlobalAppSelector,
 } from "../../redux/hooks/globalHook";
-import {
-  setAllLikedTracks,
-  setResetAllTracks,
-  setUpdateSelectedTrack,
-  type GlobalAppDispatch,
-} from "../../redux/storages/globalSlice";
+// import {
+  // setAllLikedTracks,/
+  // setResetAllTracks,
+  // setUpdateSelectedTrack,
+  // type GlobalAppDispatch,
+// } from "../../redux/storages/globalSlice";
 import { globalAgent } from "http";
 
-import { handleStateForPlayerTrack } from "../../database-controllers/stopBeginTrack";
-import { handleSetTracksToDefault } from "../../database-controllers/resetAllTracks";
+// import { handleStateForPlayerTrack } from "../../database-controllers/stopBeginTrack";
+// import { handleSetTracksToDefault } from "../../database-controllers/resetAllTracks";
 
 import type { RootState, AppDispatch, AppThunk } from "../../redux/storages/store";
 import type { ThunkAction } from "redux-thunk";
@@ -82,7 +82,7 @@ export const TrackTitle = ({ trackData }: TrackTitleProps) => {
 
     
     // async func that resetted all db (playable = false, setted = false)
-    await handleSetTracksToDefault();
+    // await handleSetTracksToDefault();
     dispatch(
       setPlayerData({
         data: { ...track, playable: !isPlayable, setted: true },
@@ -93,25 +93,25 @@ export const TrackTitle = ({ trackData }: TrackTitleProps) => {
     console.log("CurrentTrack playable:", isPlayable)
 
     // set this actual track from redux in async set track in db func
-    await handleStateForPlayerTrack(currentTrack);
+    // await handleStateForPlayerTrack(currentTrack);
     console.log("CurrentTrack playable:", isPlayable)
     
     // ressetung all tracks in redux state
-    dispatch(setResetAllTracks());
+    // dispatch(setResetAllTracks());
       const updatedLikedTracks = await fetch(
         "http://localhost:5001/likedTracks"
       ).then((res) => res.json());
       // and set new changed db ( current track: playable = true, setted = true)
-      dispatch(setAllLikedTracks({ likedTracksFromDb: updatedLikedTracks }));
+      // dispatch(setAllLikedTracks({ likedTracksFromDb: updatedLikedTracks }));
     console.log("CurrentTrack playable:", isPlayable)
       
       // state for isPlayed, isSetted variables in code
-      dispatch(
-        setUpdateSelectedTrack({
-          id: track.id,
-          data: { playable: currentTrack.playable, setted: true },
-        })
-      );
+      // dispatch(
+        // setUpdateSelectedTrack({
+          // id: track.id,
+          // data: { playable: currentTrack.playable, setted: true },
+        // })
+      // );
     console.log("CurrentTrack playable: (isPlayable)", isPlayable)
     console.log("CurrentTrack playable: (currentTrack)", currentTrack.playable)
 

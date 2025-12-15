@@ -3,7 +3,7 @@ import { Component, type PopcornIcon } from "lucide-react";
 import { useNavbarAppDispatch } from "../../../redux/hooks/navbarHook";
 import { useAuthAppDispatch, useAuthAppSelector } from "../../../redux/hooks/authHook";
 
-import { setIsUserLoggedValue } from "../../../redux/storages/authSlice";
+import { setIsUserLoggedValue} from "@redux-storage/authSlice";
 
 import { motion } from "motion/react";
 import { forwardRef, useRef } from "react";

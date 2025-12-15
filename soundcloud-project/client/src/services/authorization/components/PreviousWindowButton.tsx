@@ -14,7 +14,7 @@ export const PreviousWindowButton = () => {
         setAuthorizationWindowId({ windowId:  1 }) 
       );
     }else {
-      dispatch(setAuthorizationWindowId({ windowId:  authorizationWindowId -1 }))
+      dispatch(setAuthorizationWindowId({ windowId:  authorizationWindowId - 1 }))
 
     }
   };

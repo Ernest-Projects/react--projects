@@ -1,7 +1,4 @@
-import {
-  authReducer,
-  setIsUserLoggedValue,
-} from "../../redux/storages/authSlice";
+
 import {
   useAuthAppDispatch,
   useAuthAppSelector,
@@ -15,7 +12,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { createPortal } from "react-dom";
 import {
   setAuthorizationWindowId,
-  setIsAuthorizationWindowOpened, setClearAuthorizationData
+  setIsAuthorizationWindowOpened,clearAllUserData
 } from "@redux-storage/authSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -27,7 +24,8 @@ import { LogInWindows } from "./windows/LogInWindows";
 import { span } from "motion/react-client";
 import { SignInWithGoogleWindow } from "./sign-up/SignInWithGoogleWindow";
 
-import { GoogleLogin } from "@react-oauth/google";
+// import { GoogleLogin } from "@react-oauth/google";
+import { TestComponent } from "./sign-in/testComponent";
 
 export const Registration = () => {
   const [closeAuthorizationWindow, setCloseAuthorizationWindow] =
@@ -48,15 +46,20 @@ export const Registration = () => {
   );
 
   const handleCloseAuthorizationWindow = async () => {
-    dispatch(setClearAuthorizationData());
+    dispatch(clearAllUserData())
+    
     document.documentElement.style.overflow = "visible";
+
+    dispatch(setIsAuthorizationWindowOpened({opened: false}));
+    dispatch(setAuthorizationWindowId({windowId: 1}));
+
   };
 
  
   // facebook button bg
   // rgba(0, 59, 179, 1)
 
-  return createPortal(
+  return createPortal( 
     <motion.main
       transition={{}}
       className={` fixed w-[100vw] left-0 top-0 h-[100vh] flex justify-center align-center ${
@@ -65,6 +68,8 @@ export const Registration = () => {
           : "z-[-100] opacity-[0] pointer-events-none"
       }`}
     >
+
+      <TestComponent/>
 
 
       {/* semitransparent background  */}
@@ -85,22 +90,18 @@ export const Registration = () => {
         style={{transform: "translateX(0%) translateY(0%)", transformOrigin:"top"}}
         className={`rounded-[.2rem] border w-[28rem] place-self-center gap-[1rem] absolute h-fit p-[1.5rem] bg-[rgb(18,18,18)]`}
       >
-
         {authorizationWindowId == 1 ? (
           
           <motion.div key = "main" initial={{y:-40,  opacity: 0}} animate = {{y: 0, opacity:1}} exit={{y:40, opacity:0}}>
             <MainWindow />
           </motion.div>
 
-        ) : ([2,3].includes(authorizationWindowId)) ? (
+        ) : ([2,3,4].includes(authorizationWindowId)) && (
           
           <motion.div key = "email/password" initial={{y:-40,  opacity: 0}} animate = {{y: 0, opacity:1}} exit={{y:40, opacity:0}}>
           <LogInWindows/>
           </motion.div>
 
-        ) : authorizationWindowId == 4 && (
-          
-            <SignInWithGoogleWindow/>
         ) 
       }
         
