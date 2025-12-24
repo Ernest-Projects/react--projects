@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": ["es6", "dom"],
+    "sourceMap": true,
+    "types": ["cypress", "node"],
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx"
+
+  },
+  "include": ["**/*.ts", "**/*.tsx"]
+}

@@ -1,16 +1,27 @@
+// .env
+import dotenv from "dotenv";
+dotenv.config();
 
 import express from "express"
 import cors from "cors"
 
 
 import {pool} from "./database.js";
-import { CREATE_DATABASE, INSERT_USERS_LOCAL, SELECT_ALL, INSERT_TRACKS_ROW } from "./actions.js";
 import userRoutes from "./routes/userRoutes.js"
+
 
 const app = express();
 
+
+const ORIGIN_URL = process.env.ORIGIN_URL;
+const PORT = process.env.PORT;
+
+if(!ORIGIN_URL) throw new Error(" Url in .env is not defined!");;
+if(!PORT) throw new Error(" Port in .env is not defined!");;
+
+
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: ORIGIN_URL,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true
 }));
@@ -21,23 +32,17 @@ app.use((req, res, next) => {
   res.setHeader("Cross-Origin-Embedder-Policy", "unsafe-none");
   next();
 });
+
 app.use(express.json());
 
 app.use("/api/users", userRoutes);
 
 app.use(express.urlencoded({ extended: true }));
 
-app.listen(3000, () => console.log("Server on localhost: " + 3000))
+app.listen(PORT, () => console.log("Server on localhost: " + PORT))
 
 
-// creating database 
-const createDatabase = async() => {
-    try {
-        const createBase = await pool.query(CREATE_DATABASE);
-    }catch(err) {
-        console.error(err)
-    }
-}
+
  
 // tabla 
 // const initializeTable = async() =>{

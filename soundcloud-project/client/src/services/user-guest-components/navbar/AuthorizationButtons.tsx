@@ -36,7 +36,7 @@ export const AuthorizationButtons = () => {
     return <>
 
     <section className="h-full font-medium w-fit  flex gap-x-[1rem] ">
-        <GlobalButton onClick = {handleSingIn} text = {"Sign in"} bg = {"transparent"} color = {"white"}/>
+        <GlobalButton data-cy = "navbar-sign-in-button" onClick = {handleSingIn} text = {"Sign in"} bg = {"transparent"} color = {"white"}/>
         <GlobalButton onClick  = {handleSingIn} text = {"Create account"} bg = {"white"} color = {"black"}/>
         <GlobalButton text = {"Upload"} bg = {"transparent"} color = {"gray"}/>
     </section>

@@ -3,12 +3,12 @@ import { MorePopup, NotificationPopup, MessagePopup
  } from "../navbar-components/NavbarPopups";
 
 //  navbar buttons for main pages 
- import { Home } from "../../pages/home/Home";
- import {Feed} from "../../pages/feed/Feed";
- import { Library } from "../../pages/library/library-main/Library";
- import { TryArtist } from "../../pages/tryArtist/TryArtist";
- import { ForArtists } from "../../pages/forArtists/ForArtists";
- import { Upload } from "../../pages/upload/Upload";
+ import { Home } from "../../../pages/home/Home";
+ import {Feed} from "../../../pages/feed/Feed";
+ import { Library } from "../../../pages/library/library-main/Library";
+ import { TryArtist } from "../../../pages/tryArtist/TryArtist";
+ import { ForArtists } from "../../../pages/forArtists/ForArtists";
+ import { Upload } from "../../../pages/upload/Upload";
 
 // import * from "../pages/";
 
@@ -20,7 +20,7 @@ import { MorePopup, NotificationPopup, MessagePopup
 export const buttsNavbar = [
   { content: "Home", component: Home, path: "/discover" },
   { content: "Feed", component: Feed, path: "/feed" },
-  { content: "Library", component: Library, path: "/you/*" },
+  { content: "Library", component: Library, path: "/you" },
   { content: "Try Artist Pro", component: TryArtist,path: "/try" },
   { content: "For Artists", component:ForArtists, path: "/artist" },
   { content: "Upload", component: Upload, path: "/upload" },

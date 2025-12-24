@@ -6,8 +6,10 @@ import { CREATE_TRACKS_TABLE } from "../../actions.js";
 
 export const createTracksTable = async () => {
     try {
-        const createTable = await pool.query(CREATE_TRACKS_TABLE);
+        
+        await pool.query(CREATE_TRACKS_TABLE);
         console.log("Table successfuly dropped!")
+
     }catch(err) {
 
         

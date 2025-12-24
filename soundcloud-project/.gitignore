@@ -31,4 +31,8 @@ soundcloud-project/client/secret.txt
 *.njsproj
 *.sln
 *.sw?
+
+# server and client .env
+client/.env
+server/.env
 soundcloud-project/client/secret.txt

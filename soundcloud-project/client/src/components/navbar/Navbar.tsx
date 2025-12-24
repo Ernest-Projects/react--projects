@@ -84,12 +84,15 @@ export const Navbar = () => {
 
 
   return (
-    <>
-      <main
+    <> 
+      <main data-cy = "navbar" role = "navbar"
+                className={`w-[100%] flex align-center place-self-center relative  h-[2.5rem]`}
+              >
+      <section
         style={{ justifyContent: "space-between" }}
         className={` select-none sm:w-[40rem] md:w-[55rem] lg:w-[70rem] fixed h-[2.8rem] bg-[rgb(18,18,18)] z-[1000] place-self-center gap-[1rem]  align-center flex justify-center flex-rows  top-[0%] `}
       > 
-      
+        
         {/* left side of buttons in navbar */}
         <LeftNavbarButtons/>
         <section
@@ -129,7 +132,8 @@ export const Navbar = () => {
         </section>
           }
 
-      </main>
+      </section>
+        </main>
     </>
   );
 };

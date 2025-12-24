@@ -5,7 +5,7 @@ import {
   type HTMLInputTypeAttribute,
 } from "react";
 import "../../main/index.css";
-import { TrackData } from "../pages/library/components/library-sections/liked-tracks-array/likedTracks";
+import { TrackData } from "../../pages/library/components/library-sections/liked-tracks-array/likedTracks";
 import { motion } from "motion/react";
 import {
   Repeat,
@@ -40,7 +40,6 @@ import {
 import { setAllLikedTracks } from "../../redux/storages/globalSlice";
 
 import { CurrentTrack } from "./CurrentTrack";
-import { VolumePopup } from "./PlayerPopups";
 import { PlayerButton } from "./PlayerButton";
 
 import { handleStateForPlayerTrack } from "../../database-controllers/stopBeginTrack";
@@ -212,14 +211,14 @@ export const Player = () => {
 
   return (
     <>
-      <main
+      <main data-cy = "player"
         className={`fixed  bg-[rgb(48,48,48)] w-[100%] z-[1000] h-[3rem] flex flex-col justify-center align-center place-self-center z-[1000] left-0 bottom-0 `}
       >
         <div className="h-full text-white  sm:w-[40rem] md:w-[50rem] lg:w-[70rem] place-self-center flex  align-center justify-between relative  ">
           <section className=" gap-[.8rem] border-red-500 relative flex flex-row place-self-center  w-fit ">
             <SkipBack className="place-self-center" />
 
-            <button
+            <button data-cy ="player-play"
               onClick={(e) => {
                 handlePlayTrackAndSetTitle();
                 e.preventDefault();
@@ -285,8 +284,8 @@ export const Player = () => {
                 >
                   <motion.div className="absolute bg-black right-[-4px] transition duration-200 opacity-[0] place-self-center group-hover:opacity-[1]  z-[10000] w-[8px] aspect-[1/1] pointer  rounded-[10rem] shadow-[inset_0px_0px_0px_1.5px_rgb(255,85,0)]"></motion.div>
                 </motion.div>
-                <motion.div className="bg-[rgb(70,70,70)] w-full pointer-events-none z-[1] absolute place-self-center flex align-center h-[2px] "></motion.div>
-                <motion.input
+                <motion.div data-cy = "player-progressbar" className="bg-[rgb(70,70,70)] w-full pointer-events-none z-[1] absolute place-self-center flex align-center h-[2px] "></motion.div>
+                <motion.input data-cy = "player-progressbar"
                   onPointerDown={(e) => {
                     e.stopPropagation();
                     setIsProgressbarDragging(true);
@@ -314,7 +313,7 @@ export const Player = () => {
               <p className=" text-white  w-fit text-[12px] place-self-center">
                 <span className="font-bold">-{trackTime[1]}</span>
               </p>
-              <div
+              <div data-cy = "player-volume"
                 onMouseEnter={() => setIsVolumeHover(true)}
                 onMouseLeave={() => setIsVolumeHover(false)}
                 className=" relative  flex justify-center align-center"
@@ -406,9 +405,10 @@ export const Player = () => {
 
 
           {/* track title in player */}
-          <div className=" h-full  w-[12.5%] ">
+          <div data-cy = "player-title" className=" h-full  w-[12.5%] ">
             <CurrentTrack></CurrentTrack>
           </div>
+
           <section className=" gap-[1.5rem] border-red-500 relative flex place-self-center align-center justify-center w-fit ">
             <button>
               <Heart size={15} color={`${currentTrack.liked ? "rgb(255,85,0)": "white"}`} className="place-self-center" />

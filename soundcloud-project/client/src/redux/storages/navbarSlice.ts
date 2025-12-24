@@ -6,7 +6,7 @@ interface PopupProps {
     id: number
 }
 
-interface CounterState { 
+export interface NavbarStatesProps { 
     popupStates: PopupProps[];
     isInputOnFocus: boolean;
     activeButtonId: number;
@@ -26,7 +26,7 @@ const initialState = {
     ],
     isInputOnFocus: false,
     activeButtonId: -1
-} as CounterState;
+} as NavbarStatesProps;
 
 export const navbarStore = createSlice({
     name: "navbar",

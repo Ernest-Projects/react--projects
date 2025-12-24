@@ -61,6 +61,9 @@ export const ProfileDetailsWindow = ({ handleSetGlobalNotEmptyInputs, inputError
           placeholder="Display name"
           isTypePassword={false}
           inputError= {inputError.userDisplayName}
+
+                  inputAttrs={{ "data-cy": "registration-display-name" } as any}
+
   
           sliceReducer={setUserDisplayName}
           sliceKey={"userDisplayName"}
@@ -95,6 +98,9 @@ export const ProfileDetailsWindow = ({ handleSetGlobalNotEmptyInputs, inputError
   
                     inputError= {inputError.userAge}
 
+                                      inputAttrs={{ "data-cy": "registration-age" } as any}
+
+
           sliceReducer={setUserAge}
           sliceKey={"userAge"}
           sliceState={userAge}
@@ -120,6 +126,8 @@ export const ProfileDetailsWindow = ({ handleSetGlobalNotEmptyInputs, inputError
           isTypePassword={false}
 
                     inputError= {null}
+
+                                      inputAttrs={{ "data-cy": "registration-gender" } as any}
 
           sliceReducer={setUserGender}
           sliceKey={"userGender"}

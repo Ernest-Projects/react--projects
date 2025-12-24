@@ -159,7 +159,8 @@ export const MorePopup = () => {
 
   return (
     <>
-      <motion.div
+      <motion.div data-cy = "navbar-popup"
+      data-index = "0"
             data-popup ="true" 
 
         initial={{ opacity: 0, y: 0 }}
@@ -167,7 +168,8 @@ export const MorePopup = () => {
         className={` top-[100%] w-[10rem] h-fit py-2 rounded-[.1rem] bg-[rgb(18,18,18)] font-medium right-[.2rem]  border-[rgb(50,50,50)] border-[0.2px] absolute aspect-[1/1] px-2  text-white`}
       >
         {buttonList.map((item, index) => (
-          <motion.button
+          <motion.button data-cy = "navbar-popup-button"
+          data-index = {index} 
             onClick={() => {handleRouteMorePopup(item.component)}}
             key={index}
             className=" w-full flex py-[.3rem] flex-nowrap gap-[.5rem] flex-cols relative  text-bold text-sm flex-nowrap group hover:text-[rgb(152,152,152)]"

@@ -23,13 +23,15 @@ interface AuthorizationInputTemplateProps<T extends Record<string, number | stri
   
   // 
   sliceState: string | number | null;
-  inputAttrs?: React.InputHTMLAttributes<HTMLInputElement>;
+  inputAttrs?: React.ComponentPropsWithoutRef<"input">;
+
 
   // onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 
   // error apear if user input data is invalid 
   inputError: string | null;
+
 }
 
 export const AuthorizationInputTemplate = forwardRef(
@@ -69,7 +71,7 @@ export const AuthorizationInputTemplate = forwardRef(
           {placeholder}
           </motion.p>
       <form autoComplete="on">
-        <input autoComplete= {isTypePassword ? "new-password" : "on"}
+        <input autoComplete= {isTypePassword ? "new-password" : "on"} data-cy ="registration-input"
         // all atributes for input tag (<HTMLInputElement> type)
           {...inputAttrs}
           ref={ref}

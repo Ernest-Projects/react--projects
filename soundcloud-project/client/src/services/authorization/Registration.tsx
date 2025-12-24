@@ -17,12 +17,9 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import { useEffect, useState } from "react";
-import { SignInComponent } from "./sign-in/SignInComponent";
-import { AuthorizationWithServices } from "./sign-up/AuthorizationWithServices";
 import { MainWindow } from "./windows/MainWindow";
 import { LogInWindows } from "./windows/LogInWindows";
 import { span } from "motion/react-client";
-import { SignInWithGoogleWindow } from "./sign-up/SignInWithGoogleWindow";
 
 // import { GoogleLogin } from "@react-oauth/google";
 import { TestComponent } from "./sign-in/testComponent";
@@ -60,7 +57,7 @@ export const Registration = () => {
   // rgba(0, 59, 179, 1)
 
   return createPortal( 
-    <motion.main
+    <motion.main data-cy = "registration-window-container" role = "dialog"
       transition={{}}
       className={` fixed w-[100vw] left-0 top-0 h-[100vh] flex justify-center align-center ${
         isAuthorizationWindowOpened
@@ -68,12 +65,12 @@ export const Registration = () => {
           : "z-[-100] opacity-[0] pointer-events-none"
       }`}
     >
-
-      <TestComponent/>
+      {/* TEST */}
+      {/* <TestComponent/> */}
 
 
       {/* semitransparent background  */}
-      <div
+      <div data-cy = "registration-window-overlay"
         className={`bg-white duration-200 w-full h-full transition ${
           isAuthorizationWindowOpened ? "opacity-[.4]" : "opacity-[0]"
         }`}
@@ -85,26 +82,25 @@ export const Registration = () => {
       {isAuthorizationWindowOpened && (
 
 
-      <motion.section
+      <motion.section data-cy = "registration-window"
       initial = {{ opacity: 0, y: -100}} animate = {{opacity: 1, y: 0}} exit={{opacity: 0  , y:  -100}}
         style={{transform: "translateX(0%) translateY(0%)", transformOrigin:"top"}}
         className={`rounded-[.2rem] border w-[28rem] place-self-center gap-[1rem] absolute h-fit p-[1.5rem] bg-[rgb(18,18,18)]`}
       >
         {authorizationWindowId == 1 ? (
           
-          <motion.div key = "main" initial={{y:-40,  opacity: 0}} animate = {{y: 0, opacity:1}} exit={{y:40, opacity:0}}>
+          <motion.div data-cy = "main-registration-window" key = "main" initial={{y:-40,  opacity: 0}} animate = {{y: 0, opacity:1}} exit={{y:40, opacity:0}}>
             <MainWindow />
           </motion.div>
 
         ) : ([2,3,4].includes(authorizationWindowId)) && (
           
-          <motion.div key = "email/password" initial={{y:-40,  opacity: 0}} animate = {{y: 0, opacity:1}} exit={{y:40, opacity:0}}>
+          <motion.div data-cy ="input-registration-window" key = "email/password" initial={{y:-40,  opacity: 0}} animate = {{y: 0, opacity:1}} exit={{y:40, opacity:0}}>
           <LogInWindows/>
           </motion.div>
 
         ) 
       }
-        
 
       </motion.section> 
       )}
@@ -113,39 +109,8 @@ export const Registration = () => {
 {/* 
 
 
-      <AnimatePresence mode="wait">
-  {authorizationWindowId === 1 ? (
-    <motion.section
-      key="main"
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 20 }}
-      transition={{ duration: 0.3 }}
-      style={{ transform: "translate(50%, -50%)" }}
-      className="rounded-[.2rem] border w-[28rem] place-self-center absolute h-fit p-[1.5rem] bg-[rgb(18,18,18)]"
-    >
-      <MainWindow close={closeAuthorizationWindow} />
-    </motion.section>
-  ) : (
-    <motion.section
-      key="email"
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 20 }}
-      transition={{ duration: 0.3 }}
-      style={{ transform: "translate(50%, -50%)" }}
-      className="rounded-[.2rem] border w-[28rem] place-self-center absolute h-fit p-[1.5rem] bg-[rgb(18,18,18)]"
-    >
-      <<LogInWindow></LogInWindow> />
-    </motion.section>
-  )}
-</AnimatePresence> */}
-
-
-
-
       {/*button to close auth window */}
-      <button
+      <button  data-cy="close-registration-button" aria-label="close modal"
         onClick={handleCloseAuthorizationWindow}
         className="w-fit h-fit group rounded-[10rem] p-[.2rem] bg-[rgb(48,48,48)] text-white absolute right-[3rem] top-[3rem]"
       >

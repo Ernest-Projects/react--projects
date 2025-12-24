@@ -84,7 +84,7 @@ export const PasswordWindow = ({ handleSetGlobalNotEmptyInputs, handleKeyDown, i
 
         <p
           className={` text-white transition duration-200 translate-y-[2px] my-0 focus:outline-none active:outline-none  w-full `}
-        > hereis 
+        > 
           {userEmail}
         </p>
       </div>
@@ -95,6 +95,7 @@ export const PasswordWindow = ({ handleSetGlobalNotEmptyInputs, handleKeyDown, i
         isTypePassword={true}
 
         inputError = {inputError}
+        inputAttrs={{ "data-cy": "registration-password" } as any}
 
 
         sliceReducer={setUserPassword} 
@@ -105,7 +106,7 @@ export const PasswordWindow = ({ handleSetGlobalNotEmptyInputs, handleKeyDown, i
         onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
           handleKeyDown(e, "userPassword")
         }
-      ></AuthorizationInputTemplate>
+      ></AuthorizationInputTemplate> 
 
       { inputError !== null && inputError.length && (
       

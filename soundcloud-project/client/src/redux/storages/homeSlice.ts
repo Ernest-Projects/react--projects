@@ -8,7 +8,7 @@ import type { InitialEntry } from "react-router-dom";
 type SliderProps = {
   [key: string]: number;
 };
-type ToolsProps = {
+export interface ToolsProps  {
   isToolsOpened: boolean;
   // sliders: SliderProps;
 };

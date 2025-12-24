@@ -17,7 +17,7 @@ interface AuthorizationErrorsProps  {
     userAge: string | null;
 }
 
-interface AuthorzationProps  {
+export interface AuthorzationProps  {
     isUserLogged: boolean
 
     // for UI (maybe not the best solution) 
@@ -49,7 +49,7 @@ const initialState =  {
         isAuthorizationWindowOpened: false,
         
 
-        validationErrors: {userEmail: null, userPassword: null, userDisplayName: null, userAge: null},
+        validationErrors: {userEmail: "", userPassword: "", userDisplayName: "", userAge: ""},
 
         provider: null,
 

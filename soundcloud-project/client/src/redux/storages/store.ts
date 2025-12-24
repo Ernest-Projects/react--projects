@@ -13,7 +13,7 @@ export const store =  configureStore({
         // static
         navbar: navbarReducer,
         player: playerReducer,
-
+        
         // ------
         
         // pages
@@ -29,7 +29,7 @@ export const store =  configureStore({
         authorization: authReducer
     },
 });
-
+export type storeApp = typeof store;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export type AppThunk<ReturnType = void> = import("@reduxjs/toolkit").ThunkAction<ReturnType, RootState, undefined, import("redux").AnyAction>;

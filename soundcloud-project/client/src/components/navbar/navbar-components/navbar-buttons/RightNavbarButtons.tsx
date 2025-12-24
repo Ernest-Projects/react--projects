@@ -43,13 +43,13 @@ export const RightNavbarButtons = () => {
     }
     butts.push(
       <>
-        <motion.button
+        <motion.button data-cy = "navbar-button"
           whileTap={{ scale: 0.98 }} 
           onClick={() => {
 
             handleClick(buttsNavbar[i].component, i);
           }}
-          className={` w-min border-b-[2px] ${activeButtonId == i ? "text-white border-b-white"  : "text-[rgb(152,152,152)] border-b-[rgb(18,18,18)]" }  box-border font-bold lg:text-sm md:text-[.8rem] transition whitespace-nowrap duration-100 h-[100%] text-[rgb(152,152,152)] ${col} hover:text-white font-semibold`}
+          className={` w-min border-b-[2px] ${activeButtonId != undefined  &&  activeButtonId != null && activeButtonId == i ? "text-white border-b-white"  : "text-[rgb(152,152,152)] border-b-[rgb(18,18,18)]" }  box-border font-bold lg:text-sm md:text-[.8rem] transition whitespace-nowrap duration-100 h-[100%] text-[rgb(152,152,152)] ${col} hover:text-white font-semibold`}
         >
           {buttsNavbar[i].content}{" "}
         </motion.button> 
@@ -58,7 +58,7 @@ export const RightNavbarButtons = () => {
     col = "";
   }
 return <>
- <section className=" h-full w-fit relative flex gap-[1rem] flex-cols">
+ <section data-cy = "right-button-side" className=" h-full w-fit relative flex gap-[1rem] flex-cols">
           {butts}
         </section>
 </>

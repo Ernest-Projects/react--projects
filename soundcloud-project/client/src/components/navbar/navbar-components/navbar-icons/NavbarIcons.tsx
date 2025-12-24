@@ -12,7 +12,7 @@ export const NavbarIcons = () => {
     const dispatch = useNavbarAppDispatch();
     return <>
        {navbarIcons.map((item, index) => (
-                <div
+                <div data-cy ="navbar-icon" data-index = {index}
                   className="relative place-self-center flex justify-center align-items"
                   key={index}
                 >

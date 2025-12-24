@@ -11,23 +11,28 @@ import { useEffect, useState } from "react";
 
 import { useAuthAppDispatch, useAuthAppSelector } from "@redux-hook/authHook";
 
-import type {  AuthFieldType } from "../../../app-types/errorTypes";
+import type { AuthFieldType } from "../../../app-types/errorTypes";
 
 type EmailWindowProps = {
   handleSetGlobalNotEmptyInputs: (value: boolean) => void;
   inputError: string | null;
-  handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>, type: AuthFieldType) => void;
+  handleKeyDown: (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    type: AuthFieldType
+  ) => void;
 };
 
-export const EmailWindow = ({handleSetGlobalNotEmptyInputs, handleKeyDown, inputError}: EmailWindowProps) => {
+export const EmailWindow = ({
+  handleSetGlobalNotEmptyInputs,
+  handleKeyDown,
+  inputError,
+}: EmailWindowProps) => {
   const userEmail = useAuthAppSelector(
     (state) => state.authorization.userInputData.userEmail
   );
   const dispatch = useAuthAppDispatch();
 
   const [isNotEmptyInput, setIsNotEmptyInput] = useState<boolean>(true);
-
-
 
   // --------------------------------------------------
 
@@ -69,27 +74,24 @@ export const EmailWindow = ({handleSetGlobalNotEmptyInputs, handleKeyDown, input
       {/* this is universal input for all auth fields  */}
       <AuthorizationInputTemplate<{ userEmail: string }>
         placeholder="Your email address or profile URL"
-
         isTypePassword={false}
+        inputAttrs={{ "data-cy": "registration-email" } as any}
 
         sliceReducer={setUserEmail}
         sliceKey="userEmail"
         sliceState={userEmail}
-
         onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
           handleKeyDown(e, "userEmail")
         }
-        inputError = {inputError}
+        inputError={inputError}
+        data-cy="registration-email"
       ></AuthorizationInputTemplate>
 
-
-       { inputError !== null && inputError.length && (
-      
-      <section className="text-red-500 mt-[.2rem] text-[.8rem] h-fit w-full">
-        <p>{inputError}</p>
-      </section>)
-      
-      }
+      {inputError !== null && inputError.length && (
+        <section className="text-red-500 mt-[.2rem] text-[.8rem] h-fit w-full">
+          <p>{inputError}</p>
+        </section>
+      )}
     </>
   );
 };

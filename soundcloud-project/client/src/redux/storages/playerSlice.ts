@@ -6,7 +6,7 @@ import {
 
 import type{ TrackProps} from 'src/app-types/Track'
 
-export interface PlayerState {
+export interface PlayerStatesProps {
   isAudioPlaying: boolean;
   trackDuration: number;
   trackCurrentTime: number;
@@ -41,7 +41,7 @@ const initialState = {
       setted: true,
       playable: false
   },
-} as PlayerState;
+} as PlayerStatesProps;
 
 export const playerStore = createSlice({
   name: "player",

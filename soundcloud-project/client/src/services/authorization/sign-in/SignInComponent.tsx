@@ -20,7 +20,7 @@ import { EmailWindow } from "./EmailWindow";
 import axios from "axios";
 import { ProfileDetailsWindow } from "../sign-up/ProfileDetailsWindow";
 import type { Provider } from "../../../app-types/loginTypes";
-import { handleAddUserInDatabase } from "../fetching/addToDatabase";
+import { useLocalAuth } from "../hooks/useLocalAuth";
 
 
 
@@ -44,7 +44,7 @@ interface InputErrorsProps {
   // invalidGender: string
 }
 
-export const SignInComponent = () => {
+export const  SignInComponent = () => {
   const navigate = useNavigate();
 
   const [isInputNotEmpty, setIsInputNotEmpty] = useState<boolean>(false);
@@ -52,37 +52,19 @@ export const SignInComponent = () => {
   const authorizationWindowId = useAuthAppSelector(
     (state) => state.authorization.authorizationWindowId
   );
+  // --------------------------------------------------------
 
-  // google data
+
+  // GOOGLE DATA OBJECT
   const userGoogleData = useAuthAppSelector(
     (state) => state.authorization.userGoogleData
   );
+  // --------------------------------------------------------
 
+  // ERRORS OBJECT
   const validationErrors = useAuthAppSelector(
     (state) => state.authorization.validationErrors
   );
-
-  // useEffect(() => {
-  //   const handleEnterPressed = (e: KeyboardEvent) => {
-
-  //     if (e.key == "Enter") {
-  //       // e.preventDefault();
-
-  //       if (inputOnFocus && isInputNotEmpty) {
-  //         alert("Enter is entered when input in focus (what)");
-  //         dispatch(setAuthorizationWindowId({windowId: 3}));
-  //        }
-
-  //     }
-  //   }
-  //   window.addEventListener("keydown", handleEnterPressed);
-
-  // return () => (
-  //   window.removeEventListener("keydown", handleEnterPressed)
-  // )
-
-  // /    onEnterClicked();
-  // }, [])
 
   // --------------------------------------------------------
   // ALL INPUT FIELDS
@@ -115,16 +97,6 @@ export const SignInComponent = () => {
 
   const sleep = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
-
-  // if user in password window (windowId = 3), then set isUserLogged = true and close auth window
-  const handleLoginUser = () => {
-    dispatch(setIsUserLogged());
-
-    // alert("legged");
-
-    navigate("/discover");
-    return;
-  };
 
   // -----------------------------------------------------------------------------
 
@@ -165,11 +137,6 @@ export const SignInComponent = () => {
       userDisplayName: null,
       userAge: null,
     };
-
-    // IF ERRORS EXISTS, THAN BLOCK CONTINUING AUTHORIZATION
-    // if (!invalidErrorExists(validationErrors)) {
-    //   dispatch(setAuthorizationWindowId({ windowId: authorizationWindowId + 1 }));
-    // }
 
     if (authorizationWindowId == 1) {
       // set provider right here, only one time
@@ -220,9 +187,6 @@ export const SignInComponent = () => {
 
     // invalidEmail: "Enter a valid email address!", invalidPassword: "This password is incorrect!",invalidAge: "Sorry, but you don't meet SoundCloud's minimum age requirements"
     if (authorizationWindowId == 4) {
-      // if all necessary fields valid
-      // if (isUserInputDataValid()) {
-
       errors = validateUserLocalLogin({ userDisplayName, userAge });
       dispatch(setValidationErrors(errors));
 
@@ -230,7 +194,7 @@ export const SignInComponent = () => {
         return;
       } else {
         // GET ANSWER FROM SERVER
-        const result = await handleAddUserInDatabase(userInputData);
+        const result = await useLocalAuth(userInputData);
 
         // IF SUCCESS
         if (result.ok) {
@@ -247,14 +211,7 @@ export const SignInComponent = () => {
           dispatch(setValidationErrors(errors));
         }
       }
-
-      // set user logged
-      // dispatch(setIsUserLogged());
-
-      // add user in database
-      // handleAddUserInDatabase();
     }
-    // set errors
 
     return;
   };
@@ -280,42 +237,15 @@ export const SignInComponent = () => {
     handleFieldValidationAfterKeyDown(e, type, authorizationWindowId, getValueByField(type),  dispatch);
   };
 
-  // set semitransparent and disabled 'continue' button, when input empty
-  // useEffect(() => {
-  //   if (authorizationWindowId == 2 || authorizationWindowId == 1) {
-  //     setIsInputNotEmpty(userEmail.length ? true : false);
-  //   } else if (authorizationWindowId == 3) {
-  //     setIsInputNotEmpty(userPassword.length ? true : false);
-  //   }
-  //   else {
-  //     setIsInputNotEmpty(userPassword.length ? true : false);
-  //   }
-
-  // }, [userPassword, userEmail, userAge, userDisplayName, userGender]);
-
-
-  // SET PROVIDER TO LOCAL
-  // ------------------------------------------
-  // TEST
-
-  // useEffect(() => {
-  //   // for provider
-  //   if (userEmail.length) {
-  //     dispatch(setProvider({ type: "local" }));
-  //   }
-  // }, [userEmail]);
-
-  // ------------------------------------------
-
   return (
     <>
-      <section className="gap-y-[1rem]  flex  h-fit w-full text-sm flex-col">
+      <section data-cy = "sign-in-component" className="gap-y-[1rem]  flex  h-fit w-full text-sm flex-col">
         <div
           className=" flex flex-col gap-[1rem] align-center text-[.7rem] overflow-hidden w-full h-fit "
         >
           <AnimatePresence mode="sync">
             {authorizationWindowId == 2 || authorizationWindowId == 1 ? (
-              <motion.div
+              <motion.div data-cy = "email-input"
                 key="email"
                 initial={{ y: -40, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -365,7 +295,7 @@ export const SignInComponent = () => {
           </AnimatePresence>
         </div>
 
-        <button
+        <button data-cy = "registration-continue-button"
           onClick={handleEntryUser}
           disabled={!isInputNotEmpty}
           className={`w-full font-medium rounded-[.2rem]  flex flex-row justify-center gap-[.5rem] h-fit text-black py-[.8rem] ${

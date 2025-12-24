@@ -10,10 +10,10 @@ export const NavbarElipsisIcon = () => {
       const popupStates = useNavbarAppSelector((state) => state.navbar.popupStates);
         const dispatch = useNavbarAppDispatch();
     return <>
-      <div
+      <div  
                       className="relative place-self-center flex justify-center align-items"
                     >
-                      <button
+                      <button data-cy = "navbar-last-popup-button" 
                         onClick={() => dispatch(setOpenPopupWindow({ id: 2 }))}
                       >
                         <Ellipsis size = {25}
