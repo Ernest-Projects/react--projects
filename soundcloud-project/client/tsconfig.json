@@ -1,6 +1,8 @@
 {
  
   "compilerOptions": {
+       "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "jsx": "react-jsx", // or "react", "preserve", etc. depending on your needs
         "lib": ["DOM", "ESNext"],         
             "moduleResolution": "node",
