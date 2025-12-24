@@ -1,6 +1,6 @@
  
 import {useState, useEffect} from 'react'
-import { useLibraryAppDispatch, useLibraryAppSelector } from 'src/redux/hooks/libraryHook';
+import { useLibraryAppDispatch, useLibraryAppSelector } from '../../../../../redux/hooks/libraryHook';
 
 interface TrackProps  {
   id: number,
