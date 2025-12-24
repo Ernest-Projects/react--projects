@@ -14,7 +14,6 @@ import { useAuthAppDispatch, useAuthAppSelector } from "@redux-hook/authHook";
 
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState, type ProviderProps } from "react";
-import { AuthorizationButtons } from "src/services/user-guest-components/navbar/AuthorizationButtons";
 import { PasswordWindow } from "./PasswordWindow";
 import { EmailWindow } from "./EmailWindow";
 import axios from "axios";
